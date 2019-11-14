@@ -1,0 +1,29 @@
+{
+  "name": "@kissmybutton/motorcortex-video",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/kissmybutton/motorcortex-flubber",
+  "author": "Kiss My Button PC",
+  "license": "MIT",
+  "scripts": {
+    "build": "npx babel ./src --out-dir ./dist --source-maps",
+    "start": "webpack && webpack-dev-server --inline --hot --disableHostCheck"
+  },
+  "dependencies": {
+    "flubber": "^0.4.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "npx": "*",
+    "babel-preset-es2015": "*",
+    "webpack": "4.40.2",
+    "webpack-cli": "3.3.9",
+    "webpack-dev-server": "3.8.1",
+    "@kissmybutton/motorcortex": "3.4.0-rc0",
+    "@kissmybutton/motorcortex-player": "1.4.5"
+  },
+  "peerDependencies": {
+    "@kissmybutton/motorcortex": "3.4.0-rc0"
+  }
+}
