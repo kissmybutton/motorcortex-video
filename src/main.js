@@ -13,5 +13,8 @@ module.exports = {
         name: "VideoEffect"
     }],
     compositeAttributes,
-    Clip: VideoClip
+    Clip: VideoClip,
+    capabilities: {
+        speed: false
+    }
 }
