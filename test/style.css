@@ -1,9 +1,9 @@
-#video-container{
-    width: 800px;
-    height: 600px;
-    position:relative;
-    top: 200px;
+#video-container {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    top: 100px;
     margin-left: auto;
     margin-right: auto;
-    border:5px black solid;
+    border: 5px black solid;
 }
