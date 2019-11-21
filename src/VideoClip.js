@@ -27,9 +27,16 @@ class VideoClip extends MC.API.DOMClip {
         video.muted = true;
         const canvas = this.context.getElements("canvas")[0];
         const ctx = canvas.getContext('2d');
-        canvas.width = this.attrs.width || 640;
-        canvas.height = this.attrs.width || 360;
-        // ctx.filter = "grayscale(100%)";
+
+        video.addEventListener("loadedmetadata", (e) => {
+            const canvasWidth = this.attrs.width || 640;
+            const canvasHeight = this.attrs.height || 360;
+            // console.log(canvasWidth / video.videoWidth, canvasHeight / video.videoHeight)
+            canvas.style.transform = `scale(${canvasWidth / video.videoWidth}, ${canvasHeight / video.videoHeight})`;
+            canvas.style['transform-origin'] = "top left";
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        }, false);
 
         this.setCustomEntity("video", {
             video,

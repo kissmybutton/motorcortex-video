@@ -18,78 +18,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var MC = require("@kissmybutton/motorcortex");
+var MotorCortex = require("@kissmybutton/motorcortex");
 
-var VideoPlay =
+var effects = require('../compositeAttributes').filter;
+
+var VideoEffect =
 /*#__PURE__*/
-function (_MC$API$MediaPlayback) {
-  _inherits(VideoPlay, _MC$API$MediaPlayback);
+function (_MotorCortex$API$Mono) {
+  _inherits(VideoEffect, _MotorCortex$API$Mono);
 
-  function VideoPlay() {
-    _classCallCheck(this, VideoPlay);
+  function VideoEffect() {
+    _classCallCheck(this, VideoEffect);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(VideoPlay).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(VideoEffect).apply(this, arguments));
   }
 
-  _createClass(VideoPlay, [{
-    key: "play",
-    value: function play(millisecond) {
-      var _this = this;
-
-      var video = this.element.entity.video;
-      var ctx = this.element.entity.ctx;
-      var playPromise = video.play();
-
-      if (this.hasSetWaitingListener !== true) {
-        video.addEventListener('waiting', this._waitingHandler.bind(this));
-        this.hasSetWaitingListener = true;
-      }
-
-      if (this.hasSetCanplayListener !== true) {
-        video.addEventListener('canplay', this._canplayHandler.bind(this));
-        this.hasSetCanplayListener = true;
-      }
-
-      var drawFrame = function drawFrame(video) {
-        ctx.drawImage(video, 0, 0);
-        _this.timeout = setTimeout(function () {
-          drawFrame(video);
-        }, 10);
+  _createClass(VideoEffect, [{
+    key: "getScratchValue",
+    value: function getScratchValue() {
+      return {
+        blur: 0,
+        brightness: 1,
+        contrast: 1,
+        grayscale: 0,
+        'hue-rotate': 0,
+        invert: 0,
+        opacity: 1,
+        saturate: 1,
+        sepia: 0
       };
+    }
+  }, {
+    key: "_objToFilterValue",
+    value: function _objToFilterValue(obj) {
+      var string = "";
 
-      drawFrame(video);
-      return true;
-    }
-  }, {
-    key: "_waitingHandler",
-    value: function _waitingHandler() {
-      console.log('waiting');
-      console.log('and blocking');
-      this.setBlock('Video loading');
-    }
-  }, {
-    key: "_canplayHandler",
-    value: function _canplayHandler() {
-      console.log('unblocking');
-      this.unblock();
-    }
-  }, {
-    key: "stop",
-    value: function stop() {
-      this.element.entity.video.pause();
-      clearTimeout(this.timeout);
+      for (var filter in obj) {
+        string += "".concat(filter, "(").concat(obj[filter]).concat(this._effectsUnits[filter], ") ");
+      }
+
+      return string;
     }
   }, {
     key: "onProgress",
-    value: function onProgress(f, millisecond) {
-      var startFrom = millisecond + this.element.entity.startFrom;
-      this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
-      this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);
+    value: function onProgress(f, m) {
+      var targetValues = Object.assign({}, this.initialValue);
+
+      for (var i = 0; i < effects.length; i++) {
+        var effect = effects[i];
+
+        if (this.initialValue[effect] !== this.targetValue[effect]) {
+          targetValues[effect] = f * (this.targetValue[effect] - this.initialValue[effect]) + this.initialValue[effect];
+        }
+      }
+
+      this.element.entity.ctx.filter = this._objToFilterValue(targetValues);
+    }
+  }, {
+    key: "_effectsUnits",
+    get: function get() {
+      return {
+        blur: 'px',
+        brightness: '',
+        contrast: '',
+        grayscale: '',
+        'hue-rotate': 'deg',
+        invert: '',
+        opacity: '',
+        saturate: '',
+        sepia: ''
+      };
     }
   }]);
 
-  return VideoPlay;
-}(MC.API.MediaPlayback);
+  return VideoEffect;
+}(MotorCortex.API.MonoIncident);
 
-module.exports = VideoPlay;
-//# sourceMappingURL=VideoPlay.js.map
+module.exports = VideoEffect;
+//# sourceMappingURL=Effect.js.map

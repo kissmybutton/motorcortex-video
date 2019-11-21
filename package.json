@@ -2,7 +2,7 @@
   "name": "@kissmybutton/motorcortex-video",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "repository": "https://github.com/kissmybutton/motorcortex-flubber",
+  "repository": "https://github.com/kissmybutton/motorcortex-video",
   "author": "Kiss My Button PC",
   "license": "MIT",
   "scripts": {

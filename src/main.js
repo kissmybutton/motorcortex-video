@@ -10,11 +10,73 @@ module.exports = {
         name: "Playback"
     }, {
         exportable: VideoEffect,
-        name: "VideoEffect"
+        name: "VideoEffect",
+        attributesValidationRules: {
+            animatedAttrs: {
+                type: "object",
+                props: {
+                    filter: {
+                        type: "object",
+                        props: {
+                            blur: {
+                                type: "number",
+                                min: 0,
+                                optional: true
+                            },
+                            brightness: {
+                                type: "number",
+                                min: 0,
+                                max: 1,
+                                optional: true
+                            },
+                            contrast: {
+                                type: "number",
+                                min: 0,
+                                optional: true
+                            },
+                            grayscale: {
+                                type: "number",
+                                min: 0,
+                                max: 1,
+                                optional: true
+                            },
+                            'hue-rotate': {
+                                type: "number",
+                                optional: true
+                            },
+                            invert: {
+                                type: "number",
+                                min: 0,
+                                max: 1,
+                                optional: true
+                            },
+                            opacity: {
+                                type: "number",
+                                min: 0,
+                                max: 1,
+                                optional: true
+                            },
+                            saturate: {
+                                type: "number",
+                                min: 0,
+                                optional: true
+                            },
+                            sepia: {
+                                type: "number",
+                                min: 0,
+                                max: 1,
+                                optional: true
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }],
     compositeAttributes,
     Clip: VideoClip,
     capabilities: {
-        speed: false
+        speed: false,
+        preview: false
     }
 }
