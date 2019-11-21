@@ -37,7 +37,7 @@ const VideoPlugin = MotorCortex.loadPlugin(MCVideo);
 const VideoClip = new VideoPlugin.Clip({
     sources: [
         'http://path/to/the/video/file.mp4',
-        './path/to/the/video/file.mp4'
+        './path/to/the/video/file.ogg' // alternative source for browser compatibility issues
     ],
     width: 640,
     height: 360
@@ -72,7 +72,7 @@ const VideoClip = new VideoPlugin.Clip({
 });
 
 const Playback = new VideoPlugin.Playback({
-    selector: "!#video", // that's mandatory and targets the video of the VideoPlugin.Clip 
+    selector: "!#video", // that's mandatory, it should always have the value "!#video" and it targets the video of the VideoPlugin.Clip 
     duration: 20000 // the duration of the playback in milliseconds
 });
 
@@ -111,7 +111,7 @@ const VideoClip = new VideoPlugin.Clip({
 });
 
 const Playback = new VideoPlugin.Playback({
-    selector: "!#video", // that's mandatory and targets the video of the VideoPlugin.Clip 
+    selector: "!#video", // that's mandatory, it should always have the value "!#video" and it targets the video of the VideoPlugin.Clip 
     duration: 20000 // the duration of the playback in milliseconds
 });
 
@@ -130,7 +130,7 @@ const Effect = new VideoPlugin.VideoEffect({
         }
     }
 }, {
-    selector: "!#video", // that's mandatory and targets the video of the VideoPlugin.Clip 
+    selector: "!#video", // that's mandatory, it should always have the value "!#video" and it targets the video of the VideoPlugin.Clip 
     duration: 4000
 });
 

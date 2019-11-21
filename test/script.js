@@ -22,8 +22,8 @@ const MyClip = new MotorCortex.Clip({
 const VideoClip = new VideoPlugin.Clip({
     sources: ["https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"],
     startFrom: 120,
-    width: 1280 / 2,
-    height: 720 / 2
+    width: 1280,
+    height: 720
 }, {
     selector: '#video-container',
     id: 'videoClip'
