@@ -29,7 +29,7 @@ const VideoClip = new VideoPlugin.Clip({
     id: 'videoClip'
 });
 
-const Playback1 = new VideoPlugin.Playback({}, {
+const Playback1 = new VideoPlugin.Playback({
     selector: "!#video",
     duration: 25000
 });
