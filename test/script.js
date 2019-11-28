@@ -86,6 +86,7 @@ const Effect5 = new VideoPlugin.VideoEffect({
         }
     }
 }, {
+    easing: 'easeInOutBounce',
     selector: "!#video",
     duration: 2000
 });
@@ -98,6 +99,7 @@ const Effect6 = new VideoPlugin.VideoEffect({
         }
     }
 }, {
+    easing: 'easeInOutBack',
     selector: "!#video",
     duration: 8000
 });

@@ -1,7 +1,7 @@
 {
   "name": "@kissmybutton/motorcortex-video",
-  "version": "1.0.4",
-  "main": "dist/index.js",
+  "version": "1.0.0",
+  "main": "dist/main.js",
   "repository": "https://github.com/kissmybutton/motorcortex-video",
   "author": "Kiss My Button PC",
   "license": "MIT",
@@ -23,12 +23,12 @@
     "webpack": "4.40.2",
     "webpack-cli": "3.3.9",
     "webpack-dev-server": "3.8.1",
-    "@kissmybutton/motorcortex": "3.5.0-rc1",
+    "@kissmybutton/motorcortex": "3.5.3-rc3",
     "@kissmybutton/motorcortex-player": "1.4.5",
     "@babel/plugin-proposal-decorators": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0"
   },
   "peerDependencies": {
-    "@kissmybutton/motorcortex": "3.5.0-rc1"
+    "@kissmybutton/motorcortex": "3.5.3-rc3"
   }
 }
