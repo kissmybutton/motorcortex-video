@@ -3,8 +3,8 @@ const MC = require('@kissmybutton/motorcortex');
 class VideoClip extends MC.API.DOMClip {
     get html() {
         return `
-        <div>
-            <video id="video" style="width:${this.attrs.width || 640}px;height:${this.attrs.height || 360}px;" preload="auto">
+        <div style="display:flex;align-items:center;justify-content:center;">
+            <video id="video" style="width:${this.attrs.width || "640px"};height:${this.attrs.height || "360px"};" preload="auto">
                 ${this.attrs.sources.map((item, i) => `
                     <source src="${item}#t=${this.attrs.startFrom || 0}"></source>
                 `).join('')}
@@ -24,16 +24,16 @@ class VideoClip extends MC.API.DOMClip {
 
     onAfterRender() {
         const video = this.context.getElements("video")[0];
-        video.muted = true;
+        video.muted = this.attrs.muted || true;
         const canvas = this.context.getElements("canvas")[0];
         const ctx = canvas.getContext('2d');
 
         video.addEventListener("loadedmetadata", (e) => {
-            const canvasWidth = this.attrs.width || 640;
-            const canvasHeight = this.attrs.height || 360;
-            // console.log(canvasWidth / video.videoWidth, canvasHeight / video.videoHeight)
+            const canvasWidth = parseFloat(this.attrs.width) || 640;
+            const canvasHeight = parseFloat(this.attrs.height) || 360;
+            console.log(canvasWidth,video.videoWidth, canvasHeight, video.videoHeight)
             canvas.style.transform = `scale(${canvasWidth / video.videoWidth}, ${canvasHeight / video.videoHeight})`;
-            canvas.style['transform-origin'] = "top left";
+            // canvas.style['transform-origin'] = "top left";
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
         }, false);
