@@ -11,7 +11,7 @@
   };
   var n,
     i = !0,
-    r = "92e2e9ec04d94887089d",
+    r = "75b7fc0639a44b6e2e99",
     o = {},
     s = [],
     a = [];
@@ -540,7 +540,7 @@
     (S.h = function () {
       return r;
     }),
-    l(3)((S.s = 3));
+    l(1)((S.s = 1));
 })([
   function (e, t, n) {
     (function (e) {
@@ -12154,7 +12154,77 @@
           (t.loadPlugin = fn),
           Object.defineProperty(t, "__esModule", { value: !0 });
       })(t);
-    }.call(this, n(4)));
+    }.call(this, n(2)));
+  },
+  function (e, t, n) {
+    var i = n(0),
+      r = n(3),
+      o = n(4),
+      s = i.loadPlugin(o),
+      a = new i.Clip({
+        host: document.getElementById("clip"),
+        id: "my-root-clip",
+        html: '<div id="video-container"></div>',
+        css:
+          "\n        #video-container{\n            width: 1280px;\n            height: 720px;\n        }\n    ",
+      }),
+      l = new s.Clip(
+        {
+          sources: [
+            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          ],
+          startFrom: 120,
+          width: 1280,
+          height: 720,
+        },
+        { selector: "#video-container", id: "videoClip" }
+      ),
+      c = new s.Playback({ selector: "!#video", duration: 25e3 }),
+      u = new s.VideoEffect(
+        { animatedAttrs: { filter: { blur: 6 } } },
+        { selector: "!#video", duration: 2e3 }
+      ),
+      d = new s.VideoEffect(
+        { animatedAttrs: { filter: { blur: 0, sepia: 1 } } },
+        { selector: "!#video", duration: 2e3 }
+      ),
+      p = new s.VideoEffect(
+        { animatedAttrs: { filter: { sepia: 0 } } },
+        { selector: "!#video", duration: 2e3 }
+      ),
+      h = new s.VideoEffect(
+        { animatedAttrs: { filter: { "hue-rotate": 360 } } },
+        { selector: "!#video", duration: 4e3 }
+      ),
+      f = new s.VideoEffect(
+        { animatedAttrs: { filter: { grayscale: 1 } } },
+        { easing: "easeInOutBounce", selector: "!#video", duration: 2e3 }
+      ),
+      m = new s.VideoEffect(
+        { animatedAttrs: { filter: { grayscale: 0, invert: 1 } } },
+        { easing: "easeInOutBack", selector: "!#video", duration: 8e3 }
+      );
+    a.addIncident(l, 0),
+      l.addIncident(c, 500),
+      l.addIncident(u, 1e3),
+      l.addIncident(d, 3e3),
+      l.addIncident(p, 5e3),
+      l.addIncident(h, 1e4),
+      l.addIncident(f, 14e3),
+      l.addIncident(m, 16e3),
+      new r({ clip: a });
+  },
+  function (e, t) {
+    var n;
+    n = (function () {
+      return this;
+    })();
+    try {
+      n = n || new Function("return this")();
+    } catch (e) {
+      "object" == typeof window && (n = window);
+    }
+    e.exports = n;
   },
   function (e, t, n) {
     e.exports = (function (e) {
@@ -15022,15 +15092,14 @@
                 value: function () {
                   var e = this,
                     t = this.context.getElements("video")[0];
-                  (t.muted = !0),
-                    void 0 !== this.attrs.muted && (t.muted = this.attrs.muted);
+                  t.muted = !0;
                   var n = this.context.getElements("canvas")[0],
                     i = n.getContext("2d");
                   t.addEventListener(
                     "loadedmetadata",
                     function () {
-                      var i = parseFloat(e.attrs.width) || 640,
-                        r = parseFloat(e.attrs.height) || 360;
+                      var i = e.attrs.width || 640,
+                        r = e.attrs.height || 360;
                       (n.style.transform = "scale("
                         .concat(i / t.videoWidth, ", ")
                         .concat(r / t.videoHeight, ")")),
@@ -15051,11 +15120,11 @@
                 key: "html",
                 get: function () {
                   var e = this;
-                  return '\n        <div style="display:flex;align-items:center;justify-content:center;">\n            <video id="video" style="width:'
-                    .concat(this.attrs.width || "640px", ";height:")
+                  return '\n        <div>\n            <video id="video" style="width:'
+                    .concat(this.attrs.width || 640, "px;height:")
                     .concat(
-                      this.attrs.height || "360px",
-                      ';" preload="auto">\n                '
+                      this.attrs.height || 360,
+                      'px;" preload="auto">\n                '
                     )
                     .concat(
                       this.attrs.sources
@@ -15315,50 +15384,5 @@
         (e.npm_name = v),
         Object.defineProperty(e, "__esModule", { value: !0 });
     });
-  },
-  function (e, t, n) {
-    "use strict";
-    n.r(t);
-    var i = n(1),
-      r = n.n(i),
-      o = n(0),
-      s = n.n(o),
-      a = n(2),
-      l = n.n(a),
-      c = s.a.loadPlugin(l.a),
-      u = document.getElementById("clip"),
-      d = new c.Clip(
-        {
-          sources: [
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-          ],
-          width: "1280px",
-          height: "675px",
-          muted: !1,
-          startFrom: 0,
-        },
-        { host: u }
-      ),
-      p = new c.Playback({ selector: "!#video", duration: 325e3 });
-    d.addIncident(p, 0),
-      new r.a({
-        clip: d,
-        theme: "mc-blue",
-        showVolume: !0,
-        preview: !0,
-        pointerEvents: !1,
-      });
-  },
-  function (e, t) {
-    var n;
-    n = (function () {
-      return this;
-    })();
-    try {
-      n = n || new Function("return this")();
-    } catch (e) {
-      "object" == typeof window && (n = window);
-    }
-    e.exports = n;
   },
 ]);
