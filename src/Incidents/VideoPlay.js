@@ -6,6 +6,7 @@ class VideoPlay extends MC.API.MediaPlayback {
     const ctx = this.element.entity.ctx;
 
     // const playPromise = video.play();
+    video.play();
     if (this.hasSetWaitingListener !== true) {
       video.addEventListener("waiting", this._waitingHandler.bind(this));
       this.hasSetWaitingListener = true;
