@@ -11,7 +11,7 @@
   };
   var n,
     i = !0,
-    r = "75b7fc0639a44b6e2e99",
+    r = "145ac625f326cc9f1a24",
     o = {},
     s = [],
     a = [];
@@ -1261,14 +1261,14 @@
                 ),
               null != e.length &&
                 o.push(
-                  `\n\t\t\tif (len !== ${
-                    e.length
-                  }) {\n\t\t\t\t${this.makeError({
-                    type: "arrayLength",
-                    expected: e.length,
-                    actual: "len",
-                    messages: t,
-                  })}\n\t\t\t}\n\t\t`
+                  `\n\t\t\tif (len !== ${e.length}) {\n\t\t\t\t${this.makeError(
+                    {
+                      type: "arrayLength",
+                      expected: e.length,
+                      actual: "len",
+                      messages: t,
+                    }
+                  )}\n\t\t\t}\n\t\t`
                 ),
               null != e.contains &&
                 o.push(
@@ -1962,229 +1962,380 @@
             const t = ue.format(e, de);
             return pe.highlight(t, he);
           },
-          me = class {
-            constructor(e) {
-              (this.opts = { messages: j({}, S) }),
-                e && j(this.opts, e),
-                (this.messages = this.opts.messages),
-                (this.rules = {
-                  any: M,
-                  array: B,
-                  boolean: A,
-                  custom: T,
-                  date: D,
-                  email: z,
-                  enum: N,
-                  equal: $,
-                  forbidden: R,
-                  function: H,
-                  multi: F,
-                  number: G,
-                  object: J,
-                  string: Y,
-                  url: te,
-                  uuid: ie,
-                  mac: oe,
-                  luhn: se,
-                }),
-                (this.aliases = {}),
-                (this.cache = new Map());
-            }
-            validate(e, t) {
-              return this.compile(t)(e);
-            }
-            wrapRequiredCheckSourceCode(e, t, n) {
-              const i = [],
-                r =
-                  null != e.schema.default
-                    ? JSON.stringify(e.schema.default)
-                    : null;
-              return (
-                i.push(
-                  "\n\t\t\tif (value === undefined || value === null) {\n\t\t"
-                ),
-                !0 === e.schema.optional || "forbidden" == e.schema.type
-                  ? null != r && n
-                    ? i.push(`${n} = ${r};`)
-                    : i.push("// Do nothing, it's an optional field")
-                  : null != r && n
-                  ? i.push(`${n} = ${r};`)
-                  : i.push(
-                      this.makeError({
-                        type: "required",
-                        actual: "value",
-                        messages: e.messages,
-                      })
-                    ),
-                i.push("} else {"),
-                t && i.push(t),
-                i.push("\t\t}"),
-                i.join("\n")
-              );
-            }
-            compile(e) {
-              if (null === e || "object" != typeof e)
-                throw new Error("Invalid schema.");
-              const t = this,
-                n = { index: 0, rules: [], fn: [], customs: {} };
-              if ((this.cache.clear(), !0 !== e.$$root))
-                if (Array.isArray(e)) e = this.getRuleFromSchema(e).schema;
-                else {
-                  const t = Object.assign({}, e);
-                  (e = { type: "object", strict: t.$$strict, properties: t }),
-                    delete t.$$strict;
-                }
-              const i = ["var errors = [];", "var field;"],
-                r = this.getRuleFromSchema(e);
-              i.push(
-                this.compileRule(
-                  r,
-                  n,
-                  null,
-                  "context.fn[%%INDEX%%](value, field, null, errors, context);",
-                  "value"
-                )
-              ),
-                i.push("if (errors.length) {"),
-                i.push(
-                  '\n\t\t\treturn errors.map(err => {\n\t\t\t\tif (err.message)\n\t\t\t\t\terr.message = err.message\n\t\t\t\t\t\t.replace(/\\{field\\}/g, err.field || "")\n\t\t\t\t\t\t.replace(/\\{expected\\}/g, err.expected != null ? err.expected : "")\n\t\t\t\t\t\t.replace(/\\{actual\\}/g, err.actual != null ? err.actual : "");\n\n\t\t\t\treturn err;\n\t\t\t});\n\t\t'
-                ),
-                i.push("}"),
-                i.push("return true;");
-              const o = i.join("\n"),
-                s = new Function("value", "context", o);
-              if (this.opts.debug) {
-                let e = function (e) {
-                  return e;
-                };
-                "undefined" == typeof window && (e = fe),
-                  n.fn.forEach((t, n) =>
-                    console.log(e(`// Context.fn[${n}]\n` + t.toString()))
-                  ),
-                  console.log(e("// Main check function\n" + s.toString()));
+          me = new RegExp(
+            /^#([\da-f]{3}){1,2}$|^#([\da-f]{4}){1,2}$|(rgb|hsl)a?\((\s*-?\d+%?\s*,){2}(\s*-?\d+%?\s*,?\s*\)?)(,\s*(0?\.\d+)?|1)?\)/,
+            "gi"
+          ),
+          ve = new RegExp(/^[-+]?\d+$/),
+          ge = function () {
+            var e = new (class {
+              constructor(e) {
+                (this.opts = { messages: j({}, S) }),
+                  e && j(this.opts, e),
+                  (this.messages = this.opts.messages),
+                  (this.rules = {
+                    any: M,
+                    array: B,
+                    boolean: A,
+                    custom: T,
+                    date: D,
+                    email: z,
+                    enum: N,
+                    equal: $,
+                    forbidden: R,
+                    function: H,
+                    multi: F,
+                    number: G,
+                    object: J,
+                    string: Y,
+                    url: te,
+                    uuid: ie,
+                    mac: oe,
+                    luhn: se,
+                  }),
+                  (this.aliases = {}),
+                  (this.cache = new Map());
               }
-              return (
-                this.cache.clear(),
-                function (e) {
-                  return (n.data = e), s.call(t, e, n);
+              validate(e, t) {
+                return this.compile(t)(e);
+              }
+              wrapRequiredCheckSourceCode(e, t, n) {
+                const i = [],
+                  r =
+                    null != e.schema.default
+                      ? JSON.stringify(e.schema.default)
+                      : null;
+                return (
+                  i.push(
+                    "\n\t\t\tif (value === undefined || value === null) {\n\t\t"
+                  ),
+                  !0 === e.schema.optional || "forbidden" == e.schema.type
+                    ? null != r && n
+                      ? i.push(`${n} = ${r};`)
+                      : i.push("// Do nothing, it's an optional field")
+                    : null != r && n
+                    ? i.push(`${n} = ${r};`)
+                    : i.push(
+                        this.makeError({
+                          type: "required",
+                          actual: "value",
+                          messages: e.messages,
+                        })
+                      ),
+                  i.push("} else {"),
+                  t && i.push(t),
+                  i.push("\t\t}"),
+                  i.join("\n")
+                );
+              }
+              compile(e) {
+                if (null === e || "object" != typeof e)
+                  throw new Error("Invalid schema.");
+                const t = this,
+                  n = { index: 0, rules: [], fn: [], customs: {} };
+                if ((this.cache.clear(), !0 !== e.$$root))
+                  if (Array.isArray(e)) e = this.getRuleFromSchema(e).schema;
+                  else {
+                    const t = Object.assign({}, e);
+                    (e = { type: "object", strict: t.$$strict, properties: t }),
+                      delete t.$$strict;
+                  }
+                const i = ["var errors = [];", "var field;"],
+                  r = this.getRuleFromSchema(e);
+                i.push(
+                  this.compileRule(
+                    r,
+                    n,
+                    null,
+                    "context.fn[%%INDEX%%](value, field, null, errors, context);",
+                    "value"
+                  )
+                ),
+                  i.push("if (errors.length) {"),
+                  i.push(
+                    '\n\t\t\treturn errors.map(err => {\n\t\t\t\tif (err.message)\n\t\t\t\t\terr.message = err.message\n\t\t\t\t\t\t.replace(/\\{field\\}/g, err.field || "")\n\t\t\t\t\t\t.replace(/\\{expected\\}/g, err.expected != null ? err.expected : "")\n\t\t\t\t\t\t.replace(/\\{actual\\}/g, err.actual != null ? err.actual : "");\n\n\t\t\t\treturn err;\n\t\t\t});\n\t\t'
+                  ),
+                  i.push("}"),
+                  i.push("return true;");
+                const o = i.join("\n"),
+                  s = new Function("value", "context", o);
+                if (this.opts.debug) {
+                  let e = function (e) {
+                    return e;
+                  };
+                  "undefined" == typeof window && (e = fe),
+                    n.fn.forEach((t, n) =>
+                      console.log(e(`// Context.fn[${n}]\n` + t.toString()))
+                    ),
+                    console.log(e("// Main check function\n" + s.toString()));
                 }
-              );
-            }
-            compileRule(e, t, n, i, r) {
-              const o = [],
-                s = this.cache.get(e.schema);
-              if (s)
-                ((e = s).cycle = !0),
-                  (e.cycleStack = []),
-                  o.push(
-                    this.wrapRequiredCheckSourceCode(
-                      e,
-                      `\n\t\t\t\tvar rule = context.rules[${
-                        e.index
-                      }];\n\t\t\t\tif (rule.cycleStack.indexOf(value) === -1) {\n\t\t\t\t\trule.cycleStack.push(value);\n\t\t\t\t\t${i.replace(
-                        "%%INDEX%%",
-                        e.index
-                      )}\n\t\t\t\t\trule.cycleStack.pop(value);\n\t\t\t\t}\n\t\t\t`,
-                      r
-                    )
-                  );
-              else {
-                this.cache.set(e.schema, e),
-                  (e.index = t.index),
-                  (t.rules[t.index] = e),
-                  "function" == typeof e.schema.custom &&
-                    ((t.customs[n] = {
-                      schema: e.schema,
-                      messages: e.messages,
-                    }),
-                    (e.customValidation = (e) =>
-                      `\n\t\t\t\t\tconst rule = context.customs["${n}"];\n\t\t\t\t\tconst res = rule.schema.custom.call(this, ${e}, rule.schema, "${n}", parent, context);\n\t\t\t\t\tif (Array.isArray(res)) {\n\t\t\t\t\t\tres.forEach(err => errors.push(Object.assign({ message: rule.messages[err.type], field }, err)));\n\t\t\t\t\t}\n\t\t\t\t`)),
-                  t.index++;
-                const s = e.ruleFunction.call(this, e, n, t);
-                if (s.source) {
-                  const n = new Function(
-                    "value",
-                    "field",
-                    "parent",
-                    "errors",
-                    "context",
-                    s.source
-                  );
-                  (t.fn[e.index] = n),
+                return (
+                  this.cache.clear(),
+                  function (e) {
+                    return (n.data = e), s.call(t, e, n);
+                  }
+                );
+              }
+              compileRule(e, t, n, i, r) {
+                const o = [],
+                  s = this.cache.get(e.schema);
+                if (s)
+                  ((e = s).cycle = !0),
+                    (e.cycleStack = []),
                     o.push(
                       this.wrapRequiredCheckSourceCode(
                         e,
-                        i.replace("%%INDEX%%", e.index),
+                        `\n\t\t\t\tvar rule = context.rules[${
+                          e.index
+                        }];\n\t\t\t\tif (rule.cycleStack.indexOf(value) === -1) {\n\t\t\t\t\trule.cycleStack.push(value);\n\t\t\t\t\t${i.replace(
+                          "%%INDEX%%",
+                          e.index
+                        )}\n\t\t\t\t\trule.cycleStack.pop(value);\n\t\t\t\t}\n\t\t\t`,
                         r
                       )
                     );
-                } else o.push(this.wrapRequiredCheckSourceCode(e));
+                else {
+                  this.cache.set(e.schema, e),
+                    (e.index = t.index),
+                    (t.rules[t.index] = e),
+                    "function" == typeof e.schema.custom &&
+                      ((t.customs[n] = {
+                        schema: e.schema,
+                        messages: e.messages,
+                      }),
+                      (e.customValidation = (e) =>
+                        `\n\t\t\t\t\tconst rule = context.customs["${n}"];\n\t\t\t\t\tconst res = rule.schema.custom.call(this, ${e}, rule.schema, "${n}", parent, context);\n\t\t\t\t\tif (Array.isArray(res)) {\n\t\t\t\t\t\tres.forEach(err => errors.push(Object.assign({ message: rule.messages[err.type], field }, err)));\n\t\t\t\t\t}\n\t\t\t\t`)),
+                    t.index++;
+                  const s = e.ruleFunction.call(this, e, n, t);
+                  if (s.source) {
+                    const n = new Function(
+                      "value",
+                      "field",
+                      "parent",
+                      "errors",
+                      "context",
+                      s.source
+                    );
+                    (t.fn[e.index] = n),
+                      o.push(
+                        this.wrapRequiredCheckSourceCode(
+                          e,
+                          i.replace("%%INDEX%%", e.index),
+                          r
+                        )
+                      );
+                  } else o.push(this.wrapRequiredCheckSourceCode(e));
+                }
+                return o.join("\n");
               }
-              return o.join("\n");
-            }
-            getRuleFromSchema(e) {
-              if ("string" == typeof e) {
-                const t = e.split("|").map((e) => e.trim());
-                (e = { type: t[0] }),
-                  t.slice(1).map((t) => {
-                    const n = t.indexOf(":");
-                    if (-1 !== n) {
-                      const i = t.substr(0, n).trim();
-                      let r = t.substr(n + 1).trim();
-                      "true" === r || "false" === r
-                        ? (r = "true" === r)
-                        : Number.isNaN(Number(r)) || (r = Number(r)),
-                        (e[i] = r);
-                    } else
-                      t.startsWith("no-") ? (e[t.slice(3)] = !1) : (e[t] = !0);
-                  });
-              } else if (Array.isArray(e)) {
-                if (0 == e.length) throw new Error("Invalid schema.");
-                (e = { type: "multi", rules: e }).rules
-                  .map((e) => this.getRuleFromSchema(e))
-                  .every((e) => 1 == e.schema.optional) && (e.optional = !0);
+              getRuleFromSchema(e) {
+                if ("string" == typeof e) {
+                  const t = e.split("|").map((e) => e.trim());
+                  (e = { type: t[0] }),
+                    t.slice(1).map((t) => {
+                      const n = t.indexOf(":");
+                      if (-1 !== n) {
+                        const i = t.substr(0, n).trim();
+                        let r = t.substr(n + 1).trim();
+                        "true" === r || "false" === r
+                          ? (r = "true" === r)
+                          : Number.isNaN(Number(r)) || (r = Number(r)),
+                          (e[i] = r);
+                      } else
+                        t.startsWith("no-")
+                          ? (e[t.slice(3)] = !1)
+                          : (e[t] = !0);
+                    });
+                } else if (Array.isArray(e)) {
+                  if (0 == e.length) throw new Error("Invalid schema.");
+                  (e = { type: "multi", rules: e }).rules
+                    .map((e) => this.getRuleFromSchema(e))
+                    .every((e) => 1 == e.schema.optional) && (e.optional = !0);
+                }
+                const t = this.aliases[e.type];
+                t && (delete e.type, (e = Object.assign({}, t, e)));
+                const n = this.rules[e.type];
+                if (!n)
+                  throw new Error(
+                    "Invalid '" + e.type + "' type in validator schema."
+                  );
+                return {
+                  messages: Object.assign({}, this.messages, e.messages),
+                  schema: e,
+                  ruleFunction: n,
+                  customValidation: () => "",
+                };
               }
-              const t = this.aliases[e.type];
-              t && (delete e.type, (e = Object.assign({}, t, e)));
-              const n = this.rules[e.type];
-              if (!n)
-                throw new Error(
-                  "Invalid '" + e.type + "' type in validator schema."
+              makeError({
+                type: e,
+                field: t,
+                expected: n,
+                actual: i,
+                messages: r,
+              }) {
+                const o = { type: `"${e}"`, message: `"${r[e]}"` };
+                return (
+                  (o.field = t ? `"${t}"` : "field"),
+                  n && (o.expected = n),
+                  i && (o.actual = i),
+                  `errors.push({ ${Object.keys(o)
+                    .map((e) => `${e}: ${o[e]}`)
+                    .join(", ")} });`
                 );
-              return {
-                messages: Object.assign({}, this.messages, e.messages),
-                schema: e,
-                ruleFunction: n,
-                customValidation: () => "",
-              };
-            }
-            makeError({
-              type: e,
-              field: t,
-              expected: n,
-              actual: i,
-              messages: r,
-            }) {
-              const o = { type: `"${e}"`, message: `"${r[e]}"` };
-              return (
-                (o.field = t ? `"${t}"` : "field"),
-                n && (o.expected = n),
-                i && (o.actual = i),
-                `errors.push({ ${Object.keys(o)
-                  .map((e) => `${e}: ${o[e]}`)
-                  .join(", ")} });`
-              );
-            }
-            add(e, t) {
-              this.rules[e] = t;
-            }
-            alias(e, t) {
-              if (this.rules[e])
-                throw new Error("Alias name must not be a rule name");
-              this.aliases[e] = t;
-            }
+              }
+              add(e, t) {
+                this.rules[e] = t;
+              }
+              alias(e, t) {
+                if (this.rules[e])
+                  throw new Error("Alias name must not be a rule name");
+                this.aliases[e] = t;
+              }
+            })({
+              messages: {
+                color:
+                  "The '{field}' field must be an a valid color! Actual: {actual}",
+                measurement:
+                  "The '{field}' must be a measurement with specs that are not met. Please check schema definition. Actual: {actual}",
+              },
+            });
+            return (
+              e.add("measurement", function (e, t, n) {
+                var i = e.schema,
+                  r = e.messages,
+                  o = new RegExp(
+                    "^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)(" +
+                      i.units.join("|") +
+                      ")$",
+                    "gi"
+                  ),
+                  s = new RegExp("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)", "gi"),
+                  a = i.units.join(", ");
+                return {
+                  source: "\n        if(typeof value !== 'string' && !(value instanceof String)){\n          "
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        units: a,
+                        messages: r,
+                      }),
+                      "\n          return ;\n        }\n        if(!value.match("
+                    )
+                    .concat(o, ")){\n          ")
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        units: a,
+                        messages: r,
+                      }),
+                      "\n        } else {\n          var numberPart = value.match("
+                    )
+                    .concat(s, ")[0];\n          if(")
+                    .concat(
+                      Object.prototype.hasOwnProperty.call(i, "min"),
+                      "){\n            if("
+                    )
+                    .concat(i.min, " > numberPart){\n              ")
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        units: a,
+                        messages: r,
+                      }),
+                      "\n            }\n          }\n          if("
+                    )
+                    .concat(
+                      Object.prototype.hasOwnProperty.call(i, "max"),
+                      "){\n            if("
+                    )
+                    .concat(i.max, " < numberPart){\n              ")
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        units: a,
+                        messages: r,
+                      }),
+                      "\n            }\n          }\n           if("
+                    )
+                    .concat(
+                      Object.prototype.hasOwnProperty.call(i, "integer"),
+                      "){\n            if(!numberPart.match("
+                    )
+                    .concat(ve, ")){\n              ")
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        units: a,
+                        messages: r,
+                      }),
+                      "\n            }\n          }\n        }\n        return value;\n      "
+                    ),
+                };
+              }),
+              e.add("html", function (e, t, n) {
+                e.schema;
+                var i = e.messages;
+                return {
+                  source: "\n        if(value === null){\n          ".concat(
+                    this.makeError({
+                      type: "html",
+                      actual: "value",
+                      messages: i,
+                    }),
+                    "\n        } else {\n          return value;\n        }\n      "
+                  ),
+                };
+              }),
+              e.add("css", function (e, t, n) {
+                e.schema;
+                var i = e.messages;
+                return {
+                  source: "\n        if(value === null){\n          ".concat(
+                    this.makeError({
+                      type: "css",
+                      actual: "value",
+                      messages: i,
+                    }),
+                    "\n        } else {\n          return value;\n        }\n      "
+                  ),
+                };
+              }),
+              e.add("color", function (e, t, n) {
+                e.schema;
+                var i = e.messages;
+                return {
+                  source: "\n        if(typeof value !== 'string' && !(value instanceof String)){\n          "
+                    .concat(
+                      this.makeError({
+                        type: "measurement",
+                        actual: "value",
+                        messages: i,
+                      }),
+                      "\n          return ;\n        }\n        if(!value.match("
+                    )
+                    .concat(
+                      me,
+                      ') && [\n            "aliceblue",\n            "antiquewhite",\n            "aqua",\n            "aquamarine",\n            "azure",\n            "beige",\n            "bisque",\n            "black",\n            "blanchedalmond",\n            "blue",\n            "blueviolet",\n            "brown",\n            "burlywood",\n            "cadetblue",\n            "chartreuse",\n            "chocolate",\n            "coral",\n            "cornflowerblue",\n            "cornsilk",\n            "crimson",\n            "cyan",\n            "darkblue",\n            "darkcyan",\n            "darkgoldenrod",\n            "darkgray",\n            "darkgrey",\n            "darkgreen",\n            "darkkhaki",\n            "darkmagenta",\n            "darkolivegreen",\n            "darkorange",\n            "darkorchid",\n            "darkred",\n            "darksalmon",\n            "darkseagreen",\n            "darkslateblue",\n            "darkslategray",\n            "darkslategrey",\n            "darkturquoise",\n            "darkviolet",\n            "deeppink",\n            "deepskyblue",\n            "dimgray",\n            "dimgrey",\n            "dodgerblue",\n            "firebrick",\n            "floralwhite",\n            "forestgreen",\n            "fuchsia",\n            "gainsboro",\n            "ghostwhite",\n            "gold",\n            "goldenrod",\n            "gray",\n            "grey",\n            "green",\n            "greenyellow",\n            "honeydew",\n            "hotpink",\n            "indianred",\n            "indigo",\n            "ivory",\n            "khaki",\n            "lavender",\n            "lavenderblush",\n            "lawngreen",\n            "lemonchiffon",\n            "lightblue",\n            "lightcoral",\n            "lightcyan",\n            "lightgoldenrodyellow",\n            "lightgray",\n            "lightgrey",\n            "lightgreen",\n            "lightpink",\n            "lightsalmon",\n            "lightseagreen",\n            "lightskyblue",\n            "lightslategray",\n            "lightslategrey",\n            "lightsteelblue",\n            "lightyellow",\n            "lime",\n            "limegreen",\n            "linen",\n            "magenta",\n            "maroon",\n            "mediumaquamarine",\n            "mediumblue",\n            "mediumorchid",\n            "mediumpurple",\n            "mediumseagreen",\n            "mediumslateblue",\n            "mediumspringgreen",\n            "mediumturquoise",\n            "mediumvioletred",\n            "midnightblue",\n            "mintcream",\n            "mistyrose",\n            "moccasin",\n            "navajowhite",\n            "navy",\n            "oldlace",\n            "olive",\n            "olivedrab",\n            "orange",\n            "orangered",\n            "orchid",\n            "palegoldenrod",\n            "palegreen",\n            "paleturquoise",\n            "palevioletred",\n            "papayawhip",\n            "peachpuff",\n            "peru",\n            "pink",\n            "plum",\n            "powderblue",\n            "purple",\n            "rebeccapurple",\n            "red",\n            "rosybrown",\n            "royalblue",\n            "saddlebrown",\n            "salmon",\n            "sandybrown",\n            "seagreen",\n            "seashell",\n            "sienna",\n            "silver",\n            "skyblue",\n            "slateblue",\n            "slategray",\n            "slategrey",\n            "snow",\n            "springgreen",\n            "steelblue",\n            "tan",\n            "teal",\n            "thistle",\n            "tomato",\n            "turquoise",\n            "violet",\n            "wheat",\n            "white",\n            "whitesmoke",\n            "yellow",\n            "yellowgreen",\n          ].indexOf(value.toLowerCase()) < 0){\n          '
+                    )
+                    .concat(
+                      this.makeError({
+                        type: "color",
+                        actual: "value",
+                        messages: i,
+                      }),
+                      "\n        }\n        return value;\n      "
+                    ),
+                };
+              }),
+              e
+            );
           },
-          ve = [
+          ye = [
             { key: "info", style: "color: #666;", level: 5 },
             {
               key: "notice",
@@ -2200,46 +2351,46 @@
             { key: "error", style: "color: black; background: red;", level: 1 },
           ];
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        var ge = new window.AudioContext();
-        function ye(e) {
+        var be = new window.AudioContext();
+        function xe(e) {
           return "object" === n(e);
         }
-        function be(e) {
+        function ke(e) {
           return e.charAt(0).toUpperCase() + e.slice(1);
         }
-        function xe(e, t) {
+        function we(e, t) {
           return Math.round(e / t) * t;
         }
-        function ke(e) {
+        function _e(e) {
           var t = e.split("___");
           return { mcid: t[0], attribute: t[1] };
         }
-        function we() {
+        function Ce() {
           return Math.floor(65536 * (1 + Math.random()))
             .toString(16)
             .substring(1);
         }
-        function _e() {
+        function Ie() {
           var e =
               arguments.length > 0 && void 0 !== arguments[0] && arguments[0],
             t = e ? "_" : "-";
-          return we() + we() + t + we() + t + we();
+          return Ce() + Ce() + t + Ce() + t + Ce();
         }
-        function Ce(e, t) {
+        function Oe(e, t) {
           return new Function("return `".concat(e, "`;")).call(t);
         }
-        function Ie(e, t) {
+        function Ee(e, t) {
           return "".concat(e).concat("___").concat(t);
         }
-        var Oe = (function () {
+        var Pe = (function () {
             function e(t) {
               i(this, e);
               var n = 1;
               t &&
                 Object.prototype.hasOwnProperty.call(t, "logLevel") &&
                 (n = t.logLevel);
-              for (var r = 0; r < ve.length; r++) {
-                var o = ve[r];
+              for (var r = 0; r < ye.length; r++) {
+                var o = ye[r];
                 n >= o.level
                   ? (this[o.key] = window.console.log.bind(
                       window.console,
@@ -2257,7 +2408,7 @@
                 {
                   key: "validateProps",
                   value: function (e, t, n) {
-                    var i = new me().validate(e, t);
+                    var i = ge().validate(e, t);
                     if (i.length > 0) {
                       for (
                         var r = "Error on plugin's \""
@@ -2325,13 +2476,13 @@
               e
             );
           })(),
-          Ee = new Oe();
-        function Pe(e) {
+          je = new Pe();
+        function Se(e) {
           return e.result
             ? { result: !0, execute: e.execute }
             : { result: !1, errors: e.errors };
         }
-        var je = (function () {
+        var Me = (function () {
           function e(t) {
             i(this, e),
               (this.runTimeInfo = t.runTimeInfo),
@@ -2347,19 +2498,19 @@
                 {
                   key: "_resize",
                   value: function () {
-                    Ee.log("Please overwite the _resize method of the Channel");
+                    je.log("Please overwite the _resize method of the Channel");
                   },
                 },
                 {
                   key: "addIncidents",
                   value: function (e) {
-                    return Pe(this.checkAddition(e));
+                    return Se(this.checkAddition(e));
                   },
                 },
                 {
                   key: "editIncidents",
                   value: function (e, t) {
-                    return Pe(this.checkEdit(e, t));
+                    return Se(this.checkEdit(e, t));
                   },
                 },
                 {
@@ -2369,7 +2520,7 @@
                       arguments.length > 1 && void 0 !== arguments[1]
                         ? arguments[1]
                         : {};
-                    return Pe(this.checkDelete(e, t));
+                    return Se(this.checkDelete(e, t));
                   },
                 },
                 { key: "recalcScratchValues", value: function (e) {} },
@@ -2411,15 +2562,15 @@
             e
           );
         })();
-        function Se(e) {
+        function Be(e) {
           e.descriptor.value = function (e) {
             this.duration = this.duration * e;
           };
         }
-        var Me = "up",
-          Be = "down",
-          Ae = "native.tree.bypass",
-          Te = _(null, function (e) {
+        var Ae = "up",
+          Te = "down",
+          De = "native.tree.bypass",
+          Le = _(null, function (e) {
             return {
               F: function t() {
                 var n =
@@ -2432,7 +2583,7 @@
                   (this.isNode = !1),
                   Object.prototype.hasOwnProperty.call(n, "id")
                     ? (this.id = n.id)
-                    : (this.id = _e()),
+                    : (this.id = Ie()),
                   (this.props = n);
               },
               d: [
@@ -2520,13 +2671,13 @@
                     (this.duration = e),
                       this.putMessageOnPipe("recalcDuration", {}, "Groups", {
                         selfExecute: !1,
-                        direction: Me,
+                        direction: Ae,
                       });
                   },
                 },
                 {
                   kind: "method",
-                  decorators: [Se],
+                  decorators: [Be],
                   key: "systoleDiastole",
                   value: function () {},
                 },
@@ -2561,8 +2712,8 @@
                         : {};
                     if (
                       (Object.prototype.hasOwnProperty.call(i, "direction") ||
-                        (i.direction = Be),
-                      i.direction !== Be ||
+                        (i.direction = Te),
+                      i.direction !== Te ||
                         Object.prototype.hasOwnProperty.call(
                           i,
                           "positionDelta"
@@ -2570,23 +2721,23 @@
                         (i.positionDelta = 0),
                       i.selfExecute)
                     ) {
-                      var r = "handle".concat(be(e)),
+                      var r = "handle".concat(ke(e)),
                         o = "function" == typeof this[r];
                       if (o) {
                         var s = this[r](n, t);
-                        if (s !== Ae) {
+                        if (s !== De) {
                           var a = { response: s, responder: this };
-                          return i.direction === Me
+                          return i.direction === Ae
                             ? a
                             : [l({}, a, { positionDelta: i.positionDelta })];
                         }
                       }
                     }
-                    return i.direction === Me
+                    return i.direction === Ae
                       ? this.hasParent
                         ? this.parentNode.putMessageOnPipe(e, t, n, {
                             selfExecute: !0,
-                            direction: Me,
+                            direction: Ae,
                           })
                         : { response: !1, responder: null }
                       : [];
@@ -2596,7 +2747,7 @@
                   kind: "method",
                   key: "bypass",
                   value: function () {
-                    return Ae;
+                    return De;
                   },
                 },
                 {
@@ -2619,7 +2770,7 @@
                         "getPositionOnPyramidion",
                         { delta: e, id: this.id },
                         "Parent",
-                        { selfExecute: !1, direction: Me }
+                        { selfExecute: !1, direction: Ae }
                       );
                       return t.response;
                     }
@@ -2629,8 +2780,8 @@
               ],
             };
           }),
-          De = "The Leaf with the requested id couldn't be found on the Tree",
-          Le = _(
+          Ve = "The Leaf with the requested id couldn't be found on the Tree",
+          ze = _(
             null,
             function (e, t) {
               var n = (function (t) {
@@ -2690,7 +2841,7 @@
                       (this.duration = e),
                         this.putMessageOnPipe("recalcDuration", {}, "Groups", {
                           selfExecute: !1,
-                          direction: Me,
+                          direction: Ae,
                         });
                     },
                   },
@@ -2719,7 +2870,7 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Se],
+                    decorators: [Be],
                     key: "systoleDiastole",
                     value: function () {},
                   },
@@ -2731,7 +2882,7 @@
                         !this._calculateDuration() ||
                         this.putMessageOnPipe("recalcDuration", {}, "Groups", {
                           selfExecute: !1,
-                          direction: Me,
+                          direction: Ae,
                         })
                       );
                     },
@@ -2771,7 +2922,7 @@
                         "getLeafPosition",
                         { id: e },
                         "Groups",
-                        { selfExecute: !1, direction: Be }
+                        { selfExecute: !1, direction: Te }
                       );
                       return t.length > 0
                         ? t[0].positionDelta + t[0].response
@@ -2824,7 +2975,7 @@
                             "recalcDuration",
                             {},
                             "Groups",
-                            { selfExecute: !0, direction: Me }
+                            { selfExecute: !0, direction: Ae }
                           ),
                           { result: !0 });
                     },
@@ -2838,7 +2989,7 @@
                         e
                       )
                         ? { result: !0 }
-                        : { result: !1, reason: De };
+                        : { result: !1, reason: Ve };
                     },
                   },
                   {
@@ -2850,7 +3001,7 @@
                         delete this.children[e],
                         this.putMessageOnPipe("recalcDuration", {}, "Groups", {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         }),
                         { result: !0 }
                       );
@@ -2868,7 +3019,7 @@
                           }
                         : Object.prototype.hasOwnProperty.call(this.children, e)
                         ? { result: !0 }
-                        : { result: !1, reason: De };
+                        : { result: !1, reason: Ve };
                     },
                   },
                   {
@@ -2889,7 +3040,7 @@
                               "recalcDuration",
                               {},
                               "Groups",
-                              { selfExecute: !0, direction: Me }
+                              { selfExecute: !0, direction: Ae }
                             ),
                           { result: !0 }
                         );
@@ -2905,14 +3056,14 @@
                           : {};
                       if (
                         (Object.prototype.hasOwnProperty.call(r, "direction") ||
-                          (r.direction = Be),
-                        r.direction !== Be ||
+                          (r.direction = Te),
+                        r.direction !== Te ||
                           Object.prototype.hasOwnProperty.call(
                             r,
                             "positionDelta"
                           ) ||
                           (r.positionDelta = 0),
-                        r.direction === Me)
+                        r.direction === Ae)
                       )
                         return v(u(n.prototype), "putMessageOnPipe", this).call(
                           this,
@@ -2952,11 +3103,11 @@
                 ],
               };
             },
-            Te
+            Le
           );
-        function Ve(e) {
+        function Ne(e) {
           e.descriptor.value = function (e) {
-            void 0 === this.blockID && (this.blockID = _e()),
+            void 0 === this.blockID && (this.blockID = Ie()),
               this.DescriptiveIncident.putMessageOnPipe(
                 "setBlock",
                 {
@@ -2966,26 +3117,26 @@
                   realIncidentId: this.id,
                 },
                 "rootClip",
-                { selfExecute: !0, direction: Me }
+                { selfExecute: !0, direction: Ae }
               );
           };
         }
-        function ze(e) {
+        function $e(e) {
           e.descriptor.value = function (e) {
             return this.id === e ? this : this.bypass();
           };
         }
-        function Ne(e) {
+        function Re(e) {
           e.descriptor.value = function () {
             this.DescriptiveIncident.putMessageOnPipe(
               "unBlock",
               { id: this.blockID },
               "rootClip",
-              { selfExecute: !0, direction: Me }
+              { selfExecute: !0, direction: Ae }
             );
           };
         }
-        var $e = _(
+        var He = _(
             null,
             function (e, t) {
               var n = (function (t) {
@@ -2998,7 +3149,7 @@
                     (s = n.call(this, o)),
                     e(p(s)),
                     (s.mc_plugin_npm_name = "motor-cortex-js"),
-                    (s.plugin_channel_class = je),
+                    (s.plugin_channel_class = Me),
                     (s.hasIncidents = !0),
                     s.onGroupInitialise(),
                     (s.calculatedDuration = 0),
@@ -3054,7 +3205,7 @@
                   },
                   {
                     kind: "method",
-                    decorators: [ze],
+                    decorators: [$e],
                     key: "handleResize",
                     value: function () {},
                   },
@@ -3108,22 +3259,22 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Ve],
+                    decorators: [Ne],
                     key: "setBlock",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [Ne],
+                    decorators: [Re],
                     key: "unblock",
                     value: function () {},
                   },
                 ],
               };
             },
-            Le
+            ze
           ),
-          Re = ce(function (e, t) {
+          Fe = ce(function (e, t) {
             var n = "[object Arguments]",
               i = "[object Map]",
               r = "[object Object]",
@@ -4036,7 +4187,7 @@
               );
             };
           }),
-          He = ce(function (e, t) {
+          Ge = ce(function (e, t) {
             var n = "[object Arguments]",
               i = "[object Map]",
               r = "[object Object]",
@@ -5113,7 +5264,7 @@
             }
             e.exports = Xe;
           }),
-          Fe = (function (e) {
+          We = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -5151,7 +5302,7 @@
                           this.incidentsById,
                           e[r].id
                         ) &&
-                          (Ee.error(
+                          (je.error(
                             "Incident with the id ".concat(
                               e[r].id,
                               " already exists. Addition is rejected."
@@ -5168,7 +5319,7 @@
                       execute: function () {
                         (o.incidentsById = Object.assign(o.incidentsById, n)),
                           (o.incidents = o.incidents.concat(i)),
-                          (o.incidents = He(o.incidents, [
+                          (o.incidents = Ge(o.incidents, [
                             function (e) {
                               return e.millisecond;
                             },
@@ -5192,7 +5343,7 @@
                               n.incidents[r].millisecond += t;
                               break;
                             }
-                        n.incidents = He(n.incidents, [
+                        n.incidents = Ge(n.incidents, [
                           function (e) {
                             return e.millisecond;
                           },
@@ -5209,7 +5360,7 @@
                     return {
                       result: !0,
                       execute: function () {
-                        var e = Re(t.incidents, function (e) {
+                        var e = Fe(t.incidents, function (e) {
                           return -1 === n.indexOf(e.id);
                         });
                         t.incidents = e;
@@ -5232,7 +5383,7 @@
                               t.incidents[i].millisecond += e[n].startDelta;
                               break;
                             }
-                        t.incidents = He(t.incidents, [
+                        t.incidents = Ge(t.incidents, [
                           function (e) {
                             return e.millisecond;
                           },
@@ -5266,7 +5417,7 @@
                     else {
                       var a,
                         l = this;
-                      a = Re(
+                      a = Fe(
                         this.incidents,
                         t > e
                           ? function (n) {
@@ -5312,47 +5463,47 @@
               ]),
               n
             );
-          })(je),
-          Ge = "function" == typeof Float32Array;
-        function We(e, t) {
+          })(Me),
+          Ue = "function" == typeof Float32Array;
+        function qe(e, t) {
           return 1 - 3 * t + 3 * e;
         }
-        function Ue(e, t) {
+        function Je(e, t) {
           return 3 * t - 6 * e;
         }
-        function qe(e) {
+        function Ke(e) {
           return 3 * e;
         }
-        function Je(e, t, n) {
-          return ((We(t, n) * e + Ue(t, n)) * e + qe(t)) * e;
+        function Xe(e, t, n) {
+          return ((qe(t, n) * e + Je(t, n)) * e + Ke(t)) * e;
         }
-        function Ke(e, t, n) {
-          return 3 * We(t, n) * e * e + 2 * Ue(t, n) * e + qe(t);
+        function Qe(e, t, n) {
+          return 3 * qe(t, n) * e * e + 2 * Je(t, n) * e + Ke(t);
         }
-        function Xe(e) {
+        function Ze(e) {
           return e;
         }
-        var Qe = function (e, t, n, i) {
+        var Ye = function (e, t, n, i) {
           if (!(0 <= e && e <= 1 && 0 <= n && n <= 1))
             throw new Error("bezier x values must be in [0, 1] range");
-          if (e === t && n === i) return Xe;
+          if (e === t && n === i) return Ze;
           for (
-            var r = Ge ? new Float32Array(11) : new Array(11), o = 0;
+            var r = Ue ? new Float32Array(11) : new Array(11), o = 0;
             o < 11;
             ++o
           )
-            r[o] = Je(0.1 * o, e, n);
+            r[o] = Xe(0.1 * o, e, n);
           function s(t) {
             for (var i = 0, o = 1; 10 !== o && r[o] <= t; ++o) i += 0.1;
             --o;
             var s = i + ((t - r[o]) / (r[o + 1] - r[o])) * 0.1,
-              a = Ke(s, e, n);
+              a = Qe(s, e, n);
             return a >= 0.001
               ? (function (e, t, n, i) {
                   for (var r = 0; r < 4; ++r) {
-                    var o = Ke(t, n, i);
+                    var o = Qe(t, n, i);
                     if (0 === o) return t;
-                    t -= (Je(t, n, i) - e) / o;
+                    t -= (Xe(t, n, i) - e) / o;
                   }
                   return t;
                 })(t, s, e, n)
@@ -5363,7 +5514,7 @@
                     s,
                     a = 0;
                   do {
-                    (o = Je((s = t + (n - t) / 2), i, r) - e) > 0
+                    (o = Xe((s = t + (n - t) / 2), i, r) - e) > 0
                       ? (n = s)
                       : (t = s);
                   } while (Math.abs(o) > 1e-7 && ++a < 10);
@@ -5371,10 +5522,10 @@
                 })(t, i, i + 0.1, e, n);
           }
           return function (e) {
-            return 0 === e ? 0 : 1 === e ? 1 : Je(s(e), t, i);
+            return 0 === e ? 0 : 1 === e ? 1 : Xe(s(e), t, i);
           };
         };
-        function Ze(e) {
+        function et(e) {
           e.descriptor.value = function () {
             var e =
                 arguments.length > 0 && void 0 !== arguments[0]
@@ -5398,7 +5549,7 @@
             );
           };
         }
-        var Ye = _(null, function (e) {
+        var tt = _(null, function (e) {
             return {
               F: function t() {
                 var n =
@@ -5417,10 +5568,10 @@
                   (this.dna = o),
                   (this.context = o.context),
                   (this.mcid = o.mcid),
-                  (this.id = r.id || _e()),
+                  (this.id = r.id || Ie()),
                   (this.modelId = r.modelId),
                   (this.gotContext = !1),
-                  (this.plugin_channel_class = je),
+                  (this.plugin_channel_class = Me),
                   (this.mc_plugin_npm_name = "motor-cortex-js"),
                   Object.prototype.hasOwnProperty.call(
                     r,
@@ -5500,7 +5651,7 @@
                 },
                 {
                   kind: "method",
-                  decorators: [Ze],
+                  decorators: [et],
                   key: "getIncidentsByChannel",
                   value: function () {},
                 },
@@ -5574,7 +5725,7 @@
                   kind: "method",
                   key: "onGetContext",
                   value: function () {
-                    Ee.info(
+                    je.info(
                       'Overwritte the "onGetContext" method with the code you want to get executed',
                       "info"
                     );
@@ -5585,7 +5736,7 @@
                   kind: "method",
                   key: "onInitialise",
                   value: function () {
-                    Ee.info(
+                    je.info(
                       'Overwritte the "onInialise" method with the code you want to get executed',
                       "info"
                     );
@@ -5598,20 +5749,20 @@
                 },
                 {
                   kind: "method",
-                  decorators: [Ve],
+                  decorators: [Ne],
                   key: "setBlock",
                   value: function () {},
                 },
                 {
                   kind: "method",
-                  decorators: [Ne],
+                  decorators: [Re],
                   key: "unblock",
                   value: function () {},
                 },
               ],
             };
           }),
-          et = (function (e) {
+          nt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r, o) {
@@ -5636,7 +5787,7 @@
                   key: "onGetContext",
                   value: function () {
                     var e = this.DescriptiveIncident.realClip.exportConstructionArguments(),
-                      t = Ee.getElementByMCID(this.context, this.mcid),
+                      t = je.getElementByMCID(this.context, this.mcid),
                       n = l({}, e.props, { selector: void 0, host: t });
                     (this.ownClip = new this.DescriptiveIncident.constructor.Incident(
                       e.attrs,
@@ -5697,13 +5848,13 @@
               ]),
               n
             );
-          })(Ye);
-        function tt(e) {
+          })(tt);
+        function it(e) {
           Object.prototype.hasOwnProperty.call(e, "dnaExtras") ||
             (e.dnaExtras = {});
           var t = new e.Incident(
             e.attrs,
-            l({}, e.props, { id: e.id || _e() }),
+            l({}, e.props, { id: e.id || Ie() }),
             l({}, e.dnaExtras, { context: e.context, mcid: e.mcid })
           );
           return (
@@ -5713,7 +5864,7 @@
             t
           );
         }
-        var nt = {
+        var rt = {
             linear: function (e) {
               return e;
             },
@@ -5863,7 +6014,7 @@
                 : 0.5 * ((e -= 2) * e * ((1 + (t *= 1.525)) * e + t) + 2);
             },
             easeInBounce: function (e) {
-              return 1 - nt.easeOutBounce(1 - e);
+              return 1 - rt.easeOutBounce(1 - e);
             },
             easeOutBounce: function (e) {
               return (e /= 1) < 1 / 2.75
@@ -5876,11 +6027,11 @@
             },
             easeInOutBounce: function (e) {
               return e < 0.5
-                ? 0.5 * nt.easeInBounce(2 * e)
-                : 0.5 * nt.easeOutBounce(2 * e - 1) + 0.5;
+                ? 0.5 * rt.easeInBounce(2 * e)
+                : 0.5 * rt.easeOutBounce(2 * e - 1) + 0.5;
             },
           },
-          it = _(
+          ot = _(
             null,
             function (e, t) {
               return {
@@ -5907,19 +6058,19 @@
                         (l._duration = e),
                           l.putMessageOnPipe("recalcDuration", {}, "Groups", {
                             selfExecute: !0,
-                            direction: Me,
+                            direction: Ae,
                           });
                       }),
-                      (l.easing = nt.linear),
+                      (l.easing = rt.linear),
                       Object.prototype.hasOwnProperty.call(l.props, "easing") &&
                         (Array.isArray(l.props.easing)
-                          ? (l.easing = Qe(
+                          ? (l.easing = Ye(
                               l.props.easing[0],
                               l.props.easing[1],
                               l.props.easing[2],
                               l.props.easing[3]
                             ))
-                          : (l.easing = nt[l.props.easing])),
+                          : (l.easing = rt[l.props.easing])),
                       l
                     );
                   }
@@ -5966,10 +6117,10 @@
                       var n = l({}, this.constructionIngredients, {
                         context: e.context,
                         mcid: this.mcid,
-                        Incident: et,
+                        Incident: nt,
                         DescriptiveIncident: this.DescriptiveIncident,
                       });
-                      (this.contexts[e.clipId] = tt(n)),
+                      (this.contexts[e.clipId] = it(n)),
                         t && this.contexts[e.clipId]._onGetContextOnce();
                     },
                   },
@@ -5982,7 +6133,7 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Ze],
+                    decorators: [et],
                     key: "getIncidentsByChannel",
                     value: function () {},
                   },
@@ -6020,9 +6171,9 @@
                 ],
               };
             },
-            Te
+            Le
           ),
-          rt = _(
+          st = _(
             null,
             function (e, t) {
               var r = (function (t) {
@@ -6070,16 +6221,16 @@
                             u.constructionIngredients.attrs.animatedAttrs[
                               u.attribute
                             ])),
-                    (u.easing = nt.linear),
+                    (u.easing = rt.linear),
                     Object.prototype.hasOwnProperty.call(u.props, "easing") &&
                       (Array.isArray(u.props.easing)
-                        ? (u.easing = Qe(
+                        ? (u.easing = Ye(
                             u.props.easing[0],
                             u.props.easing[1],
                             u.props.easing[2],
                             u.props.easing[3]
                           ))
-                        : (u.easing = nt[u.props.easing])),
+                        : (u.easing = rt[u.props.easing])),
                     u
                   );
                 }
@@ -6131,7 +6282,7 @@
                           context: e.context,
                           mcid: this.mcid,
                         }),
-                        r = tt(i);
+                        r = it(i);
                       (this.contexts[e.clipId] = r),
                         n ||
                           null === this.attribute ||
@@ -6150,7 +6301,7 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Ze],
+                    decorators: [et],
                     key: "getIncidentsByChannel",
                     value: function () {},
                   },
@@ -6300,7 +6451,7 @@
                                 .nonFragmentedContext,
                               mcid: this.mcid,
                             }),
-                            i = tt(n);
+                            i = it(n);
                           return i.getScratchValue();
                         }
                         return 1 === t.length
@@ -6339,9 +6490,9 @@
                 ],
               };
             },
-            Te
+            Le
           ),
-          ot = (function (e) {
+          at = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r, o, s) {
@@ -6377,7 +6528,7 @@
                           Channel: e.constructor.Channel,
                           DescriptiveIncident: e,
                         },
-                        a = new rt(s, t, this.mcid, n);
+                        a = new st(s, t, this.mcid, n);
                       this.addChild(a, 0);
                     }
                   },
@@ -6385,8 +6536,8 @@
               ]),
               n
             );
-          })($e),
-          st = (function (e) {
+          })(He),
+          lt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r) {
@@ -6434,7 +6585,7 @@
                   value: function (e) {
                     var t = this.originalContext.getMCID(e);
                     return (
-                      t || ((t = _e(!0)), this.originalContext.setMCID(e, t)), t
+                      t || ((t = Ie(!0)), this.originalContext.setMCID(e, t)), t
                     );
                   },
                 },
@@ -6453,7 +6604,7 @@
                         "animatedAttrs"
                       )
                     ) {
-                      var s = new ot(
+                      var s = new at(
                         t,
                         n,
                         o,
@@ -6475,7 +6626,7 @@
                           Channel: t.constructor.Channel,
                           DescriptiveIncident: t,
                         },
-                        d = new rt(u, n, o, null);
+                        d = new st(u, n, o, null);
                       this.addChild(d, 0);
                     }
                   },
@@ -6489,8 +6640,8 @@
               ]),
               n
             );
-          })($e),
-          at = (function (e) {
+          })(He),
+          ct = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r) {
@@ -6514,10 +6665,10 @@
                         }),
                         Incident: t.constructor.Incident,
                         plugin_npm_name: t.constructor.plugin_npm_name,
-                        Channel: Fe,
+                        Channel: We,
                         DescriptiveIncident: t,
                       },
-                      c = new it(a, n, o, t);
+                      c = new ot(a, n, o, t);
                     this.addChild(c, 0);
                   },
                 },
@@ -6534,8 +6685,8 @@
               ]),
               n
             );
-          })(st);
-        function lt(e, t) {
+          })(lt);
+        function ut(e, t) {
           var n,
             i = arguments.length > 2 && void 0 !== arguments[2] && arguments[2];
           if ((i && "off" === e.audio) || (!i && "only" === e.audio))
@@ -6551,9 +6702,9 @@
           if (e.constructor.isClip) {
             if (!Object.prototype.hasOwnProperty.call(e.props, "selector") || i)
               return i ? e.audioClip : e.realClip;
-            (n = new at(e, t)).plugin_channel_class = je;
+            (n = new ct(e, t)).plugin_channel_class = Me;
           } else if (e.constructor.isGroup)
-            for (var r in ((n = tt({
+            for (var r in ((n = it({
               id: e.id,
               attrs: e.attrs,
               props: e.props,
@@ -6563,13 +6714,13 @@
               DescriptiveIncident: e,
             })),
             e.children)) {
-              var o = lt(e.children[r].leaf, t);
+              var o = ut(e.children[r].leaf, t);
               null !== o && n.addChild(o, e.children[r].position);
             }
-          else n = new st(e, t);
+          else n = new lt(e, t);
           return n;
         }
-        var ct = (function (e) {
+        var dt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r) {
@@ -6634,7 +6785,7 @@
                       "addContext",
                       e,
                       {},
-                      { selfExecute: !1, direction: Be }
+                      { selfExecute: !1, direction: Te }
                     );
                     if (
                       1 === Object.keys(this.instantiatedCopiesContexts).length
@@ -6675,7 +6826,7 @@
                             incident: e.incident,
                             millisecond: e.millisecond,
                             parentGroupId: e.parentGroupId,
-                            incidentFromDescription: lt,
+                            incidentFromDescription: ut,
                             contextData: {
                               clipId: this.id,
                               context: this.context,
@@ -6685,7 +6836,7 @@
                             audio: this.audioClip,
                           },
                           e.parentGroupId,
-                          { selfExecute: !0, direction: Be }
+                          { selfExecute: !0, direction: Te }
                         ),
                         i = {},
                         r = 0;
@@ -6717,7 +6868,7 @@
                                 "recalcDuration",
                                 {},
                                 "Groups",
-                                { selfExecute: !0, direction: Me }
+                                { selfExecute: !0, direction: Ae }
                               ),
                               t.instantiatedCopiesContexts))
                                 n[i].responder.putMessageOnPipe(
@@ -6727,7 +6878,7 @@
                                     context: t.instantiatedCopiesContexts[r],
                                   },
                                   "ContextAwareIncidents",
-                                  { selfExecute: !1, direction: Be }
+                                  { selfExecute: !1, direction: Te }
                                 );
                           },
                         }
@@ -6787,7 +6938,7 @@
                             audio: this.audioClip,
                           },
                           e.parentGroupId,
-                          { selfExecute: !0, direction: Be }
+                          { selfExecute: !0, direction: Te }
                         ),
                         n = {},
                         i = 0;
@@ -6821,7 +6972,7 @@
                                   "recalcDuration",
                                   {},
                                   "Groups",
-                                  { selfExecute: !0, direction: Me }
+                                  { selfExecute: !0, direction: Ae }
                                 );
                           },
                         }
@@ -6867,7 +7018,7 @@
                             audio: this.audioClip,
                           },
                           e.parentGroupId,
-                          { selfExecute: !0, direction: Be }
+                          { selfExecute: !0, direction: Te }
                         ),
                         n = {},
                         i = 0;
@@ -6896,7 +7047,7 @@
                                   "recalcDuration",
                                   {},
                                   "Groups",
-                                  { selfExecute: !0, direction: Me }
+                                  { selfExecute: !0, direction: Ae }
                                 );
                           },
                         }
@@ -6942,7 +7093,7 @@
                             audio: this.audioClip,
                           },
                           e.id,
-                          { selfExecute: !1, direction: Be }
+                          { selfExecute: !1, direction: Te }
                         ),
                         n = {},
                         i = 0;
@@ -6985,7 +7136,7 @@
                       r = [],
                       o = [];
                     for (var s in t) {
-                      var a = Ee.systoleDiastoleProjections(t[s], e, n),
+                      var a = je.systoleDiastoleProjections(t[s], e, n),
                         l = this.instantiatedChannels[s].checkResizedIncidents(
                           a
                         );
@@ -7081,15 +7232,15 @@
               ]),
               n
             );
-          })($e),
-          ut = (function () {
+          })(He),
+          pt = (function () {
             function e() {
               i(this, e),
-                (this.output = ge.createGain()),
-                (this.gainNode = ge.createGain()),
-                ge.createStereoPanner &&
-                  (this.pannerNode = ge.createStereoPanner()),
-                ge.createStereoPanner
+                (this.output = be.createGain()),
+                (this.gainNode = be.createGain()),
+                be.createStereoPanner &&
+                  (this.pannerNode = be.createStereoPanner()),
+                be.createStereoPanner
                   ? (this.pannerNode.connect(this.gainNode),
                     this.gainNode.connect(this.output),
                     (this.input = this.pannerNode))
@@ -7114,7 +7265,7 @@
               e
             );
           })();
-        function dt(e) {
+        function ht(e) {
           for (
             var t = window.atob(e), n = t.length, i = new Uint8Array(n), r = 0;
             r < n;
@@ -7123,8 +7274,8 @@
             i[r] = t.charCodeAt(r);
           return i.buffer;
         }
-        var pt = /\[data(-mcid="+\w+")+\]/g,
-          ht = (function () {
+        var ft = /\[data(-mcid="+\w+")+\]/g,
+          mt = (function () {
             function e() {
               i(this, e), (this.subscribers = []);
             }
@@ -7147,7 +7298,7 @@
               e
             );
           })(),
-          ft = (function () {
+          vt = (function () {
             function e() {
               var t = this,
                 n =
@@ -7163,12 +7314,12 @@
                 var o = function (e) {
                     var i = n[e],
                       o = {
-                        mcid: i.mcid || _e(),
+                        mcid: i.mcid || Ie(),
                         id: i.id,
                         src: i.src,
                         classes: i.classes || [],
                         base64: i.base64 || !1,
-                        pubSub: new ht(),
+                        pubSub: new mt(),
                         soundLoaded: !1,
                         startValues: i.startValues || {},
                       };
@@ -7177,7 +7328,7 @@
                       (t.elementsByMCID[o.mcid] = o),
                       i.base64)
                     )
-                      ge.decodeAudioData(dt(i.src), function (e) {
+                      be.decodeAudioData(ht(i.src), function (e) {
                         t._setBuffer(o, e, r);
                       });
                     else {
@@ -7186,7 +7337,7 @@
                         (s.responseType = "arraybuffer"),
                         (t.soundLoaded = !1),
                         (s.onload = function () {
-                          ge.decodeAudioData(
+                          be.decodeAudioData(
                             s.response,
                             function (e) {
                               t._setBuffer(o, e, r);
@@ -7208,7 +7359,7 @@
                 rootElement: document.body,
                 unmount: function () {},
                 masterNode: r,
-                audioContext: ge,
+                audioContext: be,
                 getElements: this.getElements.bind(this),
                 getMCID: this.getMCID.bind(this),
                 setMCID: this.setMCID.bind(this),
@@ -7225,7 +7376,7 @@
                   value: function (e, t, n) {
                     (e.soundLoaded = !0),
                       (e.buffer = t),
-                      (e.effectsAudioNode = new ut()),
+                      (e.effectsAudioNode = new pt()),
                       e.effectsAudioNode.connect(n.input),
                       e.pubSub.pub();
                   },
@@ -7245,7 +7396,7 @@
                   key: "getElements",
                   value: function (e) {
                     if ("~" !== e.charAt(0)) {
-                      if (pt.exec(e)) {
+                      if (ft.exec(e)) {
                         var t = e.split('"')[1];
                         return this.elementsByMCID[t];
                       }
@@ -7289,15 +7440,15 @@
               e
             );
           })(),
-          mt = (function (e) {
+          gt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r) {
               var o;
               i(this, n),
-                ((o = t.call(this, e, r)).audioNode = new ut()),
-                o.audioNode.connect(ge.destination);
-              var s = new ft(o.props.audioSources, o.audioNode);
+                ((o = t.call(this, e, r)).audioNode = new pt()),
+                o.audioNode.connect(be.destination);
+              var s = new vt(o.props.audioSources, o.audioNode);
               return (
                 (o.ownContext = l({}, s.context, { isHostedClip: !0 })),
                 (o.audioClip = !0),
@@ -7334,7 +7485,7 @@
                   key: "lastWish",
                   value: function () {
                     this.audioNode.output.disconnect(),
-                      this.audioNode.output.connect(ge.destination);
+                      this.audioNode.output.connect(be.destination);
                   },
                 },
                 {
@@ -7346,8 +7497,8 @@
               ]),
               n
             );
-          })(ct),
-          vt = (function (e) {
+          })(dt),
+          yt = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -7403,8 +7554,8 @@
               ]),
               n
             );
-          })(Ye),
-          gt = (function (e) {
+          })(tt),
+          bt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e) {
@@ -7413,7 +7564,7 @@
                 i(this, n),
                 ((r = t.call(this, e)).playingIncidentsIds = []),
                 (r.transitioned = !1),
-                e.subscribe(_e(), r._stateChange.bind(p(r)), 0, 1, !0),
+                e.subscribe(Ie(), r._stateChange.bind(p(r)), 0, 1, !0),
                 r
               );
             }
@@ -7463,14 +7614,14 @@
                       this.transitioned && ((e = 0), (this.transitioned = !1));
                       for (
                         var a = this,
-                          l = Re(this.incidents, function (n) {
+                          l = Fe(this.incidents, function (n) {
                             return (
                               n.millisecond >= e &&
                               n.millisecond < t &&
                               n.millisecond + a._incidentById(n.id).duration > t
                             );
                           }),
-                          c = Re(this.incidents, function (n) {
+                          c = Fe(this.incidents, function (n) {
                             return (
                               a._incidentById(n.id).duration + n.millisecond >
                                 e &&
@@ -7509,8 +7660,8 @@
               ]),
               n
             );
-          })(Fe),
-          yt = _(null, function (e) {
+          })(We),
+          xt = _(null, function (e) {
             return {
               F: function t() {
                 var n =
@@ -7529,10 +7680,10 @@
                   (this.dna = o),
                   (this.context = o.context),
                   (this.mcid = o.mcid),
-                  (this.id = r.id || _e()),
+                  (this.id = r.id || Ie()),
                   (this.modelId = r.modelId),
                   (this.gotContext = !1),
-                  (this.plugin_channel_class = gt),
+                  (this.plugin_channel_class = bt),
                   (this.mc_plugin_npm_name = "motor-cortex-js-media-playback"),
                   Object.prototype.hasOwnProperty.call(
                     r,
@@ -7563,7 +7714,7 @@
                 },
                 {
                   kind: "method",
-                  decorators: [Ze],
+                  decorators: [et],
                   key: "getIncidentsByChannel",
                   value: function () {},
                 },
@@ -7584,7 +7735,7 @@
                   kind: "method",
                   key: "onGetContext",
                   value: function () {
-                    Ee.info(
+                    je.info(
                       'Overwritte the "onGetContext" method with the code you want to get executed',
                       "info"
                     );
@@ -7595,7 +7746,7 @@
                   kind: "method",
                   key: "onInitialise",
                   value: function () {
-                    Ee.info(
+                    je.info(
                       'Overwritte the "onInialise" method with the code you want to get executed',
                       "info"
                     );
@@ -7616,20 +7767,20 @@
                 { kind: "method", key: "stop", value: function () {} },
                 {
                   kind: "method",
-                  decorators: [Ve],
+                  decorators: [Ne],
                   key: "setBlock",
                   value: function () {},
                 },
                 {
                   kind: "method",
-                  decorators: [Ne],
+                  decorators: [Re],
                   key: "unblock",
                   value: function () {},
                 },
               ],
             };
           }),
-          bt = {
+          kt = {
             npm_name: "@kissmybutton/motorcortex-soundsystem",
             incidents: [
               {
@@ -7659,7 +7810,7 @@
                               this.props,
                               "startFrom"
                             ) && (n = this.props.startFrom),
-                            (this.audioNode = ge.createBufferSource()),
+                            (this.audioNode = be.createBufferSource()),
                             (this.audioNode.buffer = this.element.buffer),
                             this.audioNode.connect(
                               this.element.effectsAudioNode.input
@@ -7678,15 +7829,15 @@
                     ]),
                     n
                   );
-                })(yt),
+                })(xt),
                 name: "AudioPlayback",
               },
-              { exportable: vt, name: "AudioEffect" },
+              { exportable: yt, name: "AudioEffect" },
             ],
-            Clip: mt,
+            Clip: gt,
             audio: "only",
           },
-          xt = ce(function (e, t) {
+          wt = ce(function (e, t) {
             var n = "[object Arguments]",
               i = "[object Map]",
               r = "[object Object]",
@@ -8622,7 +8773,7 @@
               );
             };
           }),
-          kt = (function () {
+          _t = (function () {
             function e() {
               var t =
                 arguments.length > 0 && void 0 !== arguments[0]
@@ -8677,20 +8828,20 @@
               e
             );
           })();
-        function wt(e, t, n, i) {
+        function Ct(e, t, n, i) {
           var r = !1;
           for (var o in t)
             Object.prototype.hasOwnProperty.call(n, o) ||
               ((r = !0), (i[o] = t[o]));
           return (e.animatedAttributeValue = i), r;
         }
-        function _t(e, t, n, i) {
+        function It(e, t, n, i) {
           var r =
               arguments.length > 4 && void 0 !== arguments[4] && arguments[4],
             o = e[i],
             s = t._get(o.id);
           s.setInitialValue(n, r);
-          var a = wt(
+          var a = Ct(
             s,
             s.initialValue,
             s.originalAnimatedAttributeValue,
@@ -8699,9 +8850,9 @@
           a && (s.lastWish(), s.onGetContext()),
             a &&
               i < e.length - 1 &&
-              _t(e, t, s.animatedAttributeValue, i + 1, !1);
+              It(e, t, s.animatedAttributeValue, i + 1, !1);
         }
-        var Ct = (function () {
+        var Ot = (function () {
             function e(t) {
               i(this, e),
                 (this.originalArray = t),
@@ -8792,7 +8943,7 @@
               e
             );
           })(),
-          It = (function (e) {
+          Et = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -8819,8 +8970,8 @@
               ]),
               n
             );
-          })(Ct),
-          Ot = (function (e) {
+          })(Ot),
+          Pt = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -8854,25 +9005,25 @@
               ]),
               n
             );
-          })(Ct),
-          Et = (function () {
+          })(Ot),
+          jt = (function () {
             function e() {
               var t =
                 arguments.length > 0 && void 0 !== arguments[0]
                   ? arguments[0]
                   : {};
               i(this, e),
-                (this.lanes = new kt({})),
+                (this.lanes = new _t({})),
                 t.lanes && (this.lanes = t.lanes),
                 (this.comboAttributes = {}),
                 null != t.comboAttributes &&
                   (this.comboAttributes = t.comboAttributes),
                 (this.runTimeInfo = t.runTimeInfo),
-                (this.belongingLaneKeysByAnimationId = new kt({})),
+                (this.belongingLaneKeysByAnimationId = new _t({})),
                 t.belongingLaneKeysByAnimationId &&
                   (this.belongingLaneKeysByAnimationId =
                     t.belongingLaneKeysByAnimationId),
-                (this.incidentsById = new kt({})),
+                (this.incidentsById = new _t({})),
                 t.incidentsById && (this.incidentsById = t.incidentsById);
             }
             return (
@@ -8893,11 +9044,11 @@
                   key: "createTestLanesSanbox",
                   value: function () {
                     var t = {
-                      lanes: new Ot(this.lanes._export()),
-                      belongingLaneKeysByAnimationId: new Ct(
+                      lanes: new Pt(this.lanes._export()),
+                      belongingLaneKeysByAnimationId: new Ot(
                         this.belongingLaneKeysByAnimationId._export()
                       ),
-                      incidentsById: new It(this.incidentsById._export()),
+                      incidentsById: new Et(this.incidentsById._export()),
                     };
                     return (
                       this.comboAttributes &&
@@ -8926,17 +9077,17 @@
                 {
                   key: "applySandboxChanges",
                   value: function (e) {
-                    (this.lanes = new kt(e.lanes._export())),
-                      (this.belongingLaneKeysByAnimationId = new kt(
+                    (this.lanes = new _t(e.lanes._export())),
+                      (this.belongingLaneKeysByAnimationId = new _t(
                         e.belongingLaneKeysByAnimationId._export()
                       )),
-                      (this.incidentsById = new kt(e.incidentsById._export()));
+                      (this.incidentsById = new _t(e.incidentsById._export()));
                   },
                 },
                 {
                   key: "getLane",
                   value: function (e, t) {
-                    return this.lanes._get(Ie(e, t));
+                    return this.lanes._get(Ee(e, t));
                   },
                 },
                 {
@@ -8946,7 +9097,7 @@
                         arguments.length > 2 &&
                         void 0 !== arguments[2] &&
                         arguments[2],
-                      i = Ie(e, t);
+                      i = Ee(e, t);
                     return (
                       !!this.lanes._hasOwnProperty(i) ||
                       (n && this.lanes._set(i, []), !1)
@@ -8965,7 +9116,7 @@
                           ? arguments[4]
                           : null,
                       o = this,
-                      s = Re(this.lanes._get(Ie(t, n)), function (t) {
+                      s = Fe(this.lanes._get(Ee(t, n)), function (t) {
                         var n = e.incident.duration;
                         return (
                           null != r && (n = r),
@@ -8991,19 +9142,19 @@
                 {
                   key: "addElementToLane",
                   value: function (e, t, n, i) {
-                    var r = Ie(e, t);
+                    var r = Ee(e, t);
                     this.incidentsById._set(i.id, i);
                     var o = { millisecond: n, id: i.id };
                     this.laneExists(e, t, !0);
                     var s = this.lanes._get(r);
                     s.push(o),
-                      (s = He(s, ["millisecond"])),
+                      (s = Ge(s, ["millisecond"])),
                       this.lanes._set(r, s),
                       this.belongingLaneKeysByAnimationId._hasOwnProperty(
                         i.id
                       ) || this.belongingLaneKeysByAnimationId._set(i.id, []),
                       this.belongingLaneKeysByAnimationId._get(i.id).push(r);
-                    var a = xt(s, function (e) {
+                    var a = wt(s, function (e) {
                       return e.id === i.id;
                     });
                     if (
@@ -9023,7 +9174,7 @@
                       ))
                     ) {
                       var l = i.initialValue;
-                      _t(s, this.incidentsById, l, a);
+                      It(s, this.incidentsById, l, a);
                     }
                     a + 1 < s.length &&
                       (this.incidentsById
@@ -9049,7 +9200,7 @@
                           (i[a] = {
                             animations: [],
                             lane: this.lanes._get(a),
-                            laneData: ke(o[s]),
+                            laneData: _e(o[s]),
                           }),
                           i[a].animations.push(e[r]);
                       }
@@ -9058,7 +9209,7 @@
                         var c = i[l],
                           u = c.lane,
                           d = c.laneData,
-                          p = He(this.getLanesCopy(u), ["millisecond"]),
+                          p = Ge(this.getLanesCopy(u), ["millisecond"]),
                           h = Object.prototype.hasOwnProperty.call(
                             this.comboAttributes,
                             d.attribute
@@ -9069,15 +9220,15 @@
                       )
                         c.animations.indexOf(u[f].id) >= 0 &&
                           (u[f].millisecond += t);
-                      var m = He(u, ["millisecond"]);
+                      var m = Ge(u, ["millisecond"]);
                       this.lanes._set(l, m), (u = m);
                       for (
                         var v = function (e) {
                             var t = c.animations[e],
-                              i = xt(p, function (e) {
+                              i = wt(p, function (e) {
                                 return e.id === t;
                               }),
-                              r = xt(u, function (e) {
+                              r = wt(u, function (e) {
                                 return e.id === t;
                               }),
                               o = n.incidentsById._get(u[r].id);
@@ -9085,7 +9236,7 @@
                               if (i + 1 < u.length)
                                 if (0 === i)
                                   h
-                                    ? _t(
+                                    ? It(
                                         u,
                                         n.incidentsById,
                                         o.pureInitialValues,
@@ -9100,7 +9251,7 @@
                                         .onGetContext());
                                 else if (h) {
                                   var s = r > i ? i : r;
-                                  _t(
+                                  It(
                                     u,
                                     n.incidentsById,
                                     n.incidentsById._get(p[i - 1].id)
@@ -9120,7 +9271,7 @@
                                       .onGetContext();
                               0 === r
                                 ? h
-                                  ? _t(
+                                  ? It(
                                       u,
                                       n.incidentsById,
                                       n.incidentsById._get(p[0].id)
@@ -9134,7 +9285,7 @@
                                     ),
                                     o.onGetContext())
                                 : h
-                                ? _t(
+                                ? It(
                                     u,
                                     n.incidentsById,
                                     n.incidentsById._get(u[r - 1].id)
@@ -9149,7 +9300,7 @@
                                   o.onGetContext()),
                                 r + 1 < u.length &&
                                   (h
-                                    ? _t(
+                                    ? It(
                                         u,
                                         n.incidentsById,
                                         o.animatedAttributeValue,
@@ -9197,7 +9348,7 @@
                         for (
                           var u = l({}, s[a]),
                             d = this.incidentsById._get(u.id),
-                            p = ke(r[o]),
+                            p = _e(r[o]),
                             h = [],
                             f = 0;
                           f < s.length;
@@ -9210,7 +9361,7 @@
                               this.lanes._delete(r[o]),
                               Object.prototype.hasOwnProperty.call(t, r[o]) &&
                                 delete t[r[o]])
-                            : ((t[r[o]] = ke(r[o])),
+                            : ((t[r[o]] = _e(r[o])),
                               a < s.length &&
                                 !1 !==
                                   this.incidentsById._get(u.id)
@@ -9219,7 +9370,7 @@
                                   this.comboAttributes,
                                   p.attribute
                                 )
-                                  ? _t(
+                                  ? It(
                                       s,
                                       this.incidentsById,
                                       this.incidentsById._get(u.id)
@@ -9251,12 +9402,12 @@
                       if (r.length > 0) {
                         var o = this.incidentsById._get(r[0].id),
                           s = o.getScratchValue(e),
-                          a = ke(i);
+                          a = _e(i);
                         Object.prototype.hasOwnProperty.call(
                           this.comboAttributes,
                           a.attribute
                         )
-                          ? _t(r, this.incidentsById, s, 0, !0)
+                          ? It(r, this.incidentsById, s, 0, !0)
                           : o.setInitialValue(s),
                           o.lastWish(),
                           o.onGetContext();
@@ -9268,7 +9419,7 @@
               e
             );
           })(),
-          Pt = (function (e) {
+          St = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e) {
@@ -9279,7 +9430,7 @@
                 (r.fixedAttributeName = "_"),
                 null != e.comboAttributes &&
                   (r.comboAttributes = e.comboAttributes),
-                (r.LanesHandler = new Et({
+                (r.LanesHandler = new jt({
                   comboAttributes: r.comboAttributes,
                   runTimeInfo: r.runTimeInfo,
                 })),
@@ -9294,7 +9445,7 @@
                     key: "setComboAttributes",
                     value: function (e) {
                       (this.comboAttributes = e),
-                        (this.LanesHandler = new Et({
+                        (this.LanesHandler = new jt({
                           comboAttributes: this.comboAttributes,
                         }));
                     },
@@ -9509,7 +9660,7 @@
                           void 0 !== arguments[5] &&
                           arguments[5],
                         s = this,
-                        a = Re(e, function (e) {
+                        a = Fe(e, function (e) {
                           return (
                             (e.millisecond +
                               s.incidentsById._get(e.id).duration >=
@@ -9531,7 +9682,7 @@
                         return !0;
                       }
                       var c =
-                          (a = He(a, [
+                          (a = Ge(a, [
                             function (e) {
                               return e.millisecond;
                             },
@@ -9549,7 +9700,7 @@
                     key: "slipToLaneBackwards",
                     value: function (e, t, n, i, r) {
                       var o = this,
-                        s = Re(e, function (e) {
+                        s = Fe(e, function (e) {
                           var t =
                             o.incidentsById._get(e.id).duration + e.millisecond;
                           return (
@@ -9559,7 +9710,7 @@
                           );
                         });
                       if (0 === s.length) return !0;
-                      s = He(s, [
+                      s = Ge(s, [
                         function (e) {
                           return e.millisecond;
                         },
@@ -9588,7 +9739,7 @@
                       ) {
                         var s = r[o],
                           a = this.lanes._get(s),
-                          l = ke(s);
+                          l = _e(s);
                         e <= t
                           ? this.slipIntoLaneForwards(a, l, e, t, n, i)
                           : e > t && this.slipToLaneBackwards(a, l, e, t, n, i);
@@ -9619,8 +9770,8 @@
               ),
               n
             );
-          })(je),
-          jt = (function () {
+          })(Me),
+          Mt = (function () {
             function e() {
               i(this, e), (this.customEntities = {});
             }
@@ -9652,6 +9803,7 @@
                 {
                   key: "getElements",
                   value: function (e) {
+                    if (null == e || "" === e) return [];
                     if ("!" === e.charAt(0)) {
                       if ("#" === (e = e.substr(1)).charAt(0))
                         return [this.customEntities[e.substr(1)]];
@@ -9707,7 +9859,7 @@
                       this.customEntities,
                       e
                     )
-                      ? (Ee.error(
+                      ? (je.error(
                           "Clip "
                             .concat(
                               this.id,
@@ -9729,7 +9881,7 @@
               e
             );
           })(),
-          St = (function (e) {
+          Bt = (function (e) {
             c(r, e);
             var t = f(r);
             function r() {
@@ -9738,9 +9890,9 @@
                   arguments.length > 0 && void 0 !== arguments[0]
                     ? arguments[0]
                     : {};
-              if ((i(this, r), (e = t.call(this)), !ye(o)))
+              if ((i(this, r), (e = t.call(this)), !xe(o)))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects an object on its constructor. ".concat(
                       n(o),
                       " passed"
@@ -9750,25 +9902,25 @@
                 );
               if (!Object.prototype.hasOwnProperty.call(o, "html"))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the html key on its constructor properties which is missing"
                   ),
                   h(e, !1)
                 );
               if (!Object.prototype.hasOwnProperty.call(o, "css"))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the css key on its constructor properties which is missing"
                   ),
                   h(e, !1)
                 );
               if (
                 (Object.prototype.hasOwnProperty.call(o, "initParams") ||
-                  Ee.info("ContextHandler got null initParams"),
+                  je.info("ContextHandler got null initParams"),
                 !Object.prototype.hasOwnProperty.call(o, "host"))
               )
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the host key on its constructor properties which is missing"
                   ),
                   h(e, !1)
@@ -9806,14 +9958,14 @@
                 (u.src = "");
               var d = u.contentWindow || u.contentDocument;
               d.document && (d = d.document),
-                d.write(Ce(o.html, { params: o.initParams }));
+                d.write(Oe(o.html, { params: o.initParams }));
               var f =
                   "\n        body{\n            padding:0;\n            margin:0;\n        }\n        ",
                 m = d.createElement("style");
               (m.type = "text/css"),
                 m.styleSheet
                   ? (m.styleSheet.cssText =
-                      Ce(o.css, { params: o.initParams }) + f)
+                      Oe(o.css, { params: o.initParams }) + f)
                   : m.appendChild(s.createTextNode(o.css + f));
               var v = d.head || d.getElementsByTagName("head")[0];
               if (
@@ -9854,8 +10006,8 @@
               );
             }
             return r;
-          })(jt),
-          Mt = (function (e) {
+          })(Mt),
+          At = (function (e) {
             c(r, e);
             var t = f(r);
             function r() {
@@ -9864,9 +10016,9 @@
                   arguments.length > 0 && void 0 !== arguments[0]
                     ? arguments[0]
                     : {};
-              if ((i(this, r), (e = t.call(this)), !ye(o)))
+              if ((i(this, r), (e = t.call(this)), !xe(o)))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects an object on its constructor. ".concat(
                       n(o),
                       " passed"
@@ -9876,21 +10028,21 @@
                 );
               if (!Object.prototype.hasOwnProperty.call(o, "html"))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the html key on its constructor properties which is missing"
                   ),
                   h(e, !1)
                 );
               if (!Object.prototype.hasOwnProperty.call(o, "css"))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the css key on its constructor properties which is missing"
                   ),
                   h(e, !1)
                 );
               if (!Object.prototype.hasOwnProperty.call(o, "host"))
                 return (
-                  Ee.error(
+                  je.error(
                     "ContextHandler expects the host key on its constructor properties which is missing"
                   ),
                   h(e, !1)
@@ -9907,7 +10059,7 @@
                   o.containerParams,
                   "height"
                 ) && (a.style.height = o.containerParams.height)),
-                (a.innerHTML = Ce("".concat(o.html, "<slot></slot>"), {
+                (a.innerHTML = Oe("".concat(o.html, "<slot></slot>"), {
                   params: o.initParams,
                 })),
                 s.appendChild(a);
@@ -9915,7 +10067,7 @@
               if (
                 ((l.type = "text/css"),
                 l.styleSheet
-                  ? (l.styleSheet.cssText = Ce(o.css, { params: o.initParams }))
+                  ? (l.styleSheet.cssText = Oe(o.css, { params: o.initParams }))
                   : l.appendChild(document.createTextNode(o.css)),
                 s.appendChild(l),
                 (e.fontTags = []),
@@ -9947,7 +10099,7 @@
                           .getElementsByTagName("head")[0]
                           .removeChild(this.fontTags[e]);
                     } catch (e) {
-                      Ee.warning(
+                      je.warning(
                         "The element of the Clip to be removed seems not to exist any more"
                       );
                     }
@@ -9966,8 +10118,8 @@
               );
             }
             return r;
-          })(jt),
-          Bt = (function (e) {
+          })(Mt),
+          Tt = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -9993,8 +10145,8 @@
               e.clipType = c;
               var u = new (document.head.createShadowRoot ||
               document.head.attachShadow
-                ? Mt
-                : St)(o);
+                ? At
+                : Bt)(o);
               return (
                 (e.ownContext = l({}, u.context, {
                   isHostedClip: e.isHostedClip,
@@ -10057,8 +10209,8 @@
               ]),
               n
             );
-          })(ct),
-          At = (function (e) {
+          })(dt),
+          Dt = (function (e) {
             c(r, e);
             var t = f(r);
             function r() {
@@ -10069,9 +10221,9 @@
                     : {};
               i(this, r), (e = t.call(this));
               var s = l({}, o);
-              if (!ye(s))
+              if (!xe(s))
                 return (
-                  Ee.error(
+                  je.error(
                     "HTMLFragmentContextHandler expects an object on its constructor. ".concat(
                       n(s),
                       " passed"
@@ -10089,7 +10241,7 @@
                     (c.style.width = s.containerParams.width),
                   Object.prototype.hasOwnProperty.call(s, "height") &&
                     (c.style.height = s.containerParams.height)),
-                (c.innerHTML = Ce(s.html, { params: s.initParams })),
+                (c.innerHTML = Oe(s.html, { params: s.initParams })),
                 a.appendChild(c),
                 (c.style.overflow = "hidden"),
                 (e.rootElement = c),
@@ -10116,8 +10268,8 @@
               );
             }
             return r;
-          })(jt),
-          Tt = (function (e) {
+          })(Mt),
+          Lt = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -10135,7 +10287,7 @@
               i(this, n),
                 null === a ? ((r = {}), (o = s)) : ((r = s), (o = a)),
                 (e = t.call(this, r, o));
-              var c = new At(
+              var c = new Dt(
                 l({}, o, {
                   html: Object.prototype.hasOwnProperty.call(o, "html")
                     ? o.html
@@ -10179,8 +10331,8 @@
               ]),
               n
             );
-          })(ct),
-          Dt = (function () {
+          })(dt),
+          Vt = (function () {
             function e() {
               i(this, e);
             }
@@ -10229,7 +10381,24 @@
               e
             );
           })(),
-          Lt = [
+          zt = [
+            "cm",
+            "mm",
+            "in",
+            "px",
+            "pt",
+            "pc",
+            "em",
+            "ex",
+            "ch",
+            "rem",
+            "vw",
+            "vh",
+            "vmin",
+            "vmax",
+            "%",
+          ],
+          Nt = [
             {
               type: "string",
               optional: !0,
@@ -10275,15 +10444,16 @@
               items: { type: "number" },
             },
           ],
-          Vt = { type: "string", empty: !1, trim: !0, optional: !0 },
-          zt = { type: "string", empty: !1, optional: !1 },
-          Nt = { type: "string", optional: !0 },
-          $t = {
+          $t = { type: "string", empty: !1, trim: !0, optional: !0 },
+          Rt = { type: "string", empty: !1, optional: !1 },
+          Ht = { type: "html", optional: !0 },
+          Ft = { type: "css", optional: !0 },
+          Gt = {
             type: "array",
             optional: !0,
-            itams: { type: "object", props: { type: "string", url: "string" } },
+            items: { type: "object", props: { type: "string", src: "string" } },
           },
-          Rt = {
+          Wt = {
             type: "array",
             items: {
               type: "object",
@@ -10298,13 +10468,13 @@
             },
             optional: !0,
           },
-          Ht = {
+          Ut = {
             props: {
               type: "object",
               props: {
-                id: Vt,
-                selector: l({}, zt, { optional: !0 }),
-                easing: Lt,
+                id: $t,
+                selector: l({}, Rt, { optional: !0 }),
+                easing: Nt,
                 duration: {
                   type: "number",
                   optional: !1,
@@ -10323,44 +10493,44 @@
               },
             },
           },
-          Ft = {
+          qt = {
             type: "object",
             optional: !0,
             props: {
-              width: { type: "string", optional: !0 },
-              height: { type: "string", optional: !0 },
+              width: { type: "measurement", units: zt, optional: !0 },
+              height: { type: "measurement", units: zt, optional: !0 },
             },
           },
-          Gt = { type: "string", enum: ["on", "off"], optional: !0 },
-          Wt = {
+          Jt = { type: "string", enum: ["on", "off"], optional: !0 },
+          Kt = {
             props: [
               {
                 type: "object",
                 strict: !0,
                 props: {
-                  id: Vt,
-                  selector: l({}, zt, { optional: !0 }),
-                  easing: Lt,
-                  html: Nt,
-                  css: Nt,
-                  audioSources: Rt,
-                  audio: Gt,
-                  containerParams: Ft,
-                  fonts: $t,
+                  id: $t,
+                  selector: l({}, Rt, { optional: !0 }),
+                  easing: Nt,
+                  html: Ht,
+                  css: Ft,
+                  audioSources: Wt,
+                  audio: Jt,
+                  containerParams: qt,
+                  fonts: Gt,
                 },
               },
               {
                 type: "object",
                 strict: !0,
                 props: {
-                  id: Vt,
+                  id: $t,
                   host: { type: "any", optional: !1 },
-                  html: Nt,
-                  css: Nt,
-                  audioSources: Rt,
-                  audio: Gt,
-                  containerParams: Ft,
-                  fonts: $t,
+                  html: Ht,
+                  css: Ft,
+                  audioSources: Wt,
+                  audio: Jt,
+                  containerParams: qt,
+                  fonts: Gt,
                 },
               },
               {
@@ -10368,139 +10538,17 @@
                 strict: !0,
                 props: {
                   root: { type: "boolean", optional: !0 },
-                  id: Vt,
-                  audioSources: Rt,
-                  audio: l({}, Gt, { enum: ["on"] }),
+                  id: $t,
+                  audioSources: Wt,
+                  audio: l({}, Jt, { enum: ["on"] }),
                 },
               },
             ],
           },
-          Ut = { selector: l({}, zt, { optional: !0, strict: !0 }) },
-          qt = "mc.descriptive.decisionAuthority",
-          Jt = new RegExp(
-            /^#([\da-f]{3}){1,2}$|^#([\da-f]{4}){1,2}$|(rgb|hsl)a?\((\s*-?\d+%?\s*,){2}(\s*-?\d+%?\s*,?\s*\)?)(,\s*(0?\.\d+)?|1)?\)/,
-            "gi"
-          ),
-          Kt = new RegExp(/^[-+]?\d+$/),
-          Xt = function () {
-            var e = new me({
-              messages: {
-                color:
-                  "The '{field}' field must be an a valid color! Actual: {actual}",
-                measurement:
-                  "The '{field}' must be a measurement with specs that are not met. Please check schema definition. Actual: {actual}",
-              },
-            });
-            return (
-              e.add("measurement", function (e, t, n) {
-                var i = e.schema,
-                  r = e.messages,
-                  o = new RegExp(
-                    "^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)(" +
-                      i.units.join("|") +
-                      ")$",
-                    "gi"
-                  ),
-                  s = new RegExp("^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)", "gi"),
-                  a = i.units.join(", ");
-                return {
-                  source: "\n        if(typeof value !== 'string' && !(value instanceof String)){\n          "
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        units: a,
-                        messages: r,
-                      }),
-                      "\n          return ;\n        }\n        if(!value.match("
-                    )
-                    .concat(o, ")){\n          ")
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        units: a,
-                        messages: r,
-                      }),
-                      "\n        } else {\n          var numberPart = value.match("
-                    )
-                    .concat(s, ")[0];\n          if(")
-                    .concat(
-                      Object.prototype.hasOwnProperty.call(i, "min"),
-                      "){\n            if("
-                    )
-                    .concat(i.min, " > numberPart){\n              ")
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        units: a,
-                        messages: r,
-                      }),
-                      "\n            }\n          }\n          if("
-                    )
-                    .concat(
-                      Object.prototype.hasOwnProperty.call(i, "max"),
-                      "){\n            if("
-                    )
-                    .concat(i.max, " < numberPart){\n              ")
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        units: a,
-                        messages: r,
-                      }),
-                      "\n            }\n          }\n           if("
-                    )
-                    .concat(
-                      Object.prototype.hasOwnProperty.call(i, "integer"),
-                      "){\n            if(!numberPart.match("
-                    )
-                    .concat(Kt, ")){\n              ")
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        units: a,
-                        messages: r,
-                      }),
-                      "\n            }\n          }\n        }\n        return value;\n      "
-                    ),
-                };
-              }),
-              e.add("color", function (e, t, n) {
-                e.schema;
-                var i = e.messages;
-                return {
-                  source: "\n        if(typeof value !== 'string' && !(value instanceof String)){\n          "
-                    .concat(
-                      this.makeError({
-                        type: "measurement",
-                        actual: "value",
-                        messages: i,
-                      }),
-                      "\n          return ;\n        }\n        if(!value.match("
-                    )
-                    .concat(
-                      Jt,
-                      ') && [\n            "aliceblue",\n            "antiquewhite",\n            "aqua",\n            "aquamarine",\n            "azure",\n            "beige",\n            "bisque",\n            "black",\n            "blanchedalmond",\n            "blue",\n            "blueviolet",\n            "brown",\n            "burlywood",\n            "cadetblue",\n            "chartreuse",\n            "chocolate",\n            "coral",\n            "cornflowerblue",\n            "cornsilk",\n            "crimson",\n            "cyan",\n            "darkblue",\n            "darkcyan",\n            "darkgoldenrod",\n            "darkgray",\n            "darkgrey",\n            "darkgreen",\n            "darkkhaki",\n            "darkmagenta",\n            "darkolivegreen",\n            "darkorange",\n            "darkorchid",\n            "darkred",\n            "darksalmon",\n            "darkseagreen",\n            "darkslateblue",\n            "darkslategray",\n            "darkslategrey",\n            "darkturquoise",\n            "darkviolet",\n            "deeppink",\n            "deepskyblue",\n            "dimgray",\n            "dimgrey",\n            "dodgerblue",\n            "firebrick",\n            "floralwhite",\n            "forestgreen",\n            "fuchsia",\n            "gainsboro",\n            "ghostwhite",\n            "gold",\n            "goldenrod",\n            "gray",\n            "grey",\n            "green",\n            "greenyellow",\n            "honeydew",\n            "hotpink",\n            "indianred",\n            "indigo",\n            "ivory",\n            "khaki",\n            "lavender",\n            "lavenderblush",\n            "lawngreen",\n            "lemonchiffon",\n            "lightblue",\n            "lightcoral",\n            "lightcyan",\n            "lightgoldenrodyellow",\n            "lightgray",\n            "lightgrey",\n            "lightgreen",\n            "lightpink",\n            "lightsalmon",\n            "lightseagreen",\n            "lightskyblue",\n            "lightslategray",\n            "lightslategrey",\n            "lightsteelblue",\n            "lightyellow",\n            "lime",\n            "limegreen",\n            "linen",\n            "magenta",\n            "maroon",\n            "mediumaquamarine",\n            "mediumblue",\n            "mediumorchid",\n            "mediumpurple",\n            "mediumseagreen",\n            "mediumslateblue",\n            "mediumspringgreen",\n            "mediumturquoise",\n            "mediumvioletred",\n            "midnightblue",\n            "mintcream",\n            "mistyrose",\n            "moccasin",\n            "navajowhite",\n            "navy",\n            "oldlace",\n            "olive",\n            "olivedrab",\n            "orange",\n            "orangered",\n            "orchid",\n            "palegoldenrod",\n            "palegreen",\n            "paleturquoise",\n            "palevioletred",\n            "papayawhip",\n            "peachpuff",\n            "peru",\n            "pink",\n            "plum",\n            "powderblue",\n            "purple",\n            "rebeccapurple",\n            "red",\n            "rosybrown",\n            "royalblue",\n            "saddlebrown",\n            "salmon",\n            "sandybrown",\n            "seagreen",\n            "seashell",\n            "sienna",\n            "silver",\n            "skyblue",\n            "slateblue",\n            "slategray",\n            "slategrey",\n            "snow",\n            "springgreen",\n            "steelblue",\n            "tan",\n            "teal",\n            "thistle",\n            "tomato",\n            "turquoise",\n            "violet",\n            "wheat",\n            "white",\n            "whitesmoke",\n            "yellow",\n            "yellowgreen",\n          ].indexOf(value.toLowerCase()) < 0){\n          '
-                    )
-                    .concat(
-                      this.makeError({
-                        type: "color",
-                        actual: "value",
-                        messages: i,
-                      }),
-                      "\n        }\n        return value;\n      "
-                    ),
-                };
-              }),
-              e
-            );
-          },
-          Qt = Xt();
-        function Zt(e) {
+          Xt = { selector: l({}, Rt, { optional: !0, strict: !0 }) },
+          Qt = "mc.descriptive.decisionAuthority",
+          Zt = ge();
+        function Yt(e) {
           e.descriptor.value = function (e) {
             if (this.attrsValidationRules) {
               var t = JSON.parse(JSON.stringify(this.attrsValidationRules));
@@ -10508,58 +10556,58 @@
                 this.attrsValidationRules,
                 "animatedAttrs"
               ) &&
-                (t.initialValues = Ee.buildInitialValuesValidationRules(
+                (t.initialValues = je.buildInitialValuesValidationRules(
                   t.animatedAttrs
                 ));
-              var n = Qt.validate(e, t);
+              var n = Zt.validate(e, t);
               if (n.length > 0) return { result: !1, errors: n };
             }
             return !0 ===
-              this.putMessageOnPipe("checkForClip", {}, qt, {
+              this.putMessageOnPipe("checkForClip", {}, Qt, {
                 selfExecute: !0,
-                direction: Me,
+                direction: Ae,
               }).response
               ? this.manageEditAttrProps(e, "attrs")
               : ((this.attrs = e), { result: !0 });
           };
         }
-        function Yt(e) {
+        function en(e) {
           e.descriptor.value = function (e) {
-            var t = Ee.validateProps(
+            var t = je.validateProps(
               { props: e },
               this.propsValidationRules,
               this.constructor
             );
             return t.result
               ? !0 ===
-                this.putMessageOnPipe("checkForClip", {}, qt, {
+                this.putMessageOnPipe("checkForClip", {}, Qt, {
                   selfExecute: !0,
-                  direction: Me,
+                  direction: Ae,
                 }).response
                 ? this.manageEditAttrProps(e, "props")
                 : ((this.props = e), { result: !0 })
               : t;
           };
         }
-        function en(e) {
+        function tn(e) {
           e.descriptor.value = function () {
             return null !== this.props.host && void 0 !== this.props.host
               ? [this.props.host]
               : this.hasParent &&
-                this.putMessageOnPipe("checkForClip", {}, qt, {
+                this.putMessageOnPipe("checkForClip", {}, Qt, {
                   selfExecute: !0,
-                  direction: Me,
+                  direction: Ae,
                 }).response
               ? this.putMessageOnPipe(
                   "getElements",
                   { selector: this.selector() },
-                  qt,
-                  { selfExecute: !1, direction: Me }
+                  Qt,
+                  { selfExecute: !1, direction: Ae }
                 ).response
               : [];
           };
         }
-        function tn(e) {
+        function nn(e) {
           e.descriptor.value = function (e) {
             var t =
               arguments.length > 1 && void 0 !== arguments[1]
@@ -10573,15 +10621,15 @@
               var n = this.putMessageOnPipe(
                 "checkResize",
                 { id: this.id, newSize: e, fraction: e / this.duration },
-                qt,
-                { selfExecute: !1, direction: Me }
+                Qt,
+                { selfExecute: !1, direction: Ae }
               );
               if (!n.response.result) return n.response;
             }
             return this.setNewDuration(e), { result: !0 };
           };
         }
-        function nn(e) {
+        function rn(e) {
           e.descriptor.value = function () {
             return null === this.inheritedSelector
               ? Object.prototype.hasOwnProperty.call(this.props, "selector")
@@ -10596,7 +10644,7 @@
               : this.inheritedSelector;
           };
         }
-        var rn = _(
+        var on = _(
             null,
             function (e, t) {
               var r = (function (t) {
@@ -10622,10 +10670,10 @@
                         e(p(t)),
                         (t.attrs = o),
                         (t.props = s));
-                  var a = Ee.validateProps(t.props, Ut, t.constructor);
+                  var a = je.validateProps(t.props, Xt, t.constructor);
                   return a.result
                     ? ((t.attrsValidationRules = {}),
-                      (t.propsValidationRules = Ut),
+                      (t.propsValidationRules = Xt),
                       (t._inheritedSelector = null),
                       (t.passiveAddition = !0),
                       t._buildTree(),
@@ -10643,7 +10691,7 @@
                     static: !0,
                     key: "Incident",
                     value: function () {
-                      return $e;
+                      return He;
                     },
                   },
                   {
@@ -10659,7 +10707,7 @@
                     static: !0,
                     key: "Channel",
                     value: function () {
-                      return je;
+                      return Me;
                     },
                   },
                   {
@@ -10680,31 +10728,31 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Zt],
+                    decorators: [Yt],
                     key: "editAttributes",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [Yt],
+                    decorators: [en],
                     key: "editProperties",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [tn],
+                    decorators: [nn],
                     key: "resize",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [nn],
+                    decorators: [rn],
                     key: "selector",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [en],
+                    decorators: [tn],
                     key: "getElements",
                     value: function () {},
                   },
@@ -10788,6 +10836,9 @@
                     value: function () {
                       var e = {
                         ClassName: this.constructor.ClassName,
+                        plugin:
+                          this.constructor.plugin ||
+                          this.constructor.plugin_npm_name,
                         plugin_npm_name: this.constructor.plugin_npm_name,
                         attrs: this.attrs,
                         props: this.props,
@@ -10846,16 +10897,16 @@
                           t
                         );
                         if (!i.result) return (e.inheritedSelector = null), i;
-                        var o = this.putMessageOnPipe("checkForClip", {}, qt, {
+                        var o = this.putMessageOnPipe("checkForClip", {}, Qt, {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         });
                         if (!0 === o.response) {
                           var s = e.putMessageOnPipe(
                             "checkForInvalidSelectors",
                             {},
                             null,
-                            { selfExecute: !0, direction: Be }
+                            { selfExecute: !0, direction: Te }
                           );
                           if (s.length > 0) {
                             for (var a = [], l = 0; l < s.length; l++)
@@ -10870,8 +10921,8 @@
                             millisecond: t,
                             parentGroupId: this.id,
                           },
-                          qt,
-                          { selfExecute: !0, direction: Me }
+                          Qt,
+                          { selfExecute: !0, direction: Ae }
                         );
                         if (!c.response.result)
                           return (e.inheritedSelector = null), c.response;
@@ -10903,8 +10954,8 @@
                           positionDelta: s,
                           parentGroupId: this.id,
                         },
-                        qt,
-                        { selfExecute: !0, direction: Me }
+                        Qt,
+                        { selfExecute: !0, direction: Ae }
                       );
                       return a.response.result
                         ? this.editPosition(i, t)
@@ -10925,8 +10976,8 @@
                       var o = this.putMessageOnPipe(
                         "checkDeletion",
                         { id: t, parentGroupId: this.id },
-                        qt,
-                        { selfExecute: !0, direction: Me }
+                        Qt,
+                        { selfExecute: !0, direction: Ae }
                       );
                       return o.response.result
                         ? this.removeChild(t)
@@ -10971,9 +11022,9 @@
                 ],
               };
             },
-            Le
+            ze
           ),
-          on = (function (e) {
+          sn = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e, r) {
@@ -10999,7 +11050,7 @@
                       for (var t in ((this.runTimeInfo.state = e),
                       this.putMessageOnPipe("setState", e, "Clips", {
                         selfExecute: !1,
-                        direction: Be,
+                        direction: Te,
                       }),
                       this.listeners))
                         this.listeners[t].funct(
@@ -11092,7 +11143,7 @@
                               this.runTimeInfo.currentMillisecond
                           ) > i.threshold
                             ? (i.funct(
-                                xe(t, i.roundTo),
+                                we(t, i.roundTo),
                                 this.runTimeInfo.state
                               ),
                               (i.cavaDelta = 0))
@@ -11189,15 +11240,15 @@
               ]),
               n
             );
-          })(rn),
-          sn = (function () {
+          })(on),
+          an = (function () {
             function e(t) {
               i(this, e),
                 (this.runTimeInfo = {
                   currentMillisecond: 0,
                   state: "transitional",
                 }),
-                (this.id = _e()),
+                (this.id = Ie()),
                 (this.realClip = t.descriptiveIncident.realClip);
               var n = t.descriptiveIncident.realClip.exportConstructionArguments(),
                 r = l({}, n.props, {
@@ -11238,7 +11289,7 @@
               e
             );
           })(),
-          an = (function (e) {
+          ln = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e) {
@@ -11253,7 +11304,7 @@
               var c = (r = t.call(this, o, s))._validateProps();
               if (!c.result) return h(r, c);
               (r.attrsValidationRules = {}),
-                (r.propsValidationRules = Wt),
+                (r.propsValidationRules = Kt),
                 (r.isTheRootClip = !1);
               var u = {
                 id: r.id,
@@ -11285,14 +11336,14 @@
                   void 0 !== s.selector &&
                   !0 !== r.constructor.customClip)
               )
-                u.Incident = Tt;
+                u.Incident = Lt;
               else if (
                 Object.prototype.hasOwnProperty.call(s, "selector") &&
                 void 0 !== s.selector &&
                 !0 === r.constructor.customClip
               ) {
                 delete u.props.selector;
-                var d = new Tt({ html: '<div id="clip-container"></div>' });
+                var d = new Lt({ html: '<div id="clip-container"></div>' });
                 (u.props.host = d.rootElement),
                   (u.Incident = r.constructor.Incident);
               } else
@@ -11303,8 +11354,8 @@
                     (u.Incident = r.constructor.Incident));
               if (
                 ("on" === r.audio || "off" === r.audio
-                  ? (r.realClip = tt(u))
-                  : (r.realClip = new Dt()),
+                  ? (r.realClip = it(u))
+                  : (r.realClip = new Vt()),
                 "on" === r.audio || "only" === r.audio)
               ) {
                 var f = {
@@ -11322,11 +11373,11 @@
                   },
                   plugin_npm_name: r.constructor.plugin_npm_name,
                   Channel: r.constructor.Channel,
-                  Incident: mt,
+                  Incident: gt,
                   DescriptiveIncident: p(r),
                 };
-                r.audioClip = tt(f);
-              } else (r.audio = "off"), (r.audioClip = new Dt());
+                r.audioClip = it(f);
+              } else (r.audio = "off"), (r.audioClip = new Vt());
               return (
                 (r.passiveAddition = !0),
                 r._buildTree(),
@@ -11339,9 +11390,9 @@
                 {
                   key: "_validateProps",
                   value: function () {
-                    return Ee.validateProps(
+                    return je.validateProps(
                       { props: this.props },
-                      Wt,
+                      Kt,
                       this.constructor
                     );
                   },
@@ -11361,11 +11412,11 @@
                       (this.duration = e),
                       this.putMessageOnPipe("recalcDuration", {}, "Groups", {
                         selfExecute: !1,
-                        direction: Me,
+                        direction: Ae,
                       }),
                       this.putMessageOnPipe("flash", {}, "RootClip", {
                         selfExecute: !0,
-                        direction: Me,
+                        direction: Ae,
                       }),
                       { result: !0 }
                     );
@@ -11393,7 +11444,7 @@
                         i.execute(),
                         this.putMessageOnPipe("flash", {}, "RootClip", {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         }),
                         { result: !0 })
                       : n;
@@ -11409,7 +11460,7 @@
                         i.execute(),
                         this.putMessageOnPipe("flash", {}, "RootClip", {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         }),
                         { result: !0 })
                       : n;
@@ -11425,7 +11476,7 @@
                         i.execute(),
                         this.putMessageOnPipe("flash", {}, "RootClip", {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         }),
                         { result: !0 })
                       : n;
@@ -11441,7 +11492,7 @@
                         i.execute(),
                         this.putMessageOnPipe("flash", {}, "RootClip", {
                           selfExecute: !0,
-                          direction: Me,
+                          direction: Ae,
                         }),
                         { result: !0 })
                       : n;
@@ -11498,7 +11549,7 @@
                   key: "paste",
                   value: function (e) {
                     return this.isTheRootClip
-                      ? new sn({ host: e, descriptiveIncident: this })
+                      ? new an({ host: e, descriptiveIncident: this })
                       : null;
                   },
                 },
@@ -11570,13 +11621,13 @@
               ]),
               n
             );
-          })(on);
-        s(an, "isClip", !0),
-          s(an, "Incident", Bt),
-          s(an, "plugin_npm_name", "@kissmybutton/self-contained-incidents"),
-          s(an, "Channel", Fe),
-          s(an, "ClassName", "Clip");
-        var ln = (function (e) {
+          })(sn);
+        s(ln, "isClip", !0),
+          s(ln, "Incident", Tt),
+          s(ln, "plugin_npm_name", "@kissmybutton/self-contained-incidents"),
+          s(ln, "Channel", We),
+          s(ln, "ClassName", "Clip");
+        var cn = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e) {
@@ -11589,8 +11640,8 @@
               return null !== r && (o.id = r), t.call(this, o);
             }
             return n;
-          })(an),
-          cn = _(
+          })(ln),
+          un = _(
             null,
             function (e, t) {
               var n = (function (t) {
@@ -11602,7 +11653,7 @@
                     void 0 === o && ((o = t), (t = {})),
                     (s = n.call(this, o)),
                     e(p(s));
-                  var a = Ee.validateProps({ props: o }, Ht, s.constructor);
+                  var a = je.validateProps({ props: o }, Ut, s.constructor);
                   return a.result
                     ? ((s.inheritedSelector = null),
                       (s.attrs = t),
@@ -11610,7 +11661,7 @@
                         (o.duration = 0),
                       (s.props = o),
                       (s.attrsValidationRules = {}),
-                      (s.propsValidationRules = Ht),
+                      (s.propsValidationRules = Ut),
                       (s.passive = !1),
                       s)
                     : h(s, a);
@@ -11625,7 +11676,7 @@
                     static: !0,
                     key: "Incident",
                     value: function () {
-                      return Ye;
+                      return tt;
                     },
                   },
                   {
@@ -11641,7 +11692,7 @@
                     static: !0,
                     key: "Channel",
                     value: function () {
-                      return Pt;
+                      return St;
                     },
                   },
                   {
@@ -11654,31 +11705,31 @@
                   },
                   {
                     kind: "method",
-                    decorators: [Zt],
+                    decorators: [Yt],
                     key: "editAttributes",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [Yt],
+                    decorators: [en],
                     key: "editProperties",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [tn],
+                    decorators: [nn],
                     key: "resize",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [nn],
+                    decorators: [rn],
                     key: "selector",
                     value: function () {},
                   },
                   {
                     kind: "method",
-                    decorators: [en],
+                    decorators: [tn],
                     key: "getElements",
                     value: function () {},
                   },
@@ -11739,6 +11790,9 @@
                     value: function () {
                       return {
                         ClassName: this.constructor.ClassName,
+                        plugin:
+                          this.constructor.plugin ||
+                          this.constructor.plugin_npm_name,
                         plugin_npm_name: this.constructor.plugin_npm_name,
                         attrs: this.attrs,
                         props: this.props,
@@ -11759,16 +11813,16 @@
                 ],
               };
             },
-            Te
+            Le
           ),
-          un = (function () {
+          dn = (function () {
             function e(t) {
               if (
                 (i(this, e),
                 !Object.prototype.hasOwnProperty.call(t, "incident"))
               )
                 return (
-                  Ee.error(
+                  je.error(
                     'Journey constructor expects an Incident on its properties on the key "incident"'
                   ),
                   !1
@@ -11833,7 +11887,7 @@
               e
             );
           })(),
-          dn = (function () {
+          pn = (function () {
             function e() {
               i(this, e), (this.memory = []);
             }
@@ -11843,8 +11897,8 @@
                   key: "startJourney",
                   value: function (e) {
                     return e
-                      ? new un({ incident: e, calpuleMemory: this.memory })
-                      : (Ee.error(
+                      ? new dn({ incident: e, calpuleMemory: this.memory })
+                      : (je.error(
                           "startJourney expects an Incident as an argument"
                         ),
                         !1);
@@ -11854,9 +11908,9 @@
               e
             );
           })(),
-          pn = Xt(),
-          hn = new Oe({ logLevel: 0 });
-        function fn(e) {
+          hn = ge(),
+          fn = new Pe({ logLevel: 0 });
+        function mn(e) {
           if (
             (Object.prototype.hasOwnProperty.call(e, "default") &&
               (e = e.default),
@@ -11869,7 +11923,7 @@
                 i = !0;
               if (
                 (Object.prototype.hasOwnProperty.call(e, "name") ||
-                  hn.error(
+                  fn.error(
                     "Warning on plugin ".concat(
                       t,
                       '. A plugin is always good to have its name on\n        its main.js file, under the key "name". It\'s missing from this plugin'
@@ -11877,7 +11931,7 @@
                   ),
                 Object.prototype.hasOwnProperty.call(e, "incidents") ||
                   Object.prototype.hasOwnProperty.call(e, "Clip") ||
-                  (hn.error(
+                  (fn.error(
                     "Error on plugin ".concat(
                       t,
                       '. A plugin must expose at least one Incident or a Clip.\n        Exposed plugin Incidents should be defined on the "incidents" key of the main.js file while Clips on the "Clip".'
@@ -11887,7 +11941,7 @@
                 Object.prototype.hasOwnProperty.call(e, "incidents") &&
                   !Array.isArray(e.incidents))
               )
-                hn.error(
+                fn.error(
                   "Error on plugin ".concat(
                     t,
                     '. thePlugin exposed Incidents are defined on the "incidents" key of the main.js file in array format.\n        Please refer to the documentation'
@@ -11903,11 +11957,11 @@
                       "default"
                     ) &&
                     (o.exportable = o.exportable.default),
-                    o.exportable.prototype instanceof rn ||
-                      o.exportable.prototype instanceof an ||
-                      o.exportable.prototype instanceof Ye ||
-                      o.exportable.prototype instanceof yt ||
-                      (hn.error(
+                    o.exportable.prototype instanceof on ||
+                      o.exportable.prototype instanceof ln ||
+                      o.exportable.prototype instanceof tt ||
+                      o.exportable.prototype instanceof xt ||
+                      (fn.error(
                         "Error on plugin "
                           .concat(
                             t,
@@ -11920,7 +11974,7 @@
                       ),
                       (i = !1)),
                     Object.prototype.hasOwnProperty.call(o, "name") ||
-                      (hn.error(
+                      (fn.error(
                         "Error on plugin ".concat(
                           t,
                           '. Exportable Incidents by any plugin must have the "name" key which defines the name of the exported Incident.\n                Please refer to documentation'
@@ -11928,7 +11982,7 @@
                       ),
                       (i = !1)),
                     Object.prototype.hasOwnProperty.call(o, "propTypes") ||
-                      hn.log(
+                      fn.log(
                         "Warning on plugin "
                           .concat(
                             t,
@@ -11957,14 +12011,14 @@
                     return i(this, n), t.apply(this, arguments);
                   }
                   return n;
-                })(an)),
+                })(ln)),
                 s(r, "Incident", e.Clip),
                 s(r, "audio", e.audio ? e.audio : "off"),
                 s(r, "customClip", !0),
                 o);
             t.Clip = a;
           }
-          var l = Pt;
+          var l = St;
           if (
             (Object.prototype.hasOwnProperty.call(e, "compositeAttributes") &&
               (l = (function (t) {
@@ -11978,7 +12032,7 @@
                   );
                 }
                 return r;
-              })(Pt)),
+              })(St)),
             Object.prototype.hasOwnProperty.call(e, "incidents"))
           )
             for (
@@ -11987,7 +12041,7 @@
                     o,
                     a = e.incidents[n].exportable,
                     u = void 0;
-                  if (a.prototype instanceof Ye)
+                  if (a.prototype instanceof tt)
                     (o = r = (function (e) {
                       c(n, e);
                       var t = f(n);
@@ -11995,15 +12049,15 @@
                         return i(this, n), t.apply(this, arguments);
                       }
                       return n;
-                    })(cn)),
+                    })(un)),
                       s(r, "Incident", a),
                       s(r, "plugin_npm_name", e.npm_name),
-                      s(r, "plugin", e.name),
+                      s(r, "plugin", e.npm_name),
                       s(r, "ClassName", e.incidents[n].name),
                       s(r, "Channel", l),
                       s(r, "audio", e.audio ? e.audio : "off"),
                       (u = o);
-                  else if (a.prototype instanceof yt) {
+                  else if (a.prototype instanceof xt) {
                     var d, p;
                     (p = d = (function (e) {
                       c(n, e);
@@ -12012,15 +12066,15 @@
                         return i(this, n), t.apply(this, arguments);
                       }
                       return n;
-                    })(cn)),
+                    })(un)),
                       s(d, "Incident", a),
                       s(d, "plugin_npm_name", "@kissmybutton/media-playback"),
-                      s(d, "plugin", e.name),
+                      s(d, "plugin", e.npm_name),
                       s(d, "ClassName", e.incidents[n].name),
-                      s(d, "Channel", gt),
+                      s(d, "Channel", bt),
                       s(d, "audio", e.audio ? e.audio : "off"),
                       (u = p);
-                  } else if (a.prototype instanceof an) {
+                  } else if (a.prototype instanceof ln) {
                     var h, m;
                     (m = h = (function (e) {
                       c(n, e);
@@ -12030,11 +12084,11 @@
                       }
                       return n;
                     })(a)),
-                      s(h, "plugin", e.name),
+                      s(h, "plugin", e.npm_name),
                       s(h, "ClassName", e.incidents[n].name),
                       s(h, "audio", e.audio ? e.audio : "on"),
                       (u = m);
-                  } else if (a.prototype instanceof rn) {
+                  } else if (a.prototype instanceof on) {
                     var v, g;
                     (g = v = (function (e) {
                       c(n, e);
@@ -12044,7 +12098,7 @@
                       }
                       return n;
                     })(a)),
-                      s(v, "plugin", e.name),
+                      s(v, "plugin", e.npm_name),
                       s(v, "ClassName", e.incidents[n].name),
                       (u = g);
                   }
@@ -12068,10 +12122,10 @@
                             e.incidents[n].attributesValidationRules,
                             "animatedAttrs"
                           ) &&
-                            (a.initialValues = hn.buildInitialValuesValidationRules(
+                            (a.initialValues = fn.buildInitialValuesValidationRules(
                               a.animatedAttrs
                             ));
-                          var l = pn.validate(r, a);
+                          var l = hn.validate(r, a);
                           if (l.length > 0) {
                             for (
                               var c = "Error on plugin's \""
@@ -12092,7 +12146,7 @@
                           s.attrsValidationRules =
                             e.incidents[n].attributesValidationRules;
                         } else
-                          hn.warning(
+                          fn.warning(
                             "It's always good to provide attributesValidationRules to the exported incidents. "
                               .concat(e.npm_name, ".")
                               .concat(s.constructor.name, " doesn't provide it")
@@ -12109,20 +12163,20 @@
               u(d);
           return t;
         }
-        var mn = fn(bt),
-          vn = an,
-          gn = rn,
-          yn = mn.Clip,
-          bn = mn.AudioPlayback,
-          xn = {
-            MonoIncident: Ye,
-            Group: gn,
-            Clip: vn,
-            AudioClip: ln,
-            MediaPlayback: yt,
-            ExtendableClip: ct,
-            DOMClip: Bt,
-            easings: nt,
+        var vn = mn(kt),
+          gn = ln,
+          yn = on,
+          bn = vn.Clip,
+          xn = vn.AudioPlayback,
+          kn = {
+            MonoIncident: tt,
+            Group: yn,
+            Clip: gn,
+            AudioClip: cn,
+            MediaPlayback: xt,
+            ExtendableClip: dt,
+            DOMClip: Tt,
+            easings: rt,
             clipFromDefinition: function e(t) {
               var n = new t.Class(t.attrs, t.props);
               if (Object.prototype.hasOwnProperty.call(t, "incidents"))
@@ -12134,24 +12188,24 @@
               return n;
             },
           },
-          kn = {
-            API: xn,
-            Group: gn,
-            Clip: vn,
-            loadPlugin: fn,
-            AudioClip: yn,
-            AudioPlayback: bn,
-            AudioEffect: mn.AudioEffect,
-            TimeCapsule: dn,
+          wn = {
+            API: kn,
+            Group: yn,
+            Clip: gn,
+            loadPlugin: mn,
+            AudioClip: bn,
+            AudioPlayback: xn,
+            AudioEffect: vn.AudioEffect,
+            TimeCapsule: pn,
           };
-        (t.API = xn),
-          (t.AudioClip = yn),
-          (t.AudioPlayback = bn),
-          (t.Clip = vn),
-          (t.Group = gn),
-          (t.TimeCapsule = dn),
-          (t.default = kn),
-          (t.loadPlugin = fn),
+        (t.API = kn),
+          (t.AudioClip = bn),
+          (t.AudioPlayback = xn),
+          (t.Clip = gn),
+          (t.Group = yn),
+          (t.TimeCapsule = pn),
+          (t.default = wn),
+          (t.loadPlugin = mn),
           Object.defineProperty(t, "__esModule", { value: !0 });
       })(t);
     }.call(this, n(2)));
