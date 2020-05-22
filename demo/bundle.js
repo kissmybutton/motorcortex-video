@@ -11,13 +11,13 @@
   };
   var n,
     i = !0,
-    r = "145ac625f326cc9f1a24",
+    r = "c8ea184524eb06dd6077",
     o = {},
     s = [],
     a = [];
   function l(e) {
     var t = j[e];
-    if (!t) return S;
+    if (!t) return M;
     var i = function (i) {
         return (
           t.hot.active
@@ -29,7 +29,7 @@
                 "[HMR] unexpected require(" + i + ") from disposed module " + e
               ),
               (s = [])),
-          S(i)
+          M(i)
         );
       },
       r = function (e) {
@@ -37,15 +37,15 @@
           configurable: !0,
           enumerable: !0,
           get: function () {
-            return S[e];
+            return M[e];
           },
           set: function (t) {
-            S[e] = t;
+            M[e] = t;
           },
         };
       };
-    for (var o in S)
-      Object.prototype.hasOwnProperty.call(S, o) &&
+    for (var o in M)
+      Object.prototype.hasOwnProperty.call(M, o) &&
         "e" !== o &&
         "t" !== o &&
         Object.defineProperty(i, o, r(o));
@@ -54,7 +54,7 @@
         return (
           "ready" === d && p("prepare"),
           y++,
-          S.e(e).then(t, function (e) {
+          M.e(e).then(t, function (e) {
             throw (t(), e);
           })
         );
@@ -63,7 +63,7 @@
         }
       }),
       (i.t = function (e, t) {
-        return 1 & t && (e = i(e)), S.t(e, -2 & t);
+        return 1 & t && (e = i(e)), M.t(e, -2 & t);
       }),
       i
     );
@@ -164,7 +164,7 @@
           return n(new Error("No browser support"));
         try {
           var i = new XMLHttpRequest(),
-            o = S.p + "" + r + ".hot-update.json";
+            o = M.p + "" + r + ".hot-update.json";
           i.open("GET", o, !0), (i.timeout = t), i.send(null);
         } catch (e) {
           return n(e);
@@ -204,7 +204,7 @@
         (function (e) {
           var t = document.createElement("script");
           (t.charset = "utf-8"),
-            (t.src = S.p + "" + e + "." + r + ".hot-update.js"),
+            (t.src = M.p + "" + e + "." + r + ".hot-update.js"),
             document.head.appendChild(t);
         })(e))
       : (b[e] = !0);
@@ -305,7 +305,7 @@
           (d = w(C)), (I = f[C] ? h(d) : { type: "disposed", moduleId: C });
           var O = !1,
             P = !1,
-            M = !1,
+            S = !1,
             B = "";
           switch (
             (I.chain && (B = "\nUpdate propagation: " + I.chain.join(" -> ")),
@@ -340,7 +340,7 @@
               i.onAccepted && i.onAccepted(I), (P = !0);
               break;
             case "disposed":
-              i.onDisposed && i.onDisposed(I), (M = !0);
+              i.onDisposed && i.onDisposed(I), (S = !0);
               break;
             default:
               throw new Error("Unexception type " + I.type);
@@ -352,7 +352,7 @@
             I.outdatedDependencies))
               Object.prototype.hasOwnProperty.call(I.outdatedDependencies, d) &&
                 (y[d] || (y[d] = []), g(y[d], I.outdatedDependencies[d]));
-          M && (g(b, [I.moduleId]), (x[d] = _));
+          S && (g(b, [I.moduleId]), (x[d] = _));
         }
       var A,
         T = [];
@@ -374,8 +374,8 @@
               delete installedChunks[e];
             })(e);
         });
-      var D,
-        L,
+      var L,
+        D,
         V = b.slice();
       for (; V.length > 0; )
         if (((d = V.pop()), (u = j[d]))) {
@@ -393,32 +393,32 @@
         }
       for (d in y)
         if (Object.prototype.hasOwnProperty.call(y, d) && (u = j[d]))
-          for (L = y[d], c = 0; c < L.length; c++)
-            (D = L[c]),
-              (A = u.children.indexOf(D)) >= 0 && u.children.splice(A, 1);
+          for (D = y[d], c = 0; c < D.length; c++)
+            (L = D[c]),
+              (A = u.children.indexOf(L)) >= 0 && u.children.splice(A, 1);
       p("apply"), void 0 !== m && ((r = m), (m = void 0));
       for (d in ((f = void 0), x))
         Object.prototype.hasOwnProperty.call(x, d) && (e[d] = x[d]);
       var R = null;
       for (d in y)
         if (Object.prototype.hasOwnProperty.call(y, d) && (u = j[d])) {
-          L = y[d];
+          D = y[d];
           var H = [];
-          for (l = 0; l < L.length; l++)
-            if (((D = L[l]), (a = u.hot._acceptedDependencies[D]))) {
+          for (l = 0; l < D.length; l++)
+            if (((L = D[l]), (a = u.hot._acceptedDependencies[L]))) {
               if (-1 !== H.indexOf(a)) continue;
               H.push(a);
             }
           for (l = 0; l < H.length; l++) {
             a = H[l];
             try {
-              a(L);
+              a(D);
             } catch (e) {
               i.onErrored &&
                 i.onErrored({
                   type: "accept-errored",
                   moduleId: d,
-                  dependencyId: L[l],
+                  dependencyId: D[l],
                   error: e,
                 }),
                 i.ignoreErrored || R || (R = e);
@@ -429,7 +429,7 @@
         var F = T[l];
         (d = F.module), (s = F.parents), (n = d);
         try {
-          S(d);
+          M(d);
         } catch (e) {
           if ("function" == typeof F.errorHandler)
             try {
@@ -480,7 +480,7 @@
     Object.prototype.hasOwnProperty.call(f, t) || (f[t] = e[t]);
   }
   var j = {};
-  function S(t) {
+  function M(t) {
     if (j[t]) return j[t].exports;
     var n = (j[t] = {
       i: t,
@@ -492,28 +492,28 @@
     });
     return e[t].call(n.exports, n, n.exports, l(t)), (n.l = !0), n.exports;
   }
-  (S.m = e),
-    (S.c = j),
-    (S.d = function (e, t, n) {
-      S.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
+  (M.m = e),
+    (M.c = j),
+    (M.d = function (e, t, n) {
+      M.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: n });
     }),
-    (S.r = function (e) {
+    (M.r = function (e) {
       "undefined" != typeof Symbol &&
         Symbol.toStringTag &&
         Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
         Object.defineProperty(e, "__esModule", { value: !0 });
     }),
-    (S.t = function (e, t) {
-      if ((1 & t && (e = S(e)), 8 & t)) return e;
+    (M.t = function (e, t) {
+      if ((1 & t && (e = M(e)), 8 & t)) return e;
       if (4 & t && "object" == typeof e && e && e.__esModule) return e;
       var n = Object.create(null);
       if (
-        (S.r(n),
+        (M.r(n),
         Object.defineProperty(n, "default", { enumerable: !0, value: e }),
         2 & t && "string" != typeof e)
       )
         for (var i in e)
-          S.d(
+          M.d(
             n,
             i,
             function (t) {
@@ -522,7 +522,7 @@
           );
       return n;
     }),
-    (S.n = function (e) {
+    (M.n = function (e) {
       var t =
         e && e.__esModule
           ? function () {
@@ -531,16 +531,16 @@
           : function () {
               return e;
             };
-      return S.d(t, "a", t), t;
+      return M.d(t, "a", t), t;
     }),
-    (S.o = function (e, t) {
+    (M.o = function (e, t) {
       return Object.prototype.hasOwnProperty.call(e, t);
     }),
-    (S.p = ""),
-    (S.h = function () {
+    (M.p = ""),
+    (M.h = function () {
       return r;
     }),
-    l(1)((S.s = 1));
+    l(1)((M.s = 1));
 })([
   function (e, t, n) {
     (function (e) {
@@ -1151,7 +1151,7 @@
                 : (t[i] = n[i]);
             return t;
           },
-          S = {
+          M = {
             required: "The '{field}' field is required.",
             string: "The '{field}' field must be a string.",
             stringEmpty: "The '{field}' field must not be empty.",
@@ -1220,7 +1220,7 @@
             uuidVersion:
               "The '{field}' field must be a valid UUID version provided.",
           },
-          M = function () {
+          S = function () {
             return {};
           },
           B = function ({ schema: e, messages: t, customValidation: n }, i, r) {
@@ -1359,7 +1359,7 @@
               { source: r.join("\n") }
             );
           },
-          D = function ({ schema: e, messages: t, customValidation: n }, i) {
+          L = function ({ schema: e, messages: t, customValidation: n }, i) {
             const r = [];
             let o = !1;
             return (
@@ -1377,11 +1377,11 @@
               { sanitized: o, source: r.join("\n") }
             );
           };
-        const L = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        const D = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           V = /^\S+@\S+\.\S+$/;
         var z = function ({ schema: e, messages: t, customValidation: n }, i) {
             const r = [],
-              o = "precise" == e.mode ? L : V;
+              o = "precise" == e.mode ? D : V;
             let s = !1;
             return (
               r.push(
@@ -1970,15 +1970,15 @@
           ge = function () {
             var e = new (class {
               constructor(e) {
-                (this.opts = { messages: j({}, S) }),
+                (this.opts = { messages: j({}, M) }),
                   e && j(this.opts, e),
                   (this.messages = this.opts.messages),
                   (this.rules = {
-                    any: M,
+                    any: S,
                     array: B,
                     boolean: A,
                     custom: T,
-                    date: D,
+                    date: L,
                     email: z,
                     enum: N,
                     equal: $,
@@ -2477,12 +2477,12 @@
             );
           })(),
           je = new Pe();
-        function Se(e) {
+        function Me(e) {
           return e.result
             ? { result: !0, execute: e.execute }
             : { result: !1, errors: e.errors };
         }
-        var Me = (function () {
+        var Se = (function () {
           function e(t) {
             i(this, e),
               (this.runTimeInfo = t.runTimeInfo),
@@ -2504,13 +2504,13 @@
                 {
                   key: "addIncidents",
                   value: function (e) {
-                    return Se(this.checkAddition(e));
+                    return Me(this.checkAddition(e));
                   },
                 },
                 {
                   key: "editIncidents",
                   value: function (e, t) {
-                    return Se(this.checkEdit(e, t));
+                    return Me(this.checkEdit(e, t));
                   },
                 },
                 {
@@ -2520,7 +2520,7 @@
                       arguments.length > 1 && void 0 !== arguments[1]
                         ? arguments[1]
                         : {};
-                    return Se(this.checkDelete(e, t));
+                    return Me(this.checkDelete(e, t));
                   },
                 },
                 { key: "recalcScratchValues", value: function (e) {} },
@@ -2569,8 +2569,8 @@
         }
         var Ae = "up",
           Te = "down",
-          De = "native.tree.bypass",
-          Le = _(null, function (e) {
+          Le = "native.tree.bypass",
+          De = _(null, function (e) {
             return {
               F: function t() {
                 var n =
@@ -2725,7 +2725,7 @@
                         o = "function" == typeof this[r];
                       if (o) {
                         var s = this[r](n, t);
-                        if (s !== De) {
+                        if (s !== Le) {
                           var a = { response: s, responder: this };
                           return i.direction === Ae
                             ? a
@@ -2747,7 +2747,7 @@
                   kind: "method",
                   key: "bypass",
                   value: function () {
-                    return De;
+                    return Le;
                   },
                 },
                 {
@@ -3103,7 +3103,7 @@
                 ],
               };
             },
-            Le
+            De
           );
         function Ne(e) {
           e.descriptor.value = function (e) {
@@ -3149,7 +3149,7 @@
                     (s = n.call(this, o)),
                     e(p(s)),
                     (s.mc_plugin_npm_name = "motor-cortex-js"),
-                    (s.plugin_channel_class = Me),
+                    (s.plugin_channel_class = Se),
                     (s.hasIncidents = !0),
                     s.onGroupInitialise(),
                     (s.calculatedDuration = 0),
@@ -3359,15 +3359,15 @@
               E,
               P,
               j = Array.prototype,
-              S = Function.prototype,
-              M = Object.prototype,
+              M = Function.prototype,
+              S = Object.prototype,
               B = m["__core-js_shared__"],
-              A = S.toString,
-              T = M.hasOwnProperty,
-              D = (O = /[^.]+$/.exec((B && B.keys && B.keys.IE_PROTO) || ""))
+              A = M.toString,
+              T = S.hasOwnProperty,
+              L = (O = /[^.]+$/.exec((B && B.keys && B.keys.IE_PROTO) || ""))
                 ? "Symbol(src)_1." + O
                 : "",
-              L = M.toString,
+              D = S.toString,
               V = RegExp(
                 "^" +
                   A.call(T)
@@ -3381,7 +3381,7 @@
               z = y ? m.Buffer : void 0,
               N = m.Symbol,
               $ = m.Uint8Array,
-              R = M.propertyIsEnumerable,
+              R = S.propertyIsEnumerable,
               H = j.splice,
               F = N ? N.toStringTag : void 0,
               G = Object.getOwnPropertySymbols,
@@ -3584,7 +3584,7 @@
             };
             function ye(e, t) {
               for (var n = 0, i = (t = Ce(t, e)).length; null != e && n < i; )
-                e = e[Le(t[n++])];
+                e = e[De(t[n++])];
               return n && n == i ? e : void 0;
             }
             function be(e) {
@@ -3600,11 +3600,11 @@
                       e[F] = void 0;
                       var i = !0;
                     } catch (e) {}
-                    var r = L.call(e);
+                    var r = D.call(e);
                     return i && (t ? (e[F] = n) : delete e[F]), r;
                   })(e)
                 : (function (e) {
-                    return L.call(e);
+                    return D.call(e);
                   })(e);
             }
             function xe(e, t) {
@@ -3621,8 +3621,8 @@
                   : (function (e, t, s, a, l, c) {
                       var u = Re(e),
                         d = Re(t),
-                        p = u ? "[object Array]" : Se(e),
-                        h = d ? "[object Array]" : Se(t),
+                        p = u ? "[object Array]" : Me(e),
+                        h = d ? "[object Array]" : Me(t),
                         f = (p = p == n ? r : p) == r,
                         m = (h = h == n ? r : h) == r,
                         v = p == h;
@@ -3758,7 +3758,7 @@
                 ? e
                 : Be(e, t)
                 ? [e]
-                : De(
+                : Le(
                     (function (e) {
                       return null == e ? "" : _e(e);
                     })(e)
@@ -3837,7 +3837,7 @@
                   !(
                     !Ue(e) ||
                     (function (e) {
-                      return !!D && D in e;
+                      return !!L && L in e;
                     })(e)
                   ) && (Ge(e) ? V : u).test(Ve(e))
                 );
@@ -3857,8 +3857,8 @@
                 : function () {
                     return [];
                   },
-              Se = be;
-            function Me(e, t) {
+              Me = be;
+            function Se(e, t) {
               var n = typeof e;
               return (
                 !!(t = null == t ? 9007199254740991 : t) &&
@@ -3894,12 +3894,12 @@
                 );
               };
             }
-            ((q && "[object DataView]" != Se(new q(new ArrayBuffer(1)))) ||
-              (J && Se(new J()) != i) ||
-              (K && "[object Promise]" != Se(K.resolve())) ||
-              (X && Se(new X()) != o) ||
-              (Q && "[object WeakMap]" != Se(new Q()))) &&
-              (Se = function (e) {
+            ((q && "[object DataView]" != Me(new q(new ArrayBuffer(1)))) ||
+              (J && Me(new J()) != i) ||
+              (K && "[object Promise]" != Me(K.resolve())) ||
+              (X && Me(new X()) != o) ||
+              (Q && "[object WeakMap]" != Me(new Q()))) &&
+              (Me = function (e) {
                 var t = be(e),
                   n = t == r ? e.constructor : void 0,
                   s = n ? Ve(n) : "";
@@ -3918,7 +3918,7 @@
                   }
                 return t;
               });
-            var De = (function (e) {
+            var Le = (function (e) {
               var t = ze(
                   function (e) {
                     var t = [];
@@ -3937,7 +3937,7 @@
                 n = t.cache;
               return t;
             })();
-            function Le(e) {
+            function De(e) {
               if ("string" == typeof e || Je(e)) return e;
               var t = e + "";
               return "0" == t && 1 / e == -1 / 0 ? "-0" : t;
@@ -4055,14 +4055,14 @@
                               ("buffer" == c ||
                                 "byteLength" == c ||
                                 "byteOffset" == c)) ||
-                            Me(c, l))) ||
+                            Se(c, l))) ||
                         a.push(c);
                     return a;
                   })(e)
                 : (function (e) {
                     if (
                       ((n = (t = e) && t.constructor),
-                      t !== (("function" == typeof n && n.prototype) || M))
+                      t !== (("function" == typeof n && n.prototype) || S))
                     )
                       return U(e);
                     var t,
@@ -4088,7 +4088,7 @@
                     ? Re(e)
                       ? (function (e, t) {
                           return Be(e) && Ae(t)
-                            ? Te(Le(e), t)
+                            ? Te(De(e), t)
                             : function (n) {
                                 var i = (function (e, t, n) {
                                   var i = null == e ? void 0 : ye(e, t);
@@ -4106,7 +4106,7 @@
                                             ++i < r;
 
                                           ) {
-                                            var s = Le(t[i]);
+                                            var s = De(t[i]);
                                             if (!(o = null != e && n(e, s)))
                                               break;
                                             e = e[s];
@@ -4116,7 +4116,7 @@
                                             : !!(r =
                                                 null == e ? 0 : e.length) &&
                                                 We(r) &&
-                                                Me(s, r) &&
+                                                Se(s, r) &&
                                                 (Re(e) || $e(e));
                                         })(e, t, xe)
                                       );
@@ -4173,7 +4173,7 @@
                               };
                         })(e)
                     : Be((t = e))
-                    ? ((n = Le(t)),
+                    ? ((n = De(t)),
                       function (e) {
                         return null == e ? void 0 : e[n];
                       })
@@ -4290,21 +4290,21 @@
               );
             }
             var j,
-              S,
               M,
+              S,
               B = Array.prototype,
               A = Function.prototype,
               T = Object.prototype,
-              D = m["__core-js_shared__"],
-              L = A.toString,
+              L = m["__core-js_shared__"],
+              D = A.toString,
               V = T.hasOwnProperty,
-              z = (j = /[^.]+$/.exec((D && D.keys && D.keys.IE_PROTO) || ""))
+              z = (j = /[^.]+$/.exec((L && L.keys && L.keys.IE_PROTO) || ""))
                 ? "Symbol(src)_1." + j
                 : "",
               N = T.toString,
               $ = RegExp(
                 "^" +
-                  L.call(V)
+                  D.call(V)
                     .replace(/[\\^$.*+?()[\]{}|]/g, "\\$&")
                     .replace(
                       /hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,
@@ -4328,10 +4328,10 @@
               K = Object.getOwnPropertySymbols,
               X = R ? R.isBuffer : void 0,
               Q =
-                ((S = Object.keys),
-                (M = Object),
+                ((M = Object.keys),
+                (S = Object),
                 function (e) {
-                  return S(M(e));
+                  return M(S(e));
                 }),
               Z = Math.max,
               Y = Date.now,
@@ -4450,17 +4450,17 @@
                   });
               }),
               (ge.prototype.delete = function (e) {
-                var t = Le(this, e).delete(e);
+                var t = De(this, e).delete(e);
                 return (this.size -= t ? 1 : 0), t;
               }),
               (ge.prototype.get = function (e) {
-                return Le(this, e).get(e);
+                return De(this, e).get(e);
               }),
               (ge.prototype.has = function (e) {
-                return Le(this, e).has(e);
+                return De(this, e).has(e);
               }),
               (ge.prototype.set = function (e, t) {
-                var n = Le(this, e),
+                var n = De(this, e),
                   i = n.size;
                 return n.set(e, t), (this.size += n.size == i ? 0 : 1), this;
               }),
@@ -4625,9 +4625,9 @@
                         (c || (c = new be()),
                         (function (e, t, n, i, r, o) {
                           var s = 1 & n,
-                            a = De(e),
+                            a = Le(e),
                             l = a.length;
-                          if (l != De(t).length && !s) return !1;
+                          if (l != Le(t).length && !s) return !1;
                           for (var c = l; c--; ) {
                             var u = a[c];
                             if (!(s ? u in t : V.call(t, u))) return !1;
@@ -4765,7 +4765,7 @@
                   })(t);
               var t, n;
             }
-            var Se = J
+            var Me = J
               ? function (e, t) {
                   return J(e, "toString", {
                     configurable: !0,
@@ -4780,9 +4780,9 @@
                   var n;
                 }
               : ut;
-            function Me(e) {
+            function Se(e) {
               if ("string" == typeof e) return e;
-              if (et(e)) return _(e, Me) + "";
+              if (et(e)) return _(e, Se) + "";
               if (at(e)) return fe ? fe.call(e) : "";
               var t = e + "";
               return "0" == t && 1 / e == -1 / 0 ? "-0" : t;
@@ -4794,7 +4794,7 @@
                 ? [e]
                 : qe(
                     (function (e) {
-                      return null == e ? "" : Me(e);
+                      return null == e ? "" : Se(e);
                     })(e)
                   );
             }
@@ -4864,13 +4864,13 @@
               }
               return o.delete(e), o.delete(t), d;
             }
-            function De(e) {
+            function Le(e) {
               return (function (e, t, n) {
                 var i = t(e);
                 return et(e) ? i : C(i, n(e));
               })(e, ct, ze);
             }
-            function Le(e, t) {
+            function De(e, t) {
               var n,
                 i,
                 r = e.__data__;
@@ -5011,7 +5011,7 @@
                   } else t = 0;
                   return e.apply(void 0, arguments);
                 };
-              })(Se),
+              })(Me),
               qe = (function (e) {
                 var t = Qe(
                     function (e) {
@@ -5039,7 +5039,7 @@
             function Ke(e) {
               if (null != e) {
                 try {
-                  return L.call(e);
+                  return D.call(e);
                 } catch (e) {}
                 try {
                   return e + "";
@@ -5463,7 +5463,7 @@
               ]),
               n
             );
-          })(Me),
+          })(Se),
           Ue = "function" == typeof Float32Array;
         function qe(e, t) {
           return 1 - 3 * t + 3 * e;
@@ -5571,7 +5571,7 @@
                   (this.id = r.id || Ie()),
                   (this.modelId = r.modelId),
                   (this.gotContext = !1),
-                  (this.plugin_channel_class = Me),
+                  (this.plugin_channel_class = Se),
                   (this.mc_plugin_npm_name = "motor-cortex-js"),
                   Object.prototype.hasOwnProperty.call(
                     r,
@@ -5786,28 +5786,25 @@
                 {
                   key: "onGetContext",
                   value: function () {
-                    var e = this.DescriptiveIncident.realClip.exportConstructionArguments(),
-                      t = je.getElementByMCID(this.context, this.mcid),
-                      n = l({}, e.props, { selector: void 0, host: t });
+                    var e = this,
+                      t = this.DescriptiveIncident.realClip.exportConstructionArguments(),
+                      n = je.getElementByMCID(this.context, this.mcid),
+                      i = l({}, t.props, { selector: void 0, host: n });
                     (this.ownClip = new this.DescriptiveIncident.constructor.Incident(
-                      e.attrs,
-                      n
+                      t.attrs,
+                      i
                     )),
                       (this.ownClip.DescriptiveIncident = this.DescriptiveIncident),
-                      (this.ownClip.contextLoaded = this.contextLoaded.bind(
-                        this
-                      )),
                       this.DescriptiveIncident.realClip.addContext(
-                        { clipId: this.id, context: this.ownClip.ownContext },
+                        {
+                          clipId: this.id,
+                          context: this.ownClip.ownContext,
+                          unblock: function () {
+                            return e.unblock();
+                          },
+                        },
                         !0
-                      ),
-                      (this.contextReady = !0);
-                  },
-                },
-                {
-                  key: "contextLoaded",
-                  value: function () {
-                    (this.contextReady = !0), this.unblock();
+                      );
                   },
                 },
                 {
@@ -5817,7 +5814,10 @@
                       arguments.length > 2 &&
                       void 0 !== arguments[2] &&
                       arguments[2];
-                    if (!0 !== this.ownClip.ownContext.loading) {
+                    if (
+                      !1 !==
+                      this.DescriptiveIncident.realClip.context.contextLoaded
+                    ) {
                       for (var i in this.DescriptiveIncident.realClip
                         .instantiatedChannels) {
                         var r = this.DescriptiveIncident.realClip
@@ -6101,7 +6101,8 @@
                           arguments[3],
                         r = this.easing(e) || 0,
                         o = r * this.duration;
-                      this.contexts[n].onProgress(r, o, i);
+                      !1 !== this.originalContext.context.contextLoaded &&
+                        this.contexts[n].onProgress(r, o, i);
                     },
                   },
                   {
@@ -6133,6 +6134,13 @@
                   },
                   {
                     kind: "method",
+                    key: "handleContextLoaded",
+                    value: function (e, t) {
+                      this._onGetContextOnce();
+                    },
+                  },
+                  {
+                    kind: "method",
                     decorators: [et],
                     key: "getIncidentsByChannel",
                     value: function () {},
@@ -6149,8 +6157,9 @@
                     kind: "method",
                     key: "_onGetContextOnce",
                     value: function () {
-                      for (var e in this.contexts)
-                        this.contexts[e]._onGetContextOnce();
+                      if (!1 !== this.originalContext.contextLoaded)
+                        for (var e in this.contexts)
+                          this.contexts[e]._onGetContextOnce();
                     },
                   },
                   {
@@ -6164,14 +6173,15 @@
                     kind: "method",
                     key: "onGetContext",
                     value: function () {
-                      for (var e in this.contexts)
-                        this.contexts[e].onGetContext();
+                      if (!1 !== this.originalContext.contextLoaded)
+                        for (var e in this.contexts)
+                          this.contexts[e].onGetContext();
                     },
                   },
                 ],
               };
             },
-            Le
+            De
           ),
           st = _(
             null,
@@ -6301,6 +6311,13 @@
                   },
                   {
                     kind: "method",
+                    key: "handleContextLoaded",
+                    value: function (e, t) {
+                      return this._onGetContextOnce(), !0;
+                    },
+                  },
+                  {
+                    kind: "method",
                     decorators: [et],
                     key: "getIncidentsByChannel",
                     value: function () {},
@@ -6321,10 +6338,13 @@
                       var o = r / this.props.duration,
                         s = this.easing(o),
                         a = s * this.props.duration;
-                      if (void 0 !== n) this.contexts[n].onProgress(s, a);
+                      if (void 0 !== n)
+                        !1 !== this.originalContext.context.contextLoaded &&
+                          this.contexts[n].onProgress(s, a);
                       else
                         for (var l in this.contexts)
-                          this.contexts[l].onProgress(s, a);
+                          this.originalContextKey !== l &&
+                            this.contexts[l].onProgress(s, a);
                     },
                   },
                   {
@@ -6357,8 +6377,9 @@
                     kind: "method",
                     key: "_onGetContextOnce",
                     value: function () {
-                      for (var e in this.contexts)
-                        this.contexts[e]._onGetContextOnce();
+                      if (!1 !== this.originalContext.context.contextLoaded)
+                        for (var e in this.contexts)
+                          this.contexts[e]._onGetContextOnce();
                     },
                   },
                   {
@@ -6372,8 +6393,9 @@
                     kind: "method",
                     key: "onGetContext",
                     value: function () {
-                      for (var e in this.contexts)
-                        this.contexts[e].onGetContext();
+                      if (!1 !== this.originalContext.contextLoaded)
+                        for (var e in this.contexts)
+                          this.contexts[e].onGetContext();
                     },
                   },
                   {
@@ -6438,6 +6460,8 @@
                         arguments.length > 0 && void 0 !== arguments[0]
                           ? arguments[0]
                           : null;
+                      if (!1 === this.originalContext.context.contextLoaded)
+                        return 0;
                       if (null === e) {
                         var t = Object.keys(this.contexts);
                         if (
@@ -6490,7 +6514,7 @@
                 ],
               };
             },
-            Le
+            De
           ),
           at = (function (e) {
             c(n, e);
@@ -6702,7 +6726,7 @@
           if (e.constructor.isClip) {
             if (!Object.prototype.hasOwnProperty.call(e.props, "selector") || i)
               return i ? e.audioClip : e.realClip;
-            (n = new ct(e, t)).plugin_channel_class = Me;
+            (n = new ct(e, t)).plugin_channel_class = Se;
           } else if (e.constructor.isGroup)
             for (var r in ((n = it({
               id: e.id,
@@ -6734,11 +6758,11 @@
                 (o.instantiatedChannels = {}),
                 (o.isHostedClip = !0),
                 (o.instantiatedCopiesContexts = {}),
+                (o.instantiatedCopiesUnblockingMethods = []),
                 o.onClipInitialise(),
                 (o.runTimeInfo = o.props.runTimeInfo),
                 (o.durationSubs = []),
                 (o.audioClip = !1),
-                (o.contextReady = !0),
                 o
               );
             }
@@ -6748,13 +6772,28 @@
                 {
                   key: "contextLoading",
                   value: function () {
-                    this.contextReady = !1;
+                    this.context.contextLoaded = !1;
                   },
                 },
                 {
                   key: "contextLoaded",
                   value: function () {
-                    (this.contextReady = !0), this.unblock();
+                    for (var e in ((this.context.contextLoaded = !0),
+                    this.putMessageOnPipe(
+                      "contextLoaded",
+                      {},
+                      {},
+                      { selfExecute: !1, direction: Te }
+                    ),
+                    this.instantiatedChannels))
+                      this.instantiatedChannels[e].recalcScratchValues();
+                    for (
+                      var t = 0;
+                      t < this.instantiatedCopiesUnblockingMethods.length;
+                      t++
+                    )
+                      this.instantiatedCopiesUnblockingMethods[t]();
+                    this.unblock();
                   },
                 },
                 {
@@ -6780,7 +6819,8 @@
                   key: "addContext",
                   value: function (e) {
                     (this.instantiatedCopiesContexts[e.clipId] = e.context),
-                      (e.instantiatedCopiesContexts = this.instantiatedCopiesContexts);
+                      (e.instantiatedCopiesContexts = this.instantiatedCopiesContexts),
+                      this.instantiatedCopiesUnblockingMethods.push(e.unblock);
                     var t = this.putMessageOnPipe(
                       "addContext",
                       e,
@@ -7189,7 +7229,7 @@
                       arguments.length > 3 &&
                       void 0 !== arguments[3] &&
                       arguments[3];
-                    if (this.contextReady) {
+                    if (!1 !== this.contextReady) {
                       for (var r in (n || (n = this.id),
                       this.instantiatedChannels)) {
                         var o = this.instantiatedChannels[r];
@@ -7222,6 +7262,12 @@
                 {
                   key: "handleRemoveBlockingWaiting",
                   value: function (e, t) {},
+                },
+                {
+                  key: "contextReady",
+                  get: function () {
+                    return this.context.contextLoaded;
+                  },
                 },
                 {
                   key: "context",
@@ -7450,7 +7496,10 @@
                 o.audioNode.connect(be.destination);
               var s = new vt(o.props.audioSources, o.audioNode);
               return (
-                (o.ownContext = l({}, s.context, { isHostedClip: !0 })),
+                (o.ownContext = l({}, s.context, {
+                  isHostedClip: !0,
+                  contextLoaded: !0,
+                })),
                 (o.audioClip = !0),
                 o
               );
@@ -7834,7 +7883,7 @@
               },
               { exportable: yt, name: "AudioEffect" },
             ],
-            Clip: gt,
+            Clip: { exportable: gt },
             audio: "only",
           },
           wt = ce(function (e, t) {
@@ -7912,19 +7961,19 @@
                 n
               );
             }
-            var S,
-              M,
+            var M,
+              S,
               B,
               A = Array.prototype,
               T = Function.prototype,
-              D = Object.prototype,
-              L = x["__core-js_shared__"],
+              L = Object.prototype,
+              D = x["__core-js_shared__"],
               V = T.toString,
-              z = D.hasOwnProperty,
-              N = (S = /[^.]+$/.exec((L && L.keys && L.keys.IE_PROTO) || ""))
-                ? "Symbol(src)_1." + S
+              z = L.hasOwnProperty,
+              N = (M = /[^.]+$/.exec((D && D.keys && D.keys.IE_PROTO) || ""))
+                ? "Symbol(src)_1." + M
                 : "",
-              $ = D.toString,
+              $ = L.toString,
               R = RegExp(
                 "^" +
                   V.call(z)
@@ -7938,16 +7987,16 @@
               H = _ ? x.Buffer : void 0,
               F = x.Symbol,
               G = x.Uint8Array,
-              W = D.propertyIsEnumerable,
+              W = L.propertyIsEnumerable,
               U = A.splice,
               q = F ? F.toStringTag : void 0,
               J = Object.getOwnPropertySymbols,
               K = H ? H.isBuffer : void 0,
               X =
-                ((M = Object.keys),
+                ((S = Object.keys),
                 (B = Object),
                 function (e) {
-                  return M(B(e));
+                  return S(B(e));
                 }),
               Q = Math.max,
               Z = je(x, "DataView"),
@@ -8040,8 +8089,8 @@
                   : (function (e, t, s, a, l, c) {
                       var u = He(e),
                         d = He(t),
-                        p = u ? "[object Array]" : Me(e),
-                        h = d ? "[object Array]" : Me(t),
+                        p = u ? "[object Array]" : Se(e),
+                        h = d ? "[object Array]" : Se(t),
                         f = (p = p == n ? r : p) == r,
                         m = (h = h == n ? r : h) == r,
                         v = p == h;
@@ -8177,7 +8226,7 @@
                 ? e
                 : Ae(e, t)
                 ? [e]
-                : Le(
+                : De(
                     (function (e) {
                       return null == e ? "" : Ce(e);
                     })(e)
@@ -8230,7 +8279,7 @@
                         e[r + n] = t[n];
                       return e;
                     })(i, n(e));
-              })(e, Xe, Se);
+              })(e, Xe, Me);
             }
             function Pe(e, t) {
               var n,
@@ -8372,7 +8421,7 @@
                 }
                 return n.set(e, t), (this.size = n.size), this;
               });
-            var Se = J
+            var Me = J
                 ? function (e) {
                     return null == e
                       ? []
@@ -8397,7 +8446,7 @@
                 : function () {
                     return [];
                   },
-              Me = xe;
+              Se = xe;
             function Be(e, t) {
               var n = typeof e;
               return (
@@ -8427,19 +8476,19 @@
             function Te(e) {
               return e == e && !Ue(e);
             }
-            function De(e, t) {
+            function Le(e, t) {
               return function (n) {
                 return (
                   null != n && n[e] === t && (void 0 !== t || e in Object(n))
                 );
               };
             }
-            ((Z && "[object DataView]" != Me(new Z(new ArrayBuffer(1)))) ||
-              (Y && Me(new Y()) != i) ||
-              (ee && "[object Promise]" != Me(ee.resolve())) ||
-              (te && Me(new te()) != o) ||
-              (ne && "[object WeakMap]" != Me(new ne()))) &&
-              (Me = function (e) {
+            ((Z && "[object DataView]" != Se(new Z(new ArrayBuffer(1)))) ||
+              (Y && Se(new Y()) != i) ||
+              (ee && "[object Promise]" != Se(ee.resolve())) ||
+              (te && Se(new te()) != o) ||
+              (ne && "[object WeakMap]" != Se(new ne()))) &&
+              (Se = function (e) {
                 var t = xe(e),
                   n = t == r ? e.constructor : void 0,
                   s = n ? ze(n) : "";
@@ -8458,7 +8507,7 @@
                   }
                 return t;
               });
-            var Le = (function (e) {
+            var De = (function (e) {
               var t = Ne(
                   function (e) {
                     var t = [];
@@ -8599,7 +8648,7 @@
                 : (function (e) {
                     if (
                       ((n = (t = e) && t.constructor),
-                      t !== (("function" == typeof n && n.prototype) || D))
+                      t !== (("function" == typeof n && n.prototype) || L))
                     )
                       return X(e);
                     var t,
@@ -8672,7 +8721,7 @@
                       ? He(e)
                         ? (function (e, t) {
                             return Ae(e) && Te(t)
-                              ? De(Ve(e), t)
+                              ? Le(Ve(e), t)
                               : function (n) {
                                   var i = (function (e, t, n) {
                                     var i = null == e ? void 0 : be(e, t);
@@ -8718,7 +8767,7 @@
                               return t;
                             })(e);
                             return 1 == t.length && t[0][2]
-                              ? De(t[0][0], t[0][1])
+                              ? Le(t[0][0], t[0][1])
                               : function (n) {
                                   return (
                                     n === e ||
@@ -9419,7 +9468,7 @@
               e
             );
           })(),
-          St = (function (e) {
+          Mt = (function (e) {
             c(n, e);
             var t = f(n);
             function n(e) {
@@ -9770,8 +9819,8 @@
               ),
               n
             );
-          })(Me),
-          Mt = (function () {
+          })(Se),
+          St = (function () {
             function e() {
               i(this, e), (this.customEntities = {});
             }
@@ -10006,7 +10055,7 @@
               );
             }
             return r;
-          })(Mt),
+          })(St),
           At = (function (e) {
             c(r, e);
             var t = f(r);
@@ -10048,39 +10097,41 @@
                   h(e, !1)
                 );
               e.isDOM = !0;
-              var s = o.host.attachShadow({ mode: "closed" }),
-                a = document.createElement("div");
-              Object.prototype.hasOwnProperty.call(o, "containerParams") &&
-                (Object.prototype.hasOwnProperty.call(
-                  o.containerParams,
-                  "width"
-                ) && (a.style.width = o.containerParams.width),
-                Object.prototype.hasOwnProperty.call(
-                  o.containerParams,
-                  "height"
-                ) && (a.style.height = o.containerParams.height)),
-                (a.innerHTML = Oe("".concat(o.html, "<slot></slot>"), {
-                  params: o.initParams,
-                })),
+              var s = o.host.shadowRoot;
+              s || (s = o.host.attachShadow({ mode: "open" }));
+              var a = document.createElement("div");
+              a.setAttribute("data-motorocortex-container", "true"),
+                Object.prototype.hasOwnProperty.call(o, "containerParams") &&
+                  (Object.prototype.hasOwnProperty.call(
+                    o.containerParams,
+                    "width"
+                  ) && (a.style.width = o.containerParams.width),
+                  Object.prototype.hasOwnProperty.call(
+                    o.containerParams,
+                    "height"
+                  ) && (a.style.height = o.containerParams.height)),
+                (a.innerHTML = Oe("".concat(o.html), { params: o.initParams })),
                 s.appendChild(a);
-              var l = document.createElement("style");
+              var l = document.createElement("slot");
+              s.appendChild(l);
+              var c = document.createElement("style");
               if (
-                ((l.type = "text/css"),
-                l.styleSheet
-                  ? (l.styleSheet.cssText = Oe(o.css, { params: o.initParams }))
-                  : l.appendChild(document.createTextNode(o.css)),
-                s.appendChild(l),
+                ((c.type = "text/css"),
+                c.styleSheet
+                  ? (c.styleSheet.cssText = Oe(o.css, { params: o.initParams }))
+                  : c.appendChild(document.createTextNode(o.css)),
+                s.appendChild(c),
                 (e.fontTags = []),
                 Object.prototype.hasOwnProperty.call(o, "fonts"))
               )
-                for (var c = 0; c < o.fonts.length; c++) {
-                  var u = o.fonts[c];
-                  if ("google-font" === u.type) {
-                    var d = document.createElement("link");
-                    d.setAttribute("rel", "stylesheet"),
-                      d.setAttribute("href", u.src),
-                      document.getElementsByTagName("head")[0].appendChild(d),
-                      e.fontTags.push(d);
+                for (var u = 0; u < o.fonts.length; u++) {
+                  var d = o.fonts[u];
+                  if ("google-font" === d.type) {
+                    var f = document.createElement("link");
+                    f.setAttribute("rel", "stylesheet"),
+                      f.setAttribute("href", d.src),
+                      document.getElementsByTagName("head")[0].appendChild(f),
+                      e.fontTags.push(f);
                   }
                 }
               return (
@@ -10093,7 +10144,7 @@
                   rootElement: a,
                   unmount: function () {
                     try {
-                      o.host.removeChild(s);
+                      s.innerHTML = "";
                       for (var e = 0; e < this.fontTags.length; e++)
                         document
                           .getElementsByTagName("head")[0]
@@ -10118,7 +10169,7 @@
               );
             }
             return r;
-          })(Mt),
+          })(St),
           Tt = (function (e) {
             c(n, e);
             var t = f(n);
@@ -10150,6 +10201,7 @@
               return (
                 (e.ownContext = l({}, u.context, {
                   isHostedClip: e.isHostedClip,
+                  contextLoaded: !0,
                 })),
                 (e.iframe = u.iframeElement),
                 (e.forceExportIncidents = !0),
@@ -10210,7 +10262,7 @@
               n
             );
           })(dt),
-          Dt = (function (e) {
+          Lt = (function (e) {
             c(r, e);
             var t = f(r);
             function r() {
@@ -10268,8 +10320,8 @@
               );
             }
             return r;
-          })(Mt),
-          Lt = (function (e) {
+          })(St),
+          Dt = (function (e) {
             c(n, e);
             var t = f(n);
             function n() {
@@ -10287,7 +10339,7 @@
               i(this, n),
                 null === a ? ((r = {}), (o = s)) : ((r = s), (o = a)),
                 (e = t.call(this, r, o));
-              var c = new Dt(
+              var c = new Lt(
                 l({}, o, {
                   html: Object.prototype.hasOwnProperty.call(o, "html")
                     ? o.html
@@ -10707,7 +10759,7 @@
                     static: !0,
                     key: "Channel",
                     value: function () {
-                      return Me;
+                      return Se;
                     },
                   },
                   {
@@ -10865,6 +10917,7 @@
                         Class: this.constructor,
                         attrs: JSON.parse(JSON.stringify(this.attrs)),
                         props: JSON.parse(JSON.stringify(this.props)),
+                        attrsValidationRules: this.attrsValidationRules || null,
                         incidents: {},
                       };
                       for (var t in this.children) {
@@ -11300,8 +11353,13 @@
                   arguments.length > 1 && void 0 !== arguments[1]
                     ? arguments[1]
                     : null;
-              i(this, n), null === a ? ((o = {}), (s = e)) : ((o = e), (s = a));
-              var c = (r = t.call(this, o, s))._validateProps();
+              if (
+                (i(this, n),
+                null === a ? ((o = {}), (s = e)) : ((o = e), (s = a)),
+                !1 === (r = t.call(this, o, s)).result)
+              )
+                return h(r, p(r));
+              var c = r._validateProps();
               if (!c.result) return h(r, c);
               (r.attrsValidationRules = {}),
                 (r.propsValidationRules = Kt),
@@ -11336,14 +11394,14 @@
                   void 0 !== s.selector &&
                   !0 !== r.constructor.customClip)
               )
-                u.Incident = Lt;
+                u.Incident = Dt;
               else if (
                 Object.prototype.hasOwnProperty.call(s, "selector") &&
                 void 0 !== s.selector &&
                 !0 === r.constructor.customClip
               ) {
                 delete u.props.selector;
-                var d = new Lt({ html: '<div id="clip-container"></div>' });
+                var d = new Dt({ html: '<div id="clip-container"></div>' });
                 (u.props.host = d.rootElement),
                   (u.Incident = r.constructor.Incident);
               } else
@@ -11420,6 +11478,17 @@
                       }),
                       { result: !0 }
                     );
+                  },
+                },
+                {
+                  key: "manageEditAttrProps",
+                  value: function (e, t) {
+                    return {
+                      result: !1,
+                      errors: [
+                        "Clips attributes and properties can not be edited",
+                      ],
+                    };
                   },
                 },
                 {
@@ -11692,7 +11761,7 @@
                     static: !0,
                     key: "Channel",
                     value: function () {
-                      return St;
+                      return Mt;
                     },
                   },
                   {
@@ -11807,15 +11876,17 @@
                         Class: this.constructor,
                         attrs: JSON.parse(JSON.stringify(this.attrs)),
                         props: JSON.parse(JSON.stringify(this.props)),
+                        attrsValidationRules: this.attrsValidationRules || null,
                       };
                     },
                   },
                 ],
               };
             },
-            Le
+            De
           ),
-          dn = (function () {
+          dn = ge(),
+          pn = (function () {
             function e(t) {
               if (
                 (i(this, e),
@@ -11887,7 +11958,7 @@
               e
             );
           })(),
-          pn = (function () {
+          hn = (function () {
             function e() {
               i(this, e), (this.memory = []);
             }
@@ -11897,7 +11968,7 @@
                   key: "startJourney",
                   value: function (e) {
                     return e
-                      ? new dn({ incident: e, calpuleMemory: this.memory })
+                      ? new pn({ incident: e, calpuleMemory: this.memory })
                       : (je.error(
                           "startJourney expects an Incident as an argument"
                         ),
@@ -11908,9 +11979,9 @@
               e
             );
           })(),
-          hn = ge(),
-          fn = new Pe({ logLevel: 0 });
-        function mn(e) {
+          fn = ge(),
+          mn = new Pe({ logLevel: 0 });
+        function vn(e) {
           if (
             (Object.prototype.hasOwnProperty.call(e, "default") &&
               (e = e.default),
@@ -11923,7 +11994,7 @@
                 i = !0;
               if (
                 (Object.prototype.hasOwnProperty.call(e, "name") ||
-                  fn.error(
+                  mn.error(
                     "Warning on plugin ".concat(
                       t,
                       '. A plugin is always good to have its name on\n        its main.js file, under the key "name". It\'s missing from this plugin'
@@ -11931,7 +12002,7 @@
                   ),
                 Object.prototype.hasOwnProperty.call(e, "incidents") ||
                   Object.prototype.hasOwnProperty.call(e, "Clip") ||
-                  (fn.error(
+                  (mn.error(
                     "Error on plugin ".concat(
                       t,
                       '. A plugin must expose at least one Incident or a Clip.\n        Exposed plugin Incidents should be defined on the "incidents" key of the main.js file while Clips on the "Clip".'
@@ -11941,7 +12012,7 @@
                 Object.prototype.hasOwnProperty.call(e, "incidents") &&
                   !Array.isArray(e.incidents))
               )
-                fn.error(
+                mn.error(
                   "Error on plugin ".concat(
                     t,
                     '. thePlugin exposed Incidents are defined on the "incidents" key of the main.js file in array format.\n        Please refer to the documentation'
@@ -11961,7 +12032,7 @@
                       o.exportable.prototype instanceof ln ||
                       o.exportable.prototype instanceof tt ||
                       o.exportable.prototype instanceof xt ||
-                      (fn.error(
+                      (mn.error(
                         "Error on plugin "
                           .concat(
                             t,
@@ -11974,7 +12045,7 @@
                       ),
                       (i = !1)),
                     Object.prototype.hasOwnProperty.call(o, "name") ||
-                      (fn.error(
+                      (mn.error(
                         "Error on plugin ".concat(
                           t,
                           '. Exportable Incidents by any plugin must have the "name" key which defines the name of the exported Incident.\n                Please refer to documentation'
@@ -11982,7 +12053,7 @@
                       ),
                       (i = !1)),
                     Object.prototype.hasOwnProperty.call(o, "propTypes") ||
-                      fn.log(
+                      mn.log(
                         "Warning on plugin "
                           .concat(
                             t,
@@ -12000,28 +12071,91 @@
           )
             return !1;
           var t = {};
-          if (Object.prototype.hasOwnProperty.call(e, "Clip")) {
-            var r,
-              o,
-              a =
-                ((o = r = (function (e) {
-                  c(n, e);
-                  var t = f(n);
-                  function n() {
-                    return i(this, n), t.apply(this, arguments);
+          if (Object.prototype.hasOwnProperty.call(e, "Clip"))
+            if (Object.prototype.hasOwnProperty.call(e.Clip, "exportable")) {
+              var r,
+                o,
+                a =
+                  ((o = r = (function (e) {
+                    c(n, e);
+                    var t = f(n);
+                    function n() {
+                      return i(this, n), t.apply(this, arguments);
+                    }
+                    return n;
+                  })(ln)),
+                  s(r, "Incident", e.Clip.exportable),
+                  s(r, "audio", e.audio ? e.audio : "off"),
+                  s(r, "customClip", !0),
+                  o);
+              t.Clip = function t(n, r) {
+                i(this, t);
+                var o = n,
+                  s = r;
+                void 0 === r && ((o = {}), (s = n));
+                var l = new a(o, s);
+                if (
+                  Object.prototype.hasOwnProperty.call(
+                    e.Clip,
+                    "attributesValidationRules"
+                  )
+                ) {
+                  var c = JSON.parse(
+                      JSON.stringify(e.Clip.attributesValidationRules)
+                    ),
+                    u = fn.validate(o, c);
+                  if (u.length > 0) {
+                    for (
+                      var d = "Error on plugin's \"".concat(
+                          e.npm_name,
+                          '" Clip instantiation. Errors:'
+                        ),
+                        p = 0;
+                      p < u.length;
+                      p++
+                    )
+                      d += "\n - "
+                        .concat(u[p].message, ". ")
+                        .concat(u[p].actual, " provided");
+                    return console.error(d), { result: !1, errors: u };
                   }
-                  return n;
-                })(ln)),
-                s(r, "Incident", e.Clip),
-                s(r, "audio", e.audio ? e.audio : "off"),
-                s(r, "customClip", !0),
-                o);
-            t.Clip = a;
-          }
-          var l = St;
+                  l.attrsValidationRules = e.Clip.attributesValidationRules;
+                } else
+                  mn.warning(
+                    "It's always good to provide attributesValidationRules to the exported incidents. "
+                      .concat(e.npm_name, ".")
+                      .concat(l.constructor.name, " doesn't provide it")
+                  );
+                return l;
+              };
+            } else {
+              var l,
+                u,
+                d =
+                  ((u = l = (function (e) {
+                    c(n, e);
+                    var t = f(n);
+                    function n() {
+                      return i(this, n), t.apply(this, arguments);
+                    }
+                    return n;
+                  })(ln)),
+                  s(l, "Incident", e.Clip),
+                  s(l, "audio", e.audio ? e.audio : "off"),
+                  s(l, "customClip", !0),
+                  u);
+              mn.warning(
+                "It's always good to provide attributesValidationRules to the exported incidents. ".concat(
+                  e.npm_name,
+                  ".Clip doesn't provide it"
+                )
+              ),
+                (t.Clip = d);
+            }
+          var p = Mt;
           if (
             (Object.prototype.hasOwnProperty.call(e, "compositeAttributes") &&
-              (l = (function (t) {
+              (p = (function (t) {
                 c(r, t);
                 var n = f(r);
                 function r(t) {
@@ -12032,15 +12166,15 @@
                   );
                 }
                 return r;
-              })(St)),
+              })(Mt)),
             Object.prototype.hasOwnProperty.call(e, "incidents"))
           )
             for (
-              var u = function (n) {
+              var h = function (n) {
                   var r,
                     o,
                     a = e.incidents[n].exportable,
-                    u = void 0;
+                    l = void 0;
                   if (a.prototype instanceof tt)
                     (o = r = (function (e) {
                       c(n, e);
@@ -12054,12 +12188,12 @@
                       s(r, "plugin_npm_name", e.npm_name),
                       s(r, "plugin", e.npm_name),
                       s(r, "ClassName", e.incidents[n].name),
-                      s(r, "Channel", l),
+                      s(r, "Channel", p),
                       s(r, "audio", e.audio ? e.audio : "off"),
-                      (u = o);
+                      (l = o);
                   else if (a.prototype instanceof xt) {
-                    var d, p;
-                    (p = d = (function (e) {
+                    var u, d;
+                    (d = u = (function (e) {
                       c(n, e);
                       var t = f(n);
                       function n() {
@@ -12067,13 +12201,13 @@
                       }
                       return n;
                     })(un)),
-                      s(d, "Incident", a),
-                      s(d, "plugin_npm_name", "@kissmybutton/media-playback"),
-                      s(d, "plugin", e.npm_name),
-                      s(d, "ClassName", e.incidents[n].name),
-                      s(d, "Channel", bt),
-                      s(d, "audio", e.audio ? e.audio : "off"),
-                      (u = p);
+                      s(u, "Incident", a),
+                      s(u, "plugin_npm_name", "@kissmybutton/media-playback"),
+                      s(u, "plugin", e.npm_name),
+                      s(u, "ClassName", e.incidents[n].name),
+                      s(u, "Channel", bt),
+                      s(u, "audio", e.audio ? e.audio : "off"),
+                      (l = d);
                   } else if (a.prototype instanceof ln) {
                     var h, m;
                     (m = h = (function (e) {
@@ -12087,7 +12221,7 @@
                       s(h, "plugin", e.npm_name),
                       s(h, "ClassName", e.incidents[n].name),
                       s(h, "audio", e.audio ? e.audio : "on"),
-                      (u = m);
+                      (l = m);
                   } else if (a.prototype instanceof on) {
                     var v, g;
                     (g = v = (function (e) {
@@ -12100,13 +12234,13 @@
                     })(a)),
                       s(v, "plugin", e.npm_name),
                       s(v, "ClassName", e.incidents[n].name),
-                      (u = g);
+                      (l = g);
                   }
                   Object.defineProperty(t, e.incidents[n].name, {
                     get: function () {
                       return function t(r, o) {
                         i(this, t);
-                        var s = new u(r, o);
+                        var s = new l(r, o);
                         if (
                           Object.prototype.hasOwnProperty.call(
                             e.incidents[n],
@@ -12122,31 +12256,31 @@
                             e.incidents[n].attributesValidationRules,
                             "animatedAttrs"
                           ) &&
-                            (a.initialValues = fn.buildInitialValuesValidationRules(
+                            (a.initialValues = mn.buildInitialValuesValidationRules(
                               a.animatedAttrs
                             ));
-                          var l = hn.validate(r, a);
-                          if (l.length > 0) {
+                          var c = fn.validate(r, a);
+                          if (c.length > 0) {
                             for (
-                              var c = "Error on plugin's \""
+                              var u = "Error on plugin's \""
                                   .concat(e.npm_name, '" "')
                                   .concat(
                                     e.incidents[n].name,
                                     '" instantiation. Errors:'
                                   ),
                                 d = 0;
-                              d < l.length;
+                              d < c.length;
                               d++
                             )
-                              c += "\n - "
-                                .concat(l[d].message, ". ")
-                                .concat(l[d].actual, " provided");
-                            return console.error(c), { result: !1, errors: l };
+                              u += "\n - "
+                                .concat(c[d].message, ". ")
+                                .concat(c[d].actual, " provided");
+                            return console.error(u), { result: !1, errors: c };
                           }
                           s.attrsValidationRules =
                             e.incidents[n].attributesValidationRules;
                         } else
-                          fn.warning(
+                          mn.warning(
                             "It's always good to provide attributesValidationRules to the exported incidents. "
                               .concat(e.npm_name, ".")
                               .concat(s.constructor.name, " doesn't provide it")
@@ -12156,56 +12290,71 @@
                     },
                   });
                 },
-                d = 0;
-              d < e.incidents.length;
-              d++
+                m = 0;
+              m < e.incidents.length;
+              m++
             )
-              u(d);
+              h(m);
           return t;
         }
-        var vn = mn(kt),
-          gn = ln,
-          yn = on,
-          bn = vn.Clip,
-          xn = vn.AudioPlayback,
-          kn = {
+        var gn = vn(kt),
+          yn = ln,
+          bn = on,
+          xn = gn.Clip,
+          kn = gn.AudioPlayback,
+          wn = {
             MonoIncident: tt,
-            Group: yn,
-            Clip: gn,
+            Group: bn,
+            Clip: yn,
             AudioClip: cn,
             MediaPlayback: xt,
             ExtendableClip: dt,
             DOMClip: Tt,
             easings: rt,
             clipFromDefinition: function e(t) {
-              var n = new t.Class(t.attrs, t.props);
-              if (Object.prototype.hasOwnProperty.call(t, "incidents"))
-                for (var i in t.incidents) {
-                  var r = t.incidents[i],
-                    o = e(r.leaf);
-                  n.addIncident(o, r.position);
+              if (
+                null !== t.attrsValidationRules &&
+                void 0 !== t.attrsValidationRules
+              ) {
+                var n = dn.validate(t.attrs, t.attrsValidationRules);
+                if (!0 !== n) return { result: !1, errors: n };
+              }
+              var i = new t.Class(t.attrs, t.props);
+              if (!1 === i.result) return i;
+              if (
+                (null !== t.attrsValidationRules &&
+                  void 0 !== t.attrsValidationRules &&
+                  (i.attrsValidationRules = t.attrsValidationRules),
+                Object.prototype.hasOwnProperty.call(t, "incidents"))
+              )
+                for (var r in t.incidents) {
+                  var o = t.incidents[r],
+                    s = e(o.leaf);
+                  if (!1 === s.result) return s;
+                  var a = i.addIncident(s, o.position);
+                  if (!1 === a.result) return a;
                 }
-              return n;
+              return i;
             },
           },
-          wn = {
-            API: kn,
-            Group: yn,
-            Clip: gn,
-            loadPlugin: mn,
-            AudioClip: bn,
-            AudioPlayback: xn,
-            AudioEffect: vn.AudioEffect,
-            TimeCapsule: pn,
+          _n = {
+            API: wn,
+            Group: bn,
+            Clip: yn,
+            loadPlugin: vn,
+            AudioClip: xn,
+            AudioPlayback: kn,
+            AudioEffect: gn.AudioEffect,
+            TimeCapsule: hn,
           };
-        (t.API = kn),
-          (t.AudioClip = bn),
-          (t.AudioPlayback = xn),
-          (t.Clip = gn),
-          (t.Group = yn),
-          (t.TimeCapsule = pn),
-          (t.default = wn),
-          (t.loadPlugin = mn),
+        (t.API = wn),
+          (t.AudioClip = xn),
+          (t.AudioPlayback = kn),
+          (t.Clip = yn),
+          (t.Group = bn),
+          (t.TimeCapsule = hn),
+          (t.default = _n),
+          (t.loadPlugin = vn),
           Object.defineProperty(t, "__esModule", { value: !0 });
       })(t);
     }.call(this, n(2)));
@@ -12592,15 +12741,15 @@
         return !1;
       }
       var j = n,
-        S = r,
-        M = o,
+        M = r,
+        S = o,
         B = function (e) {
           return document.querySelectorAll(e);
         },
         A = n,
         T = new e.TimeCapsule(),
-        D = n,
-        L = function (e) {
+        L = n,
+        D = function (e) {
           return document.getElementsByTagName(e);
         },
         V = i;
@@ -13193,7 +13342,7 @@
             {
               key: "eventBroadcast",
               value: function (e, t) {
-                var n = D("".concat(this.name, "-controls"));
+                var n = L("".concat(this.name, "-controls"));
                 "state-change" === e
                   ? "paused" === t ||
                     "idle" === t ||
@@ -14319,27 +14468,27 @@
                             (t(),
                             (e.elements.loopBar.onmouseover = e.elements.loopBar.onmouseout = t),
                             (e.elements.loopBar.onmousemove = i),
-                            M("mouseup", n, !1),
-                            M("touchend", n, !1),
-                            M("mousemove", i, !1),
-                            M("touchmove", i, !1));
+                            S("mouseup", n, !1),
+                            S("touchend", n, !1),
+                            S("mousemove", i, !1),
+                            S("touchmove", i, !1));
                         };
                       (e.elements.loopBar.onmouseover = e.elements.loopBar.onmouseout = t),
                         (e.elements.loopBar.onmousedown = function () {
                           e.options.preview &&
                             ((e.elements.loopBar.onmouseover = e.elements.loopBar.onmouseout = null),
                             (e.elements.loopBar.onmousemove = null),
-                            S("mouseup", n, !1),
-                            S("touchend", n, !1),
-                            S("mousemove", i, !1),
-                            S("touchmove", i, !1));
+                            M("mouseup", n, !1),
+                            M("touchend", n, !1),
+                            M("mousemove", i, !1),
+                            M("touchmove", i, !1));
                         }),
                         (e.elements.loopBar.onmouseup = function () {
                           e.options.preview &&
-                            (M("mouseup", n, !1),
-                            M("touchend", n, !1),
-                            M("mousemove", i, !1),
-                            M("touchmove", i, !1),
+                            (S("mouseup", n, !1),
+                            S("touchend", n, !1),
+                            S("mousemove", i, !1),
+                            S("touchmove", i, !1),
                             (e.elements.loopBar.onmouseover = e.elements.loopBar.onmouseout = t),
                             (e.elements.loopBar.onmousemove = i));
                         });
@@ -14947,7 +15096,7 @@
                 o.styleSheet
                   ? (o.styleSheet.cssText = r)
                   : o.appendChild(document.createTextNode(r)),
-                  L("head")[0].appendChild(o);
+                  D("head")[0].appendChild(o);
               },
             },
             {
@@ -14978,7 +15127,7 @@
                     1) *
                   (this.options.speedValues.length - 1) *
                   16;
-                D("".concat(this.name, "-speed-cursor")).style.top = n + "px";
+                L("".concat(this.name, "-speed-cursor")).style.top = n + "px";
               },
             },
             {
@@ -14997,9 +15146,9 @@
               key: "createPreviewDisplay",
               value: function () {
                 this.previewClip = this.clip.paste(
-                  D("".concat(this.name, "-hover-display"))
+                  L("".concat(this.name, "-hover-display"))
                 );
-                var e = D("".concat(this.name, "-hover-display"));
+                var e = L("".concat(this.name, "-hover-display"));
                 (window.previewClip = this.previewClip),
                   (e.style.position = "absolute"),
                   (e.style.zIndex = 1),
@@ -15015,9 +15164,9 @@
                   i = e.offsetHeight,
                   r = n * this.previewScale;
                 r > 300 && ((r = 300), (this.previewScale = r / n)),
-                  (D("".concat(this.name, "-hover-display")).style.width =
+                  (L("".concat(this.name, "-hover-display")).style.width =
                     n + "px"),
-                  (D("".concat(this.name, "-hover-display")).style.height =
+                  (L("".concat(this.name, "-hover-display")).style.height =
                     i + "px"),
                   (t.style.transform = "scale(".concat(this.previewScale, ")")),
                   (t.style.transformOrigin = "center bottom"),
@@ -15422,7 +15571,30 @@
             },
           ],
           compositeAttributes: h,
-          Clip: d,
+          Clip: {
+            exportable: d,
+            attributesValidationRules: {
+              sources: {
+                optional: !1,
+                type: "array",
+                min: 1,
+                items: { type: "string" },
+              },
+              width: {
+                optional: !0,
+                type: "number",
+                integer: !0,
+                positive: !0,
+              },
+              height: {
+                optional: !0,
+                type: "number",
+                integer: !0,
+                positive: !0,
+              },
+              startFrom: { optional: !0, type: "number", integer: !0, min: 0 },
+            },
+          },
           capabilities: { speed: !1, preview: !1 },
         },
         v = m.npm_name,
