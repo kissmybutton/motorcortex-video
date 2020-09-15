@@ -11,7 +11,7 @@
   };
   var n,
     i = !0,
-    r = "b155e3bc0c8dd7de517b",
+    r = "7a123942ff6e78aa2720",
     o = {},
     s = [],
     a = [];
@@ -15510,11 +15510,14 @@
             (e.exports = o));
     })(0, function (e, t) {
       "use strict";
-      function n(e, t) {
+      var n = (function (e) {
+        return e && "object" == s(e) && "default" in e ? e : { default: e };
+      })(t);
+      function i(e, t) {
         if (!(e instanceof t))
           throw new TypeError("Cannot call a class as a function");
       }
-      function i(e, t) {
+      function r(e, t) {
         for (var n = 0; n < t.length; n++) {
           var i = t[n];
           (i.enumerable = i.enumerable || !1),
@@ -15523,10 +15526,10 @@
             Object.defineProperty(e, i.key, i);
         }
       }
-      function r(e, t, n) {
-        return t && i(e.prototype, t), n && i(e, n), e;
+      function o(e, t, n) {
+        return t && r(e.prototype, t), n && r(e, n), e;
       }
-      function o(e, t) {
+      function a(e, t) {
         if ("function" != typeof t && null !== t)
           throw new TypeError(
             "Super expression must either be null or a function"
@@ -15544,27 +15547,12 @@
               )(e, t);
             })(e, t);
       }
-      function a(e) {
-        return (a = Object.setPrototypeOf
+      function l(e) {
+        return (l = Object.setPrototypeOf
           ? Object.getPrototypeOf
           : function (e) {
               return e.__proto__ || Object.getPrototypeOf(e);
             })(e);
-      }
-      function l() {
-        if ("undefined" == typeof Reflect || !Reflect.construct) return !1;
-        if (Reflect.construct.sham) return !1;
-        if ("function" == typeof Proxy) return !0;
-        try {
-          return (
-            Date.prototype.toString.call(
-              Reflect.construct(Date, [], function () {})
-            ),
-            !0
-          );
-        } catch (e) {
-          return !1;
-        }
       }
       function c(e, t) {
         return !t || ("object" != s(t) && "function" != typeof t)
@@ -15578,24 +15566,39 @@
           : t;
       }
       function u(e) {
+        var t = (function () {
+          if ("undefined" == typeof Reflect || !Reflect.construct) return !1;
+          if (Reflect.construct.sham) return !1;
+          if ("function" == typeof Proxy) return !0;
+          try {
+            return (
+              Date.prototype.toString.call(
+                Reflect.construct(Date, [], function () {})
+              ),
+              !0
+            );
+          } catch (e) {
+            return !1;
+          }
+        })();
         return function () {
-          var t,
-            n = a(e);
-          if (l()) {
-            var i = a(this).constructor;
-            t = Reflect.construct(n, arguments, i);
-          } else t = n.apply(this, arguments);
-          return c(this, t);
+          var n,
+            i = l(e);
+          if (t) {
+            var r = l(this).constructor;
+            n = Reflect.construct(i, arguments, r);
+          } else n = i.apply(this, arguments);
+          return c(this, n);
         };
       }
       var d = (function (e) {
-          o(i, e);
-          var t = u(i);
-          function i() {
-            return n(this, i), t.apply(this, arguments);
+          a(n, e);
+          var t = u(n);
+          function n() {
+            return i(this, n), t.apply(this, arguments);
           }
           return (
-            r(i, [
+            o(n, [
               {
                 key: "onAfterRender",
                 value: function () {
@@ -15657,22 +15660,17 @@
                 },
               },
             ]),
-            i
+            n
           );
-        })(
-          (t =
-            t && Object.prototype.hasOwnProperty.call(t, "default")
-              ? t.default
-              : t).API.DOMClip
-        ),
+        })(n.default.API.DOMClip),
         p = (function (e) {
-          o(i, e);
-          var t = u(i);
-          function i() {
-            return n(this, i), t.apply(this, arguments);
+          a(n, e);
+          var t = u(n);
+          function n() {
+            return i(this, n), t.apply(this, arguments);
           }
           return (
-            r(i, [
+            o(n, [
               {
                 key: "play",
                 value: function () {
@@ -15734,9 +15732,9 @@
                 },
               },
             ]),
-            i
+            n
           );
-        })(t.API.MediaPlayback),
+        })(n.default.API.MediaPlayback),
         h = {
           filter: [
             "blur",
@@ -15758,13 +15756,13 @@
             { exportable: p, name: "Playback" },
             {
               exportable: (function (e) {
-                o(i, e);
-                var t = u(i);
-                function i() {
-                  return n(this, i), t.apply(this, arguments);
+                a(n, e);
+                var t = u(n);
+                function n() {
+                  return i(this, n), t.apply(this, arguments);
                 }
                 return (
-                  r(i, [
+                  o(n, [
                     {
                       key: "getScratchValue",
                       value: function () {
@@ -15829,9 +15827,9 @@
                       },
                     },
                   ]),
-                  i
+                  n
                 );
-              })(t.API.MonoIncident),
+              })(n.default.API.MonoIncident),
               name: "VideoEffect",
               attributesValidationRules: {
                 animatedAttrs: {
