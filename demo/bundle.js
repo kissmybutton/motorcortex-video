@@ -11,7 +11,7 @@
   };
   var n,
     i = !0,
-    r = "7a123942ff6e78aa2720",
+    r = "04168445f951b46b4ac2",
     o = {},
     s = [],
     a = [];
@@ -1261,14 +1261,14 @@
                 ),
               null != e.length &&
                 o.push(
-                  `\n\t\t\tif (len !== ${
-                    e.length
-                  }) {\n\t\t\t\t${this.makeError({
-                    type: "arrayLength",
-                    expected: e.length,
-                    actual: "len",
-                    messages: t,
-                  })}\n\t\t\t}\n\t\t`
+                  `\n\t\t\tif (len !== ${e.length}) {\n\t\t\t\t${this.makeError(
+                    {
+                      type: "arrayLength",
+                      expected: e.length,
+                      actual: "len",
+                      messages: t,
+                    }
+                  )}\n\t\t\t}\n\t\t`
                 ),
               null != e.contains &&
                 o.push(
@@ -12292,6 +12292,7 @@
                     return n;
                   })(pn)),
                   s(r, "Incident", e.Clip.exportable),
+                  s(r, "plugin", e.npm_name),
                   s(r, "audio", e.audio ? e.audio : "off"),
                   s(r, "customClip", !0),
                   o);
@@ -12508,7 +12509,7 @@
               m++
             )
               h(m);
-          return t;
+          return console.log(t), t;
         }
         var kn = xn(It),
           wn = pn,
@@ -12583,6 +12584,7 @@
         html: '<div id="video-container"></div>',
         css:
           "\n        #video-container{\n            width: 1280px;\n            height: 720px;\n        }\n    ",
+        containerParams: { width: "1280px", height: "720px" },
       }),
       l = new s.Clip(
         {
@@ -12628,7 +12630,9 @@
       l.addIncident(h, 1e4),
       l.addIncident(f, 14e3),
       l.addIncident(m, 16e3),
-      new r({ clip: a });
+      new r({ clip: a }),
+      console.log("exportDefinition", a.exportDefinition()),
+      console.log("exportLiveDefinition", a.exportLiveDefinition());
   },
   function (e, t) {
     var n;

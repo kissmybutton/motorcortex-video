@@ -15,6 +15,10 @@ const MyClip = new MotorCortex.Clip({
             height: 720px;
         }
     `,
+  containerParams: {
+    width: "1280px",
+    height: "720px",
+  },
 });
 
 const VideoClip = new VideoPlugin.Clip(
@@ -135,6 +139,7 @@ VideoClip.addIncident(Effect5, 14000);
 VideoClip.addIncident(Effect6, 16000);
 
 new Player({ clip: MyClip });
+
 ``;
 
 /****** 2 ********/
