@@ -71,4 +71,7 @@ module.exports = {
     contentBase: "./demo",
     open: true,
   },
+  node: {
+    fs: "empty",
+  }
 };
