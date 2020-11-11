@@ -1,7 +1,7 @@
 const MotorCortex = require("@kissmybutton/motorcortex");
 const effects = require("../compositeAttributes").filter;
 
-class VideoEffect extends MotorCortex.API.MonoIncident {
+class VideoEffect extends MotorCortex.Effect {
   getScratchValue() {
     return {
       blur: 0,

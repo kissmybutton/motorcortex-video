@@ -5,7 +5,7 @@ const VideoPlugin = MotorCortex.loadPlugin(VideoPluginDefinition);
 
 /**** 1 ******/
 /***** CASI ******/
-const MyClip = new MotorCortex.Clip({
+const MyClip = new MotorCortex.HTMLClip({
   host: document.getElementById("clip"),
   id: "my-root-clip",
   html: `<div id="video-container"></div>`,

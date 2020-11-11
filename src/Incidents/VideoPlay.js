@@ -1,6 +1,6 @@
 const MC = require("@kissmybutton/motorcortex");
 
-class VideoPlay extends MC.API.MediaPlayback {
+class VideoPlay extends MC.MediaPlayback {
   play(/*millisecond*/) {
     const video = this.element.entity.video;
     const ctx = this.element.entity.ctx;

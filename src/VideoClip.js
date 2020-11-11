@@ -1,6 +1,6 @@
 const MC = require("@kissmybutton/motorcortex");
 
-class VideoClip extends MC.API.DOMClip {
+class VideoClip extends MC.BrowserClip {
   get html() {
     return `
         <div>
