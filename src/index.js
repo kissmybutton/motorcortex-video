@@ -1,10 +1,13 @@
-const VideoClip = require("./VideoClip");
-const VideoPlay = require("./Incidents/VideoPlay");
-const VideoEffect = require("./Incidents/Effect");
-const compositeAttributes = require("./compositeAttributes");
+import VideoClip from "./VideoClip"
+import VideoPlay from "./Incidents/VideoPlay"
+import VideoEffect from "./Incidents/Effect"
+import compositeAttributes from "./compositeAttributes"
 
-module.exports = {
-  npm_name: "@kissmybutton/motorcortex-video",
+const pkg = require("../package.json");
+
+export default {
+  npm_name: pkg.name,
+  version: pkg.version,
   incidents: [
     {
       exportable: VideoPlay,
