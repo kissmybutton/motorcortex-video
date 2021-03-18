@@ -139,7 +139,7 @@ VideoClip.addIncident(Effect5, 14000);
 VideoClip.addIncident(Effect6, 16000);
 
 new Player({ clip: MyClip });
-
+console.log(JSON.stringify(MyClip.exportDefinition()))
 ``;
 
 /****** 2 ********/
