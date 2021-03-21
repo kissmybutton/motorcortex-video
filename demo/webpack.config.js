@@ -14,7 +14,7 @@ module.exports = {
     filename: "bundle.js",
     // the output bundle
 
-    path: path.resolve(__dirname, "./" /*"./dist"*/),
+    path: path.resolve(__dirname, "./"),
   },
 
   module: {
@@ -38,10 +38,6 @@ module.exports = {
           {
             loader: "css-loader",
             options: { sourceMap: true }, // translates CSS into CommonJS
-          },
-          {
-            loader: "sass-loader",
-            options: { sourceMap: true }, // compiles Sass to CSS
           },
         ],
       },
@@ -73,5 +69,5 @@ module.exports = {
   },
   node: {
     fs: "empty",
-  }
+  },
 };
