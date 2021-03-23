@@ -138,4 +138,4 @@ VideoClip.addIncident(Playback, 0);
 VideoClip.addIncident(Effect, 1000);
 ```
 
-[Demo:](https://kissmybutton.github.io/motorcortex-video/demo/)
+Demo:[https://kissmybutton.github.io/motorcortex-video/demo/](https://kissmybutton.github.io/motorcortex-video/demo/)
