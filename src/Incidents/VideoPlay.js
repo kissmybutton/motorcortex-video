@@ -1,9 +1,8 @@
-const MC = require("@kissmybutton/motorcortex");
+import MC from "@kissmybutton/motorcortex";
 
-class VideoPlay extends MC.MediaPlayback {
+export default class VideoPlay extends MC.MediaPlayback {
   play(/*millisecond*/) {
     const video = this.element.entity.video;
-    const ctx = this.element.entity.ctx;
 
     video.play();
     if (this.hasSetWaitingListener !== true) {
@@ -15,16 +14,17 @@ class VideoPlay extends MC.MediaPlayback {
       this.hasSetCanplayListener = true;
     }
 
-    const drawFrame = (video) => {
-      ctx.drawImage(video, 0, 0);
-
-      this.timeout = setTimeout(function () {
-        drawFrame(video);
-      }, 10);
-    };
-    drawFrame(video);
+    this.drawFrame(video);
 
     return true;
+  }
+
+  drawFrame(video) {
+    const ctx = this.element.entity.ctx;
+    ctx.drawImage(video, 0, 0);
+    this.timeout = setTimeout(() => {
+      this.drawFrame(video);
+    }, 10);
   }
 
   waitingHandler() {
@@ -46,5 +46,3 @@ class VideoPlay extends MC.MediaPlayback {
     this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);
   }
 }
-
-module.exports = VideoPlay;

@@ -1,9 +1,9 @@
-const MotorCortex = require("@kissmybutton/motorcortex");
-const Player = require("@kissmybutton/motorcortex-player");
-const VideoPluginDefinition = require("../dist/motorcortex-video.umd");
-const VideoPlugin = MotorCortex.loadPlugin(VideoPluginDefinition);
+import { HTMLClip, loadPlugin } from "@kissmybutton/motorcortex";
+import Player from "@kissmybutton/motorcortex-player";
+import VideoPluginDefinition from "../src/";
+const VideoPlugin = loadPlugin(VideoPluginDefinition);
 
-const MyClip = new MotorCortex.HTMLClip({
+const MyClip = new HTMLClip({
   host: document.getElementById("clip"),
   id: "my-root-clip",
   html: `<div id="video-container"></div>`,
