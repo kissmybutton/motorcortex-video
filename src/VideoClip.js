@@ -2,32 +2,31 @@ const MC = require("@kissmybutton/motorcortex");
 
 class VideoClip extends MC.BrowserClip {
   get html() {
+    this.width = this.attrs.width || 640;
+    this.height = this.attrs.height || 360;
+    this.startFrom = this.attrs.startFrom || 0;
+
+    const videoStyle = `width:${this.width}px;height:${this.height}px;`;
+    const videoSources = this.attrs.sources
+      .map((item) => `<source src="${item}#t=${this.startFrom}"></source>`)
+      .join("\n");
+
     return `
-        <div>
-            <video id="video" style="width:${
-              this.attrs.width || 640
-            }px;height:${this.attrs.height || 360}px;" preload="auto">
-                ${this.attrs.sources
-                  .map(
-                    (item /*, i*/) => `
-                    <source src="${item}#t=${
-                      this.attrs.startFrom || 0
-                    }"></source>
-                `
-                  )
-                  .join("")}
-            </video>
-            <canvas id="canvas"></canvas>
-        </div>
-        `;
+      <div>
+          <video id="video" style="${videoStyle}" preload="auto">
+              ${videoSources}
+          </video>
+          <canvas id="canvas"></canvas>
+      </div>
+    `;
   }
 
   get css() {
     return `
-            #video{
-                display:none;
-            }
-        `;
+      #video{
+        display:none;
+      }
+    `;
   }
 
   onAfterRender() {
@@ -35,16 +34,12 @@ class VideoClip extends MC.BrowserClip {
     video.muted = true;
     const canvas = this.context.getElements("canvas")[0];
     const ctx = canvas.getContext("2d");
-
+    const scaleX = this.width / video.videoWidth;
+    const scaleY = this.width / video.videoWidth;
     video.addEventListener(
       "loadedmetadata",
       () => {
-        const canvasWidth = this.attrs.width || 640;
-        const canvasHeight = this.attrs.height || 360;
-        canvas.style.transform = `scale(${canvasWidth / video.videoWidth}, ${
-          canvasHeight / video.videoHeight
-        })`;
-        // canvas.style['transform-origin'] = "top left";
+        canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
       },
@@ -55,7 +50,7 @@ class VideoClip extends MC.BrowserClip {
       video,
       canvas,
       ctx,
-      startFrom: this.attrs.startFrom * 1000 || 0,
+      startFrom: this.startFrom,
     });
   }
 }

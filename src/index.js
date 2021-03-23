@@ -1,9 +1,9 @@
-import VideoClip from "./VideoClip"
-import VideoPlay from "./Incidents/VideoPlay"
-import VideoEffect from "./Incidents/Effect"
-import compositeAttributes from "./compositeAttributes"
+import VideoClip from "./VideoClip";
+import VideoPlay from "./Incidents/VideoPlay";
+import VideoEffect from "./Incidents/Effect";
+import compositeAttributes from "./compositeAttributes";
 
-import {name,version}  from '../package.json'
+import { name, version } from "../package.json";
 
 export default {
   npm_name: name,

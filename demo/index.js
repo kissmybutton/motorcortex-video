@@ -3,18 +3,16 @@ const Player = require("@kissmybutton/motorcortex-player");
 const VideoPluginDefinition = require("../dist/motorcortex-video.umd");
 const VideoPlugin = MotorCortex.loadPlugin(VideoPluginDefinition);
 
-/**** 1 ******/
-/***** CASI ******/
 const MyClip = new MotorCortex.HTMLClip({
   host: document.getElementById("clip"),
   id: "my-root-clip",
   html: `<div id="video-container"></div>`,
   css: `
-        #video-container{
-            width: 1280px;
-            height: 720px;
-        }
-    `,
+    #video-container{
+        width: 1280px;
+        height: 720px;
+    }
+  `,
   containerParams: {
     width: "1280px",
     height: "720px",
@@ -36,7 +34,7 @@ const VideoClip = new VideoPlugin.Clip(
   }
 );
 
-const Playback1 = new VideoPlugin.Playback({
+const Playback = new VideoPlugin.Playback({
   selector: "!#video",
   duration: 25000,
 });
@@ -130,7 +128,7 @@ const Effect6 = new VideoPlugin.VideoEffect(
 );
 
 MyClip.addIncident(VideoClip, 0);
-VideoClip.addIncident(Playback1, 500);
+VideoClip.addIncident(Playback, 500);
 VideoClip.addIncident(Effect1, 1000);
 VideoClip.addIncident(Effect2, 3000);
 VideoClip.addIncident(Effect3, 5000);
@@ -139,26 +137,3 @@ VideoClip.addIncident(Effect5, 14000);
 VideoClip.addIncident(Effect6, 16000);
 
 new Player({ clip: MyClip });
-console.log(JSON.stringify(MyClip.exportDefinition()))
-``;
-
-/****** 2 ********/
-/****** SELF HOSTED ******/
-// const VideoClip = new VideoPlugin.Clip({
-//     sources: ["https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"],
-//     startFrom: 50,
-//     width: 640,
-//     height: 360
-// }, {
-//     host: document.getElementById("video-container"),
-//     id: 'videoClip'
-// });
-
-// const Playback1 = new VideoPlugin.Playback({}, {
-//     selector: "!#video",
-//     duration: 15000
-// });
-
-// VideoClip.addIncident(Playback1, 500);
-
-// new Player({ clip: VideoClip });
