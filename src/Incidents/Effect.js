@@ -4,51 +4,51 @@ const effects = require("../compositeAttributes").filter;
 class VideoEffect extends MotorCortex.Effect {
   getScratchValue() {
     return {
-      blur: 0,
-      brightness: 1,
+      opacity: 1,
       contrast: 1,
+      saturate: 1,
+      brightness: 1,
+      blur: 0,
+      sepia: 0,
+      invert: 0,
       grayscale: 0,
       "hue-rotate": 0,
-      invert: 0,
-      opacity: 1,
-      saturate: 1,
-      sepia: 0,
     };
   }
 
-  get _effectsUnits() {
+  get effectsUnits() {
     return {
-      blur: "px",
-      brightness: "",
+      opacity: "",
       contrast: "",
+      saturate: "",
+      brightness: "",
+      blur: "px",
+      sepia: "",
+      invert: "",
       grayscale: "",
       "hue-rotate": "deg",
-      invert: "",
-      opacity: "",
-      saturate: "",
-      sepia: "",
     };
   }
 
-  _objToFilterValue(obj) {
+  objToFilterValue(obj) {
     let string = "";
     for (const filter in obj) {
-      string += `${filter}(${obj[filter]}${this._effectsUnits[filter]}) `;
+      string += `${filter}(${obj[filter]}${this.effectsUnits[filter]}) `;
     }
     return string;
   }
 
-  onProgress(f /*, m*/) {
+  onProgress(fraction) {
     const targetValues = Object.assign({}, this.initialValue);
-    for (let i = 0; i < effects.length; i++) {
+    for (const i in effects) {
       const effect = effects[i];
       if (this.initialValue[effect] !== this.targetValue[effect]) {
         targetValues[effect] =
-          f * (this.targetValue[effect] - this.initialValue[effect]) +
+          fraction * (this.targetValue[effect] - this.initialValue[effect]) +
           this.initialValue[effect];
       }
     }
-    this.element.entity.ctx.filter = this._objToFilterValue(targetValues);
+    this.element.entity.ctx.filter = this.objToFilterValue(targetValues);
   }
 }
 

@@ -139,26 +139,3 @@ VideoClip.addIncident(Effect5, 14000);
 VideoClip.addIncident(Effect6, 16000);
 
 new Player({ clip: MyClip });
-console.log(JSON.stringify(MyClip.exportDefinition()))
-``;
-
-/****** 2 ********/
-/****** SELF HOSTED ******/
-// const VideoClip = new VideoPlugin.Clip({
-//     sources: ["https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"],
-//     startFrom: 50,
-//     width: 640,
-//     height: 360
-// }, {
-//     host: document.getElementById("video-container"),
-//     id: 'videoClip'
-// });
-
-// const Playback1 = new VideoPlugin.Playback({}, {
-//     selector: "!#video",
-//     duration: 15000
-// });
-
-// VideoClip.addIncident(Playback1, 500);
-
-// new Player({ clip: VideoClip });

@@ -5,14 +5,13 @@ class VideoPlay extends MC.MediaPlayback {
     const video = this.element.entity.video;
     const ctx = this.element.entity.ctx;
 
-    // const playPromise = video.play();
     video.play();
     if (this.hasSetWaitingListener !== true) {
-      video.addEventListener("waiting", this._waitingHandler.bind(this));
+      video.addEventListener("waiting", this.waitingHandler.bind(this));
       this.hasSetWaitingListener = true;
     }
     if (this.hasSetCanplayListener !== true) {
-      video.addEventListener("canplay", this._canplayHandler.bind(this));
+      video.addEventListener("canplay", this.canplayHandler.bind(this));
       this.hasSetCanplayListener = true;
     }
 
@@ -28,14 +27,11 @@ class VideoPlay extends MC.MediaPlayback {
     return true;
   }
 
-  _waitingHandler() {
-    // console.log("waiting");
-    // console.log("and blocking");
+  waitingHandler() {
     this.setBlock("Video loading");
   }
 
-  _canplayHandler() {
-    // console.log("unblocking");
+  canplayHandler() {
     this.unblock();
   }
 
@@ -44,7 +40,7 @@ class VideoPlay extends MC.MediaPlayback {
     clearTimeout(this.timeout);
   }
 
-  onProgress(f, millisecond) {
+  onProgress(fraction, millisecond) {
     const startFrom = millisecond + this.element.entity.startFrom;
     this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
     this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);
