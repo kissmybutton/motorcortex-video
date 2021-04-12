@@ -1,7 +1,19 @@
-const MotorCortex = require("@kissmybutton/motorcortex");
-const effects = require("../compositeAttributes").filter;
+import { Effect } from "@kissmybutton/motorcortex";
+import compositeAttributes from "../compositeAttributes";
+const effects = compositeAttributes.filter;
+const effectsUnits = {
+  opacity: "",
+  contrast: "",
+  saturate: "",
+  brightness: "",
+  blur: "px",
+  sepia: "",
+  invert: "",
+  grayscale: "",
+  "hue-rotate": "deg",
+};
 
-class VideoEffect extends MotorCortex.Effect {
+export default class VideoEffect extends Effect {
   getScratchValue() {
     return {
       opacity: 1,
@@ -16,24 +28,10 @@ class VideoEffect extends MotorCortex.Effect {
     };
   }
 
-  get effectsUnits() {
-    return {
-      opacity: "",
-      contrast: "",
-      saturate: "",
-      brightness: "",
-      blur: "px",
-      sepia: "",
-      invert: "",
-      grayscale: "",
-      "hue-rotate": "deg",
-    };
-  }
-
   objToFilterValue(obj) {
     let string = "";
     for (const filter in obj) {
-      string += `${filter}(${obj[filter]}${this.effectsUnits[filter]}) `;
+      string += `${filter}(${obj[filter]}${effectsUnits[filter]}) `;
     }
     return string;
   }
@@ -51,5 +49,3 @@ class VideoEffect extends MotorCortex.Effect {
     this.element.entity.ctx.filter = this.objToFilterValue(targetValues);
   }
 }
-
-module.exports = VideoEffect;

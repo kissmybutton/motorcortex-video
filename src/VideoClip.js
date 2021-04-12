@@ -1,6 +1,5 @@
-const MC = require("@kissmybutton/motorcortex");
-
-class VideoClip extends MC.BrowserClip {
+import { BrowserClip } from "@kissmybutton/motorcortex";
+export default class VideoClip extends BrowserClip {
   get html() {
     this.width = this.attrs.width || 640;
     this.height = this.attrs.height || 360;
@@ -34,17 +33,18 @@ class VideoClip extends MC.BrowserClip {
     video.muted = true;
     const canvas = this.context.getElements("canvas")[0];
     const ctx = canvas.getContext("2d");
-    const scaleX = this.width / video.videoWidth;
-    const scaleY = this.width / video.videoWidth;
-    video.addEventListener(
-      "loadedmetadata",
-      () => {
-        canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-      },
-      false
-    );
+
+    const loadedmetadataListener = () => {
+      const scaleX = this.width / video.videoWidth;
+      const scaleY = this.width / video.videoWidth;
+      canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+    };
+
+    video.addEventListener("loadedmetadata", loadedmetadataListener, {
+      once: true,
+    });
 
     this.setCustomEntity("video", {
       video,
@@ -54,5 +54,3 @@ class VideoClip extends MC.BrowserClip {
     });
   }
 }
-
-module.exports = VideoClip;
