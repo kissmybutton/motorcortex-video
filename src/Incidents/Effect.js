@@ -17,25 +17,22 @@ export default class VideoEffect extends MC.Effect {
     };
   }
 
-  effectsUnits(filter) {
-    const filters = {
-      opacity: "",
-      contrast: "",
-      saturate: "",
-      brightness: "",
-      blur: "px",
-      sepia: "",
-      invert: "",
-      grayscale: "",
-      "hue-rotate": "deg",
-    };
-    return filters[filter];
-  }
+  effectsUnits = {
+    opacity: "",
+    contrast: "",
+    saturate: "",
+    brightness: "",
+    blur: "px",
+    sepia: "",
+    invert: "",
+    grayscale: "",
+    "hue-rotate": "deg",
+  };
 
   objToFilterValue(obj) {
     let string = "";
     for (const filter in obj) {
-      string += `${filter}(${obj[filter]}${this.effectsUnits(filter)}) `;
+      string += `${filter}(${obj[filter]}${this.effectsUnits[filter]}) `;
     }
     return string;
   }
