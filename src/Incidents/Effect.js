@@ -1,4 +1,4 @@
-import MC from "@kissmybutton/motorcortex";
+import { Effect } from "@kissmybutton/motorcortex";
 import compositeAttributes from "../compositeAttributes";
 const effects = compositeAttributes.filter;
 const effectsUnits = {
@@ -13,7 +13,7 @@ const effectsUnits = {
   "hue-rotate": "deg",
 };
 
-export default class VideoEffect extends MC.Effect {
+export default class VideoEffect extends Effect {
   getScratchValue() {
     return {
       opacity: 1,

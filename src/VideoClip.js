@@ -1,5 +1,5 @@
-import MC from "@kissmybutton/motorcortex";
-export default class VideoClip extends MC.BrowserClip {
+import { BrowserClip } from "@kissmybutton/motorcortex";
+export default class VideoClip extends BrowserClip {
   get html() {
     this.width = this.attrs.width || 640;
     this.height = this.attrs.height || 360;

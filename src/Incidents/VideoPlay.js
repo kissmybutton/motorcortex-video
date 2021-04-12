@@ -1,6 +1,6 @@
-import MC from "@kissmybutton/motorcortex";
+import { MediaPlayback } from "@kissmybutton/motorcortex";
 
-export default class VideoPlay extends MC.MediaPlayback {
+export default class VideoPlay extends MediaPlayback {
   play(/*millisecond*/) {
     const video = this.element.entity.video;
 
