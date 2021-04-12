@@ -1,6 +1,17 @@
 import MC from "@kissmybutton/motorcortex";
 import compositeAttributes from "../compositeAttributes";
 const effects = compositeAttributes.filter;
+const effectsUnits = {
+  opacity: "",
+  contrast: "",
+  saturate: "",
+  brightness: "",
+  blur: "px",
+  sepia: "",
+  invert: "",
+  grayscale: "",
+  "hue-rotate": "deg",
+};
 
 export default class VideoEffect extends MC.Effect {
   getScratchValue() {
@@ -17,22 +28,10 @@ export default class VideoEffect extends MC.Effect {
     };
   }
 
-  effectsUnits = {
-    opacity: "",
-    contrast: "",
-    saturate: "",
-    brightness: "",
-    blur: "px",
-    sepia: "",
-    invert: "",
-    grayscale: "",
-    "hue-rotate": "deg",
-  };
-
   objToFilterValue(obj) {
     let string = "";
     for (const filter in obj) {
-      string += `${filter}(${obj[filter]}${this.effectsUnits[filter]}) `;
+      string += `${filter}(${obj[filter]}${effectsUnits[filter]}) `;
     }
     return string;
   }

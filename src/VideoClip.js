@@ -40,14 +40,11 @@ export default class VideoClip extends MC.BrowserClip {
       canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      video.removeEventListener(
-        "loadedmetadata",
-        loadedmetadataListener,
-        false
-      );
     };
 
-    video.addEventListener("loadedmetadata", loadedmetadataListener, false);
+    video.addEventListener("loadedmetadata", loadedmetadataListener, {
+      once: true,
+    });
 
     this.setCustomEntity("video", {
       video,
