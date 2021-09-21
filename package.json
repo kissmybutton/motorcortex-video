@@ -68,7 +68,7 @@
     "@babel/preset-env": "7.15.6",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
-    "@kissmybutton/motorcortex": "7.3.0",
+    "@kissmybutton/motorcortex": "/Users/andreastrantidis/WebstormProjects/motorcortex2/",
     "@kissmybutton/motorcortex-player": "2.2.0",
     "@rollup/plugin-json": "4.1.0",
     "@semantic-release/changelog": "5.0.1",
@@ -128,6 +128,6 @@
     }
   },
   "peerDependencies": {
-    "@kissmybutton/motorcortex": ">= 6.4.1 < 8"
+    "@kissmybutton/motorcortex": "/Users/andreastrantidis/WebstormProjects/motorcortex2"
   }
 }
