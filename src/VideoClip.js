@@ -52,5 +52,12 @@ export default class VideoClip extends BrowserClip {
       ctx,
       startFrom: this.startFrom,
     });
+
+    // Audio
+    if (this.DescriptiveIncident.attachAudioNode) {
+      const context = new window.AudioContext();
+      const audio = context.createMediaElementSource(video);
+      this.DescriptiveIncident.attachAudioNode(audio);
+    }
   }
 }
