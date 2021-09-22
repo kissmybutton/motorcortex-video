@@ -54,10 +54,9 @@ export default class VideoClip extends BrowserClip {
     });
 
     // Audio
-    if (this.DescriptiveIncident.attachAudioNode) {
-      const context = new window.AudioContext();
-      const audio = context.createMediaElementSource(video);
-      this.DescriptiveIncident.attachAudioNode(audio);
+    if (this.DescriptiveIncident.attachMediaElementSource) {
+      video.crossOrigin = "anonymous";
+      this.DescriptiveIncident.attachMediaElementSource(video);
     }
   }
 }
