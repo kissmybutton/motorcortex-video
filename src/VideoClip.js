@@ -54,7 +54,9 @@ export default class VideoClip extends BrowserClip {
     });
 
     // Audio
-    if (this.DescriptiveIncident.attachMediaElementSource) {
+    if (this.attrs.audio === false) {
+      video.muted = true;
+    } else {
       video.crossOrigin = "anonymous";
       this.DescriptiveIncident.attachMediaElementSource(video);
     }
