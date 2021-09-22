@@ -114,4 +114,5 @@ export default {
     speed: false,
     preview: false,
   },
+  audio: "on",
 };
