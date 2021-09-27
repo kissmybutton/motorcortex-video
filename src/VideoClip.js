@@ -1,4 +1,4 @@
-import { BrowserClip } from "@kissmybutton/motorcortex";
+import { BrowserClip } from "@donkeyclip/motorcortex";
 export default class VideoClip extends BrowserClip {
   get html() {
     this.width = this.attrs.width || 640;
