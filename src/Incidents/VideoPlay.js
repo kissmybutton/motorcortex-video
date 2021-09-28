@@ -1,4 +1,4 @@
-import { MediaPlayback } from "@kissmybutton/motorcortex";
+import { MediaPlayback } from "@donkeyclip/motorcortex";
 
 export default class VideoPlay extends MediaPlayback {
   play(/*millisecond*/) {
