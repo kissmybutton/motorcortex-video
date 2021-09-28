@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.17](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.16...v1.1.17) (2021-09-28)
+
+
+### Bug Fixes
+
+* update rollup.config ([c964b0b](https://www.github.com/kissmybutton/motorcortex-video/commit/c964b0bd4d1b77a3f23c6af9f24cf0ffc3714cd4))
+
 ### [1.1.16](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.14...v1.1.16) (2021-09-28)
 
 
