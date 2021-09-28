@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.14](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.13...v1.1.14) (2021-09-28)
+
+
+### Bug Fixes
+
+* update npm name ([ea322bf](https://www.github.com/kissmybutton/motorcortex-video/commit/ea322bfa644470c47ce87080cfa2f324e0e48ee9))
+
 ### [1.1.13](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.12...v1.1.13) (2021-04-12)
 
 
