@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.16](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.14...v1.1.16) (2021-09-28)
+
+
+### Miscellaneous Chores
+
+* release 1.1.16 ([04373e5](https://www.github.com/kissmybutton/motorcortex-video/commit/04373e5fef5a2112282274102e0850a39f9f9ce1))
+
 ### [1.1.14](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.13...v1.1.14) (2021-09-28)
 
 
