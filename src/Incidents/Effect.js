@@ -1,4 +1,4 @@
-import { Effect } from "@kissmybutton/motorcortex";
+import { Effect } from "@donkeyclip/motorcortex";
 import compositeAttributes from "../compositeAttributes";
 const effects = compositeAttributes.filter;
 const effectsUnits = {

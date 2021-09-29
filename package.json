@@ -68,8 +68,8 @@
     "@babel/preset-env": "7.15.6",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
-    "@kissmybutton/motorcortex": "/Users/trad/projects/motorcortex2/",
-    "@kissmybutton/motorcortex-player": "2.2.0",
+    "@donkeyclip/motorcortex": ">=7.5.1",
+    "@donkeyclip/motorcortex-player": "2.2.1",
     "@rollup/plugin-json": "4.1.0",
     "@semantic-release/changelog": "5.0.1",
     "@semantic-release/git": "9.0.1",
@@ -77,8 +77,8 @@
     "@semantic-release/npm": "7.1.3",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.2.2",
-    "browserslist": "4.17.0",
-    "caniuse-lite": "1.0.30001259",
+    "browserslist": "4.17.1",
+    "caniuse-lite": "1.0.30001260",
     "commitizen": "4.2.4",
     "concurrently": "6.2.1",
     "coveralls": "3.1.1",
@@ -101,7 +101,7 @@
     "npx": "10.2.2",
     "prettier": "2.4.1",
     "rimraf": "3.0.2",
-    "rollup": "2.56.3",
+    "rollup": "2.57.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
@@ -128,6 +128,6 @@
     }
   },
   "peerDependencies": {
-    "@kissmybutton/motorcortex": "/Users/trad/projects/motorcortex2/"
+    "@donkeyclip/motorcortex": ">=7.5.1"
   }
 }

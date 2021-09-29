@@ -1,4 +1,4 @@
-import { BrowserClip } from "@kissmybutton/motorcortex";
+import { BrowserClip } from "@donkeyclip/motorcortex";
 export default class VideoClip extends BrowserClip {
   get html() {
     this.width = this.attrs.width || 640;
@@ -30,7 +30,7 @@ export default class VideoClip extends BrowserClip {
 
   onAfterRender() {
     const video = this.context.getElements("video")[0];
-    video.muted = true;
+    // video.muted = true;
     const canvas = this.context.getElements("canvas")[0];
     const ctx = canvas.getContext("2d");
 
@@ -54,7 +54,9 @@ export default class VideoClip extends BrowserClip {
     });
 
     // Audio
-    if (this.DescriptiveIncident.attachMediaElementSource) {
+    if (this.attrs.audio === false) {
+      video.muted = true;
+    } else {
       video.crossOrigin = "anonymous";
       this.DescriptiveIncident.attachMediaElementSource(video);
     }

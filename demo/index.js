@@ -1,5 +1,5 @@
-import { HTMLClip, loadPlugin } from "@kissmybutton/motorcortex";
-import Player from "@kissmybutton/motorcortex-player";
+import { HTMLClip, loadPlugin } from "@donkeyclip/motorcortex";
+import Player from "@donkeyclip/motorcortex-player";
 import VideoPluginDefinition from "../src/";
 const VideoPlugin = loadPlugin(VideoPluginDefinition);
 
@@ -27,6 +27,7 @@ const VideoClip = new VideoPlugin.Clip(
     startFrom: 120,
     width: 1280,
     height: 720,
+    // audio: false,
   },
   {
     selector: "#video-container",
