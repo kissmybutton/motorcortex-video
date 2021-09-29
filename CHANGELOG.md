@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.17...v1.2.0) (2021-09-29)
+
+
+### Features
+
+* sound ([426068a](https://www.github.com/kissmybutton/motorcortex-video/commit/426068a967960d5214f32c83bbb0c22f13e12966))
+
 ### [1.1.17](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.16...v1.1.17) (2021-09-28)
 
 
