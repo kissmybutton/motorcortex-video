@@ -30,7 +30,7 @@ export default class VideoClip extends BrowserClip {
 
   onAfterRender() {
     const video = this.context.getElements("video")[0];
-    video.muted = true;
+    // video.muted = true;
     const canvas = this.context.getElements("canvas")[0];
     const ctx = canvas.getContext("2d");
 
@@ -52,5 +52,13 @@ export default class VideoClip extends BrowserClip {
       ctx,
       startFrom: this.startFrom,
     });
+
+    // Audio
+    if (this.attrs.audio === false) {
+      video.muted = true;
+    } else {
+      video.crossOrigin = "anonymous";
+      this.DescriptiveIncident.attachMediaElementSource(video);
+    }
   }
 }

@@ -108,10 +108,16 @@ export default {
         integer: true,
         min: 0,
       },
+      audio: {
+        optional: true,
+        type: "boolean",
+        default: true,
+      },
     },
   },
   capabilities: {
     speed: false,
     preview: false,
   },
+  audio: "on",
 };

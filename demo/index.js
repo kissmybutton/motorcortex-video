@@ -27,6 +27,7 @@ const VideoClip = new VideoPlugin.Clip(
     startFrom: 120,
     width: 1280,
     height: 720,
+    // audio: false,
   },
   {
     selector: "#video-container",
