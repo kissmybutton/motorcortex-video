@@ -1,4 +1,4 @@
-const MotorCortex = require("@kissmybutton/motorcortex");
+const MotorCortex = require("@donkeyclip/motorcortex");
 const effects = require("../compositeAttributes").filter;
 
 class VideoEffect extends MotorCortex.Effect {

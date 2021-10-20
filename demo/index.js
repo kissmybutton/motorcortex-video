@@ -1,5 +1,5 @@
-const MotorCortex = require("@kissmybutton/motorcortex");
-const Player = require("@kissmybutton/motorcortex-player");
+const MotorCortex = require("@donkeyclip/motorcortex");
+const Player = require("@donkeyclip/motorcortex-player");
 const VideoPluginDefinition = require("../dist/motorcortex-video.umd");
 const VideoPlugin = MotorCortex.loadPlugin(VideoPluginDefinition);
 

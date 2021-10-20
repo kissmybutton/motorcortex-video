@@ -1,4 +1,4 @@
-const MC = require("@kissmybutton/motorcortex");
+const MC = require("@donkeyclip/motorcortex");
 
 class VideoClip extends MC.BrowserClip {
   get html() {
