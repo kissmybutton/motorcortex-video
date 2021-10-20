@@ -1,9 +1,9 @@
-const MotorCortex = require("@donkeyclip/motorcortex");
-const Player = require("@donkeyclip/motorcortex-player");
-const VideoPluginDefinition = require("../dist/motorcortex-video.umd");
-const VideoPlugin = MotorCortex.loadPlugin(VideoPluginDefinition);
+import { HTMLClip, loadPlugin } from "@donkeyclip/motorcortex";
+import Player from "@donkeyclip/motorcortex-player";
+import VideoPluginDefinition from "../dist/motorcortex-video.esm";
+const VideoPlugin = loadPlugin(VideoPluginDefinition);
 
-const MyClip = new MotorCortex.HTMLClip({
+const MyClip = new HTMLClip({
   host: document.getElementById("clip"),
   id: "my-root-clip",
   html: `<div id="video-container"></div>`,
