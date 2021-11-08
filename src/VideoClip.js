@@ -69,7 +69,7 @@ export default class VideoClip extends BrowserClip {
       setTimeout(() => {
         video.crossOrigin = "anonymous";
         const res = that.DescriptiveIncident.volumeChangeSubscribe(
-          that.id + Math.random(),
+          that.id,
           that.setVolume.bind(that)
         );
         that.setVolume(res);
