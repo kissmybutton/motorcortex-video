@@ -2,11 +2,11 @@ import VideoClip from "./VideoClip";
 import VideoPlay from "./Incidents/VideoPlay";
 import VideoEffect from "./Incidents/Effect";
 import compositeAttributes from "./compositeAttributes";
-import { name, version } from "../package.json";
+import pkg from "../package.json";
 
 export default {
-  npm_name: name,
-  version: version,
+  npm_name: pkg.name,
+  version: pkg.version,
   incidents: [
     {
       exportable: VideoPlay,
