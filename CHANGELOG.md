@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.2.1](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.2.0...v1.2.1) (2021-12-10)
+
+
+### Bug Fixes
+
+* fix sound ([586a3f6](https://www.github.com/kissmybutton/motorcortex-video/commit/586a3f6be7d2dbc886fcb05254cce4f909f201e9))
+* remove math random ([8dded90](https://www.github.com/kissmybutton/motorcortex-video/commit/8dded90a2e267f95e3c6ec2912e76d917b845d2b))
+
 ## [1.2.0](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.1.17...v1.2.0) (2021-09-29)
 
 
