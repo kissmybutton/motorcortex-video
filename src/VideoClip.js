@@ -29,7 +29,6 @@ export default class VideoClip extends BrowserClip {
   }
 
   setVolume(volume) {
-    // debugger
     this.video.volume = volume;
   }
 
