@@ -22,7 +22,7 @@
 [Check it out here](https://kissmybutton.github.io/motorcortex-video/demo/)
 
 # Intro / Features
-Using MotorCortex-Video you can add video and many video effeccts in your clips.
+Using MotorCortex-Video you can add video and many video effects in your clips.
 
 The Plugin exposes three Incidents in total:
 - the video Clip
