@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/kissmybutton/motorcortex-video/compare/v1.2.1...v2.0.0) (2022-03-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to mc version 8
+
+### Bug Fixes
+
+* upgrade to mc version 8 ([b4fc0ef](https://github.com/kissmybutton/motorcortex-video/commit/b4fc0efa22fcaa09ad91ec2ab27b5489e4838bd8))
+
 ### [1.2.1](https://www.github.com/kissmybutton/motorcortex-video/compare/v1.2.0...v1.2.1) (2021-12-10)
 
 
