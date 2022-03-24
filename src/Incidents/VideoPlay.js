@@ -40,7 +40,7 @@ export default class VideoPlay extends MediaPlayback {
     clearTimeout(this.timeout);
   }
 
-  onProgress(fraction, millisecond) {
+  onProgress(millisecond) {
     const startFrom = millisecond + this.element.entity.startFrom;
     this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
     this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);

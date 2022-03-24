@@ -69,8 +69,8 @@
     "@babel/preset-env": "7.16.0",
     "@commitlint/cli": "14.1.0",
     "@commitlint/config-conventional": "14.1.0",
-    "@donkeyclip/motorcortex": ">=7.5.5",
-    "@donkeyclip/motorcortex-player": "2.3.6",
+    "@donkeyclip/motorcortex": "^8.0.2",
+    "@donkeyclip/motorcortex-player": "^2.5.2",
     "@rollup/plugin-json": "4.1.0",
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
@@ -117,6 +117,6 @@
     "whatwg-fetch": "3.6.2"
   },
   "peerDependencies": {
-    "@donkeyclip/motorcortex": ">=7.5.5"
+    "@donkeyclip/motorcortex": ">=8 <9"
   }
 }
