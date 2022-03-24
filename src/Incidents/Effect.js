@@ -36,7 +36,8 @@ export default class VideoEffect extends Effect {
     return string;
   }
 
-  onProgress(fraction) {
+  onProgress(ms) {
+    const fraction = this.getFraction(ms);
     const targetValues = Object.assign({}, this.initialValue);
     for (const i in effects) {
       const effect = effects[i];
