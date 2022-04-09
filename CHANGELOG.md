@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/kissmybutton/motorcortex-video/compare/v2.0.0...v2.1.0) (2022-04-09)
+
+
+### Features
+
+* drop explorer 11 support ([ae41479](https://github.com/kissmybutton/motorcortex-video/commit/ae41479eee0fd99678fc88c5e63009740b583f21))
+* update compatibility with motorcortex ([d881873](https://github.com/kissmybutton/motorcortex-video/commit/d881873b63c22cae934171f5bfa848728f41ab9e))
+
+
+### Bug Fixes
+
+* delete commitlint.config.js ([058a1ed](https://github.com/kissmybutton/motorcortex-video/commit/058a1edaf0219efc4d11d7eb01f22ab003c4f1b4))
+
 ## [2.0.0](https://github.com/kissmybutton/motorcortex-video/compare/v1.2.1...v2.0.0) (2022-03-24)
 
 
