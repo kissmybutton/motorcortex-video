@@ -1,0 +1,110 @@
+{
+  "name": "@kissmybutton/motorcortex-video",
+  "version": "2.1.0",
+  "main": "dist/motorcortex-video.cjs.js",
+  "module": "dist/motorcortex-video.esm.js",
+  "browser": "dist/motorcortex-video.umd.js",
+  "repository": "https://github.com/kissmybutton/motorcortex-video",
+  "author": "KissMyButton PC (kissmybutton.gr) <opensource@kissmybutton.gr>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "update:packages": "npm update --save/--save-dev",
+    "concurrently": "concurrently -c \"cyan.bold,magenta.bold\" --names \"JS,Styles\"",
+    "lint:styles": "stylelint  --allow-empty-input \"src/**.css\" \"src/**/*.scss\" --config .stylelintrc.json",
+    "lint:js": "eslint -c .eslintrc src/**/*.js",
+    "lint": "npm run concurrently \"npm:lint:js\" \"npm:lint:styles\"",
+    "lint:fix": "npm run concurrently  \"npm:lint:js -- --fix\" \"npm:lint:styles -- --fix\"",
+    "build": "npm run build:lib && npm run build:demo",
+    "build:lib": "rollup -c",
+    "start": "npm run build:lib && concurrently -c \"cyan.bold,magenta.bold\" \"npm:build:lib -- -w\"  \"npm:start:demo\" ",
+    "start:demo": "webpack serve --config ./demo/webpack.config.js --mode=development --progress ",
+    "build:demo": "webpack --mode=production --config ./demo/webpack.config.js",
+    "test:prod": "npm run lint",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "commit": "git-cz",
+    "prebuild": "rimraf dist",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "motorcortex",
+    "animation"
+  ],
+  "lint-staged": {
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.css": [
+      "prettier --write",
+      "stylelint  \"src/**.css\" --config .stylelintrc.json --fix"
+    ],
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "release": {
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@donkeyclip/motorcortex": "^8.0.4",
+    "@donkeyclip/motorcortex-player": "^2.8.0",
+    "@rollup/plugin-json": "4.1.0",
+    "babel-eslint": "10.1.0",
+    "babel-loader": "^8.2.4",
+    "browserslist": "^4.20.2",
+    "caniuse-lite": "^1.0.30001328",
+    "concurrently": "^7.1.0",
+    "coveralls": "3.1.1",
+    "css-loader": "^6.7.1",
+    "es6-promise": "4.2.8",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-babel": "5.3.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-standard": "5.0.0",
+    "exports-loader": "3.1.0",
+    "husky": "^7.0.0",
+    "imports-loader": "3.1.1",
+    "json-stringify-safe": "5.0.1",
+    "lint-staged": "^12.3.7",
+    "npx": "10.2.2",
+    "prettier": "^2.6.2",
+    "rimraf": "3.0.2",
+    "rollup": "^2.70.1",
+    "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-terser": "7.0.2",
+    "shelljs": "^0.8.5",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1",
+    "whatwg-fetch": "3.6.2"
+  },
+  "peerDependencies": {
+    "@donkeyclip/motorcortex": ">=8 <10"
+  }
+}
