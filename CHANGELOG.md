@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/kissmybutton/motorcortex-video/compare/v2.1.1...v2.2.0) (2022-04-30)
+
+
+### Features
+
+* update mc to v9 ([f5abe4a](https://github.com/kissmybutton/motorcortex-video/commit/f5abe4a8664b23ed4e87b9ba16ab7baf08a56d4e))
+
 ### [2.1.1](https://github.com/kissmybutton/motorcortex-video/compare/v2.1.0...v2.1.1) (2022-04-12)
 
 
