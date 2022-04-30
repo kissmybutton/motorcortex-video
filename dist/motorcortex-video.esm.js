@@ -169,7 +169,7 @@ class VideoEffect extends Effect {
 }
 
 var name = "@kissmybutton/motorcortex-video";
-var version = "2.1.0";
+var version = "2.1.1";
 var main = "dist/motorcortex-video.cjs.js";
 var module = "dist/motorcortex-video.esm.js";
 var browser = "dist/motorcortex-video.umd.js";
@@ -223,8 +223,8 @@ var devDependencies = {
 	"@babel/cli": "^7.17.6",
 	"@babel/core": "^7.17.9",
 	"@babel/preset-env": "^7.16.11",
-	"@donkeyclip/motorcortex": "^8.0.4",
-	"@donkeyclip/motorcortex-player": "^2.8.0",
+	"@donkeyclip/motorcortex": "^9.1.1",
+	"@donkeyclip/motorcortex-player": "^2.9.5",
 	"@rollup/plugin-json": "4.1.0",
 	"babel-eslint": "10.1.0",
 	"babel-loader": "^8.2.4",
