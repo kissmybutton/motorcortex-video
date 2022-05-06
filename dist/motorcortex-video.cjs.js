@@ -171,7 +171,7 @@ class VideoEffect extends motorcortex.Effect {
 }
 
 var name = "@kissmybutton/motorcortex-video";
-var version = "2.2.0";
+var version = "2.2.1";
 var main = "dist/motorcortex-video.cjs.js";
 var module$1 = "dist/motorcortex-video.esm.js";
 var browser = "dist/motorcortex-video.umd.js";
