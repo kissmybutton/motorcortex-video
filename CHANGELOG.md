@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.1](https://github.com/kissmybutton/motorcortex-video/compare/v2.2.0...v2.2.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* **safari:** allow videos to play in safari mobile ([1ce3bba](https://github.com/kissmybutton/motorcortex-video/commit/1ce3bba12e3945bd04ad8c0545531d16ea632748))
+
 ## [2.2.0](https://github.com/kissmybutton/motorcortex-video/compare/v2.1.1...v2.2.0) (2022-04-30)
 
 
