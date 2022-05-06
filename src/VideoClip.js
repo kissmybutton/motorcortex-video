@@ -12,7 +12,7 @@ export default class VideoClip extends BrowserClip {
 
     return `
       <div>
-          <video id="video" style="${videoStyle}" preload="auto">
+          <video id="video" style="${videoStyle}" preload="auto" playsinline>
               ${videoSources}
           </video>
           <canvas id="canvas"></canvas>
@@ -61,8 +61,8 @@ export default class VideoClip extends BrowserClip {
     } else {
       const that = this;
       /*
-        The execution of this code occurs moments before the DescriptiveClip of this RealClip actually gets accepted and attached to the Descriptive Tree it tries to enter. 
-        It occurs on the Descriptive Incident of the Root Clip of the tree it tries to enter. 
+        The execution of this code occurs moments before the DescriptiveClip of this RealClip actually gets accepted and attached to the Descriptive Tree it tries to enter.
+        It occurs on the Descriptive Incident of the Root Clip of the tree it tries to enter.
         We don’t want to move the responsibility of the execution of the actual clips rendering anywhere else for the time being but we prefer keeping it to the Descriptive Clip Root level, as it is right now. For this the setTimeout(funct, 0) ensures that this block of code will be executed RIGHT after the Descriptive Clip gets accepted and attached to the Descriptive Tree. Sorry about that :slightly_smiling_face:
       */
       setTimeout(() => {
