@@ -1,30 +1,24 @@
 import { MediaPlayback } from "@donkeyclip/motorcortex";
 
+let vidCounter = 1;
+
 export default class VideoPlay extends MediaPlayback {
   play(/*millisecond*/) {
     const video = this.element.entity.video;
 
-    video.play();
+    this.playPromise = video.play();
     if (this.hasSetWaitingListener !== true) {
       video.addEventListener("waiting", this.waitingHandler.bind(this));
       this.hasSetWaitingListener = true;
     }
     if (this.hasSetCanplayListener !== true) {
       video.addEventListener("canplay", this.canplayHandler.bind(this));
+      video.addEventListener('canplaythrough', this.canplayHandler.bind(this));
+      video.addEventListener('playing', this.canplayHandler.bind(this));
       this.hasSetCanplayListener = true;
     }
 
-    this.drawFrame(video);
-
     return true;
-  }
-
-  drawFrame(video) {
-    const ctx = this.element.entity.ctx;
-    ctx.drawImage(video, 0, 0);
-    this.timeout = setTimeout(() => {
-      this.drawFrame(video);
-    }, 10);
   }
 
   waitingHandler() {
@@ -32,17 +26,20 @@ export default class VideoPlay extends MediaPlayback {
   }
 
   canplayHandler() {
-    this.unblock();
+    setTimeout(()=>this.unblock());
   }
 
   stop() {
-    this.element.entity.video.pause();
-    clearTimeout(this.timeout);
+    if(this.playPromise) {
+      this.playPromise.then(()=>{
+        this.element.entity.video.pause();
+      });
+    }
   }
 
   onProgress(millisecond) {
+    this.unblock();
     const startFrom = millisecond + this.element.entity.startFrom;
     this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
-    this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);
   }
 }
