@@ -12,20 +12,17 @@ export default class VideoClip extends BrowserClip {
 
     return `
       <div>
-          <video id="video" style="${videoStyle}" preload="auto" playsinline>
-              ${videoSources}
-          </video>
-          <canvas id="canvas"></canvas>
+        <video id="video" style="${videoStyle}" preload="metadata" ${
+      this.attrs.audio !== true ? "muted" : ""
+    } playsinline>
+          ${videoSources}
+        </video>
       </div>
     `;
   }
 
   get css() {
-    return `
-      #video{
-        display:none;
-      }
-    `;
+    return ``;
   }
 
   setVolume(volume) {
@@ -35,28 +32,13 @@ export default class VideoClip extends BrowserClip {
   onAfterRender() {
     const video = this.context.getElements("video")[0];
     this.video = video;
-    const canvas = this.context.getElements("canvas")[0];
-    const ctx = canvas.getContext("2d");
-    const loadedmetadataListener = () => {
-      const scaleX = this.width / video.videoWidth;
-      const scaleY = this.width / video.videoWidth;
-      canvas.style.transform = `scale(${scaleX}, ${scaleY})`;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-    };
-
-    video.addEventListener("loadedmetadata", loadedmetadataListener, {
-      once: true,
-    });
 
     this.setCustomEntity("video", {
       video,
-      canvas,
-      ctx,
       startFrom: this.startFrom,
     });
     // Audio
-    if (this.attrs.audio === false) {
+    if (this.attrs.audio !== true) {
       video.muted = true;
     } else {
       const that = this;

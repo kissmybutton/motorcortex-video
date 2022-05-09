@@ -1,4 +1,4 @@
-import { BrowserClip, MediaPlayback, Effect } from '@donkeyclip/motorcortex';
+import { BrowserClip, MediaPlayback } from '@donkeyclip/motorcortex';
 
 class VideoClip extends BrowserClip {
   get html() {
@@ -7,11 +7,11 @@ class VideoClip extends BrowserClip {
     this.startFrom = this.attrs.startFrom || 0;
     const videoStyle = "width:".concat(this.width, "px;height:").concat(this.height, "px;");
     const videoSources = this.attrs.sources.map(item => "<source src=\"".concat(item, "#t=").concat(this.startFrom, "\"></source>")).join("\n");
-    return "\n      <div>\n          <video id=\"video\" style=\"".concat(videoStyle, "\" preload=\"auto\" playsinline>\n              ").concat(videoSources, "\n          </video>\n          <canvas id=\"canvas\"></canvas>\n      </div>\n    ");
+    return "\n      <div>\n        <video id=\"video\" style=\"".concat(videoStyle, "\" preload=\"metadata\" ").concat(this.attrs.audio !== true ? "muted" : "", " playsinline>\n          ").concat(videoSources, "\n        </video>\n      </div>\n    ");
   }
 
   get css() {
-    return "\n      #video{\n        display:none;\n      }\n    ";
+    return "";
   }
 
   setVolume(volume) {
@@ -21,28 +21,12 @@ class VideoClip extends BrowserClip {
   onAfterRender() {
     const video = this.context.getElements("video")[0];
     this.video = video;
-    const canvas = this.context.getElements("canvas")[0];
-    const ctx = canvas.getContext("2d");
-
-    const loadedmetadataListener = () => {
-      const scaleX = this.width / video.videoWidth;
-      const scaleY = this.width / video.videoWidth;
-      canvas.style.transform = "scale(".concat(scaleX, ", ").concat(scaleY, ")");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-    };
-
-    video.addEventListener("loadedmetadata", loadedmetadataListener, {
-      once: true
-    });
     this.setCustomEntity("video", {
       video,
-      canvas,
-      ctx,
       startFrom: this.startFrom
     }); // Audio
 
-    if (this.attrs.audio === false) {
+    if (this.attrs.audio !== true) {
       video.muted = true;
     } else {
       const that = this;
@@ -64,8 +48,13 @@ class VideoClip extends BrowserClip {
 
 class VideoPlay extends MediaPlayback {
   play() {
-    const video = this.element.entity.video;
-    video.play();
+    const video = this.element.entity.video; // If the video is ready to play we don't need to block again
+
+    if (video.readyState < 3) {
+      this.waitingHandler();
+    }
+
+    this.playPromise = video.play();
 
     if (this.hasSetWaitingListener !== true) {
       video.addEventListener("waiting", this.waitingHandler.bind(this));
@@ -74,19 +63,13 @@ class VideoPlay extends MediaPlayback {
 
     if (this.hasSetCanplayListener !== true) {
       video.addEventListener("canplay", this.canplayHandler.bind(this));
+      video.addEventListener('canplaythrough', this.canplayHandler.bind(this));
+      video.addEventListener('playing', this.canplayHandler.bind(this));
+      video.addEventListener('ready', this.canplayHandler.bind(this));
       this.hasSetCanplayListener = true;
     }
 
-    this.drawFrame(video);
     return true;
-  }
-
-  drawFrame(video) {
-    const ctx = this.element.entity.ctx;
-    ctx.drawImage(video, 0, 0);
-    this.timeout = setTimeout(() => {
-      this.drawFrame(video);
-    }, 10);
   }
 
   waitingHandler() {
@@ -94,76 +77,21 @@ class VideoPlay extends MediaPlayback {
   }
 
   canplayHandler() {
-    this.unblock();
+    setTimeout(() => this.unblock());
   }
 
   stop() {
-    this.element.entity.video.pause();
-    clearTimeout(this.timeout);
+    if (this.playPromise) {
+      this.playPromise.then(() => {
+        this.element.entity.video.pause();
+      });
+    }
   }
 
   onProgress(millisecond) {
+    this.unblock();
     const startFrom = millisecond + this.element.entity.startFrom;
     this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
-    this.element.entity.ctx.drawImage(this.element.entity.video, 0, 0);
-  }
-
-}
-
-var compositeAttributes = {
-  filter: ["blur", "brightness", "contrast", "drop-shadow", "grayscale", "hue-rotate", "invert", "opacity", "saturate", "sepia"]
-};
-
-const effects = compositeAttributes.filter;
-const effectsUnits = {
-  opacity: "",
-  contrast: "",
-  saturate: "",
-  brightness: "",
-  blur: "px",
-  sepia: "",
-  invert: "",
-  grayscale: "",
-  "hue-rotate": "deg"
-};
-class VideoEffect extends Effect {
-  getScratchValue() {
-    return {
-      opacity: 1,
-      contrast: 1,
-      saturate: 1,
-      brightness: 1,
-      blur: 0,
-      sepia: 0,
-      invert: 0,
-      grayscale: 0,
-      "hue-rotate": 0
-    };
-  }
-
-  objToFilterValue(obj) {
-    let string = "";
-
-    for (const filter in obj) {
-      string += "".concat(filter, "(").concat(obj[filter]).concat(effectsUnits[filter], ") ");
-    }
-
-    return string;
-  }
-
-  onProgress(ms) {
-    const fraction = this.getFraction(ms);
-    const targetValues = Object.assign({}, this.initialValue);
-
-    for (const i in effects) {
-      const effect = effects[i];
-
-      if (this.initialValue[effect] !== this.targetValue[effect]) {
-        targetValues[effect] = fraction * (this.targetValue[effect] - this.initialValue[effect]) + this.initialValue[effect];
-      }
-    }
-
-    this.element.entity.ctx.filter = this.objToFilterValue(targetValues);
   }
 
 }
@@ -182,10 +110,8 @@ var engines = {
 var scripts = {
 	"update:packages": "npm update --save/--save-dev",
 	concurrently: "concurrently -c \"cyan.bold,magenta.bold\" --names \"JS,Styles\"",
-	"lint:styles": "stylelint  --allow-empty-input \"src/**.css\" \"src/**/*.scss\" --config .stylelintrc.json",
-	"lint:js": "eslint -c .eslintrc src/**/*.js",
-	lint: "npm run concurrently \"npm:lint:js\" \"npm:lint:styles\"",
-	"lint:fix": "npm run concurrently  \"npm:lint:js -- --fix\" \"npm:lint:styles -- --fix\"",
+	lint: "eslint -c .eslintrc src/**/*.js",
+	"lint:fix": "npm:lint -- --fix",
 	build: "npm run build:lib && npm run build:demo",
 	"build:lib": "rollup -c",
 	start: "npm run build:lib && concurrently -c \"cyan.bold,magenta.bold\" \"npm:build:lib -- -w\"  \"npm:start:demo\" ",
@@ -193,32 +119,14 @@ var scripts = {
 	"build:demo": "webpack --mode=production --config ./demo/webpack.config.js",
 	"test:prod": "npm run lint",
 	"report-coverage": "cat ./coverage/lcov.info | coveralls",
-	commit: "git-cz",
 	prebuild: "rimraf dist",
 	prepare: "husky install"
 };
 var keywords = [
 	"motorcortex",
-	"animation"
+	"video",
+	"motorcortex-plugin"
 ];
-var release = {
-	verifyConditions: [
-		"@semantic-release/changelog",
-		"@semantic-release/npm",
-		"@semantic-release/github",
-		"@semantic-release/git"
-	],
-	prepare: [
-		"@semantic-release/changelog",
-		"@semantic-release/npm",
-		"@semantic-release/git"
-	]
-};
-var config = {
-	commitizen: {
-		path: "cz-conventional-changelog"
-	}
-};
 var devDependencies = {
 	"@babel/cli": "7.17.10",
 	"@babel/core": "7.17.10",
@@ -261,7 +169,7 @@ var devDependencies = {
 	"whatwg-fetch": "3.6.2"
 };
 var peerDependencies = {
-	"@donkeyclip/motorcortex": ">=8 <10"
+	"@donkeyclip/motorcortex": "^9.1.5"
 };
 var pkg = {
 	name: name,
@@ -276,20 +184,14 @@ var pkg = {
 	scripts: scripts,
 	keywords: keywords,
 	"lint-staged": {
-	"*.{json,md,yml,yaml}": [
+	"*.{json,md,yml,yaml,css}": [
 		"prettier --write"
-	],
-	"*.css": [
-		"prettier --write",
-		"stylelint  \"src/**.css\" --config .stylelintrc.json --fix"
 	],
 	"*.{js,jsx}": [
 		"prettier --write",
 		"eslint --fix"
 	]
 },
-	release: release,
-	config: config,
 	devDependencies: devDependencies,
 	peerDependencies: peerDependencies
 };
@@ -300,72 +202,7 @@ var index = {
   incidents: [{
     exportable: VideoPlay,
     name: "Playback"
-  }, {
-    exportable: VideoEffect,
-    name: "VideoEffect",
-    attributesValidationRules: {
-      animatedAttrs: {
-        type: "object",
-        props: {
-          filter: {
-            type: "object",
-            props: {
-              blur: {
-                type: "number",
-                min: 0,
-                optional: true
-              },
-              brightness: {
-                type: "number",
-                min: 0,
-                max: 1,
-                optional: true
-              },
-              contrast: {
-                type: "number",
-                min: 0,
-                optional: true
-              },
-              grayscale: {
-                type: "number",
-                min: 0,
-                max: 1,
-                optional: true
-              },
-              "hue-rotate": {
-                type: "number",
-                optional: true
-              },
-              invert: {
-                type: "number",
-                min: 0,
-                max: 1,
-                optional: true
-              },
-              opacity: {
-                type: "number",
-                min: 0,
-                max: 1,
-                optional: true
-              },
-              saturate: {
-                type: "number",
-                min: 0,
-                optional: true
-              },
-              sepia: {
-                type: "number",
-                min: 0,
-                max: 1,
-                optional: true
-              }
-            }
-          }
-        }
-      }
-    }
   }],
-  compositeAttributes,
   Clip: {
     exportable: VideoClip,
     attributesValidationRules: {
