@@ -36,7 +36,7 @@ export default class VideoClip extends BrowserClip {
       startFrom: this.startFrom,
     });
     // Audio
-    if (this.attrs.audio === false || true) {
+    if (this.attrs.audio === false) {
       video.muted = true;
     } else {
       const that = this;
