@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.2.2](https://github.com/kissmybutton/motorcortex-video/compare/v2.2.1...v2.2.2) (2022-05-09)
+
+
+### Bug Fixes
+
+* improve safari behaviour ([0d54255](https://github.com/kissmybutton/motorcortex-video/commit/0d54255480ddf27d64c70db5daafe2f213f14ca0))
+
 ### [2.2.1](https://github.com/kissmybutton/motorcortex-video/compare/v2.2.0...v2.2.1) (2022-05-06)
 
 

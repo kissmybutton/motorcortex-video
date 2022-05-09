@@ -99,7 +99,7 @@ class VideoPlay extends motorcortex.MediaPlayback {
 }
 
 var name = "@kissmybutton/motorcortex-video";
-var version = "2.2.1";
+var version = "2.2.2";
 var main = "dist/motorcortex-video.cjs.js";
 var module$1 = "dist/motorcortex-video.esm.js";
 var browser = "dist/motorcortex-video.umd.js";
