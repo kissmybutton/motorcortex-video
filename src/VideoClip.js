@@ -1,3 +1,5 @@
+let counter = 0;
+
 import { BrowserClip } from "@donkeyclip/motorcortex";
 export default class VideoClip extends BrowserClip {
   get html() {
@@ -12,9 +14,9 @@ export default class VideoClip extends BrowserClip {
 
     return `
       <div>
-          <video id="video" style="${videoStyle}" preload="auto" playsinline>
-              ${videoSources}
-          </video>
+        <video id="video" style="${videoStyle}" preload="metadata" ${this.attrs.audio !== true ? "muted" : ""} playsinline>
+          ${videoSources}
+        </video>
       </div>
     `;
   }
@@ -30,6 +32,7 @@ export default class VideoClip extends BrowserClip {
   onAfterRender() {
     const video = this.context.getElements("video")[0];
     this.video = video;
+    window[`video_${counter++}`] = video;
 
     this.setCustomEntity("video", {
       video,

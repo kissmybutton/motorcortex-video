@@ -11,7 +11,6 @@
 - [Creating Incidents](#creating-incidents)
   - [Clip](#clip)
   - [Playback](#playback)
-  - [VideoEffect](#videoeffect)
 - [Adding Incidents in your clip](#adding-incidents-in-your-clip)
 - [Contributing](#contributing)
 - [License](#license)
@@ -74,6 +73,7 @@ const VideoClip = new VideoPlugin.Clip(
 - width: (optional / defaults to 640). The desired width of the video in pixels. You only need to define it by an integer
 - height (optional / defaults to 360). The desired height of the video in pixels. You only need to define it by an integer
 - startFrom (optional / defaluts to 0). If passed the video will be loaded directly with start on the specified millisecond
+- ⚠️ audio (optional, defaults to false). The videos always render muted unnless you explicitly set audio to true 
 
 ## Playback
 
@@ -87,50 +87,6 @@ const Playback = new VideoPlugin.Playback({
 ```
 #### IMPORTANT 
 All `Playback Incidents` should have as a `selector` : `!#video`
-
-## VideoEffect
-
-The VideoEffect incident allows the user to apply effects on the video.
-
-```javascript
-const Effect = new VideoPlugin.VideoEffect(
-  {
-    animatedAttrs: {
-      filter: {
-        blur: 5,
-        brightness: 0.2,
-        contrast: 0.9,
-        grayscale: 0.5,
-        "hue-rotate": 180,
-        invert: 0.8,
-        opacity: 0.5,
-        saturate: 0.2,
-        sepia: 0.9,
-      },
-    },
-  },
-  {
-    selector: "!#video", // that's mandatory, it should always have the value "!#video" and it targets the video of the VideoPlugin.Clip
-    duration: 4000,
-  }
-);
-```
-#### IMPORTANT 
-All `VideoEffect Incidents` should have as a `selector` : `!#video`
-
-### VideoEffect Attrs
-The supported effects are:
-
-- blur: from 0 to 1, default value: 0
-- brightness: from 0 to 1, default: 1
-- contrast: minimum value: 0, default: 1
-- grayscale: from 0 to 1, default: 1
-- hue-rotate: expressed in degrees (0-360) and with default value 0
-- invert: from 0 to 1, default: 0
-- opacity: from 0 to 1, default: 1
-- saturate: minimum value: 0, default: 1
-- sepia: from 0 to 1, default: 0
-  and they are all exposed as members of the composite attribute "filter"
 
 # Adding Incidents in your clip
 ```javascript
