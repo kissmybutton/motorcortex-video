@@ -132,7 +132,7 @@ var devDependencies = {
 	"@babel/core": "7.17.10",
 	"@babel/preset-env": "7.17.10",
 	"@donkeyclip/motorcortex": "9.1.5",
-	"@donkeyclip/motorcortex-player": "2.10.0",
+	"@donkeyclip/motorcortex-player": "2.10.1",
 	"@rollup/plugin-json": "4.1.0",
 	"babel-eslint": "10.1.0",
 	"babel-loader": "8.2.5",
