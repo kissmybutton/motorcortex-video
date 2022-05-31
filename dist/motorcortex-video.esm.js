@@ -165,7 +165,7 @@ var devDependencies = {
 	shelljs: "0.8.5",
 	webpack: "5.72.1",
 	"webpack-cli": "4.9.2",
-	"webpack-dev-server": "4.9.0",
+	"webpack-dev-server": "4.9.1",
 	"whatwg-fetch": "3.6.2"
 };
 var peerDependencies = {
