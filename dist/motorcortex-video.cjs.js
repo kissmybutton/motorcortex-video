@@ -139,7 +139,7 @@ var devDependencies = {
 	"babel-eslint": "10.1.0",
 	"babel-loader": "8.2.5",
 	browserslist: "4.20.4",
-	"caniuse-lite": "1.0.30001352",
+	"caniuse-lite": "1.0.30001354",
 	concurrently: "7.2.2",
 	coveralls: "3.1.1",
 	"css-loader": "6.7.1",
