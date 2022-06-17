@@ -155,7 +155,7 @@ var devDependencies = {
 	husky: "8.0.1",
 	"imports-loader": "4.0.0",
 	"json-stringify-safe": "5.0.1",
-	"lint-staged": "13.0.1",
+	"lint-staged": "13.0.2",
 	npx: "10.2.2",
 	prettier: "2.7.1",
 	rimraf: "3.0.2",
