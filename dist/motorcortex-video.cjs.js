@@ -7,13 +7,19 @@ class VideoClip extends motorcortex.BrowserClip {
     this.width = this.attrs.width || 640;
     this.height = this.attrs.height || 360;
     this.startFrom = this.attrs.startFrom || 0;
-    const videoStyle = "width:".concat(this.width, "px;height:").concat(this.height, "px;");
-    const videoSources = this.attrs.sources.map(item => "<source src=\"".concat(item, "#t=").concat(this.startFrom, "\"></source>")).join("\n");
-    return "\n      <div>\n        <video id=\"video\" style=\"".concat(videoStyle, "\" preload=\"metadata\" ").concat(this.attrs.audio !== true ? "muted" : "", " playsinline>\n          ").concat(videoSources, "\n        </video>\n      </div>\n    ");
+    const videoStyle = `width:${this.width}px;height:${this.height}px;`;
+    const videoSources = this.attrs.sources.map(item => `<source src="${item}#t=${this.startFrom}"></source>`).join("\n");
+    return `
+      <div>
+        <video id="video" style="${videoStyle}" preload="metadata" ${this.attrs.audio !== true ? "muted" : ""} playsinline>
+          ${videoSources}
+        </video>
+      </div>
+    `;
   }
 
   get css() {
-    return "";
+    return ``;
   }
 
   setVolume(volume) {
@@ -139,7 +145,7 @@ var devDependencies = {
 	"babel-eslint": "10.1.0",
 	"babel-loader": "8.2.5",
 	browserslist: "4.21.3",
-	"caniuse-lite": "1.0.30001387",
+	"caniuse-lite": "1.0.30001388",
 	concurrently: "7.3.0",
 	coveralls: "3.1.1",
 	"css-loader": "6.7.1",
