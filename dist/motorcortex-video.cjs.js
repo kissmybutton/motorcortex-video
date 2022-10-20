@@ -17,23 +17,20 @@ class VideoClip extends motorcortex.BrowserClip {
       </div>
     `;
   }
-
   get css() {
     return ``;
   }
-
   setVolume(volume) {
     this.video.volume = volume;
   }
-
   onAfterRender() {
     const video = this.context.getElements("video")[0];
     this.video = video;
     this.setCustomEntity("video", {
       video,
       startFrom: this.startFrom
-    }); // Audio
-
+    });
+    // Audio
     if (this.attrs.audio !== true) {
       video.muted = true;
     } else {
@@ -43,7 +40,6 @@ class VideoClip extends motorcortex.BrowserClip {
         It occurs on the Descriptive Incident of the Root Clip of the tree it tries to enter.
         We don’t want to move the responsibility of the execution of the actual clips rendering anywhere else for the time being but we prefer keeping it to the Descriptive Clip Root level, as it is right now. For this the setTimeout(funct, 0) ensures that this block of code will be executed RIGHT after the Descriptive Clip gets accepted and attached to the Descriptive Tree. Sorry about that :slightly_smiling_face:
       */
-
       setTimeout(() => {
         video.crossOrigin = "anonymous";
         const res = that.DescriptiveIncident.volumeChangeSubscribe(that.id, that.setVolume.bind(that));
@@ -51,24 +47,21 @@ class VideoClip extends motorcortex.BrowserClip {
       }, 0);
     }
   }
-
 }
 
 class VideoPlay extends motorcortex.MediaPlayback {
   play() {
-    const video = this.element.entity.video; // If the video is ready to play we don't need to block again
+    const video = this.element.entity.video;
 
+    // If the video is ready to play we don't need to block again
     if (video.readyState < 3) {
       this.waitingHandler();
     }
-
     this.playPromise = video.play();
-
     if (this.hasSetWaitingListener !== true) {
       video.addEventListener("waiting", this.waitingHandler.bind(this));
       this.hasSetWaitingListener = true;
     }
-
     if (this.hasSetCanplayListener !== true) {
       video.addEventListener("canplay", this.canplayHandler.bind(this));
       video.addEventListener('canplaythrough', this.canplayHandler.bind(this));
@@ -76,18 +69,14 @@ class VideoPlay extends motorcortex.MediaPlayback {
       video.addEventListener('ready', this.canplayHandler.bind(this));
       this.hasSetCanplayListener = true;
     }
-
     return true;
   }
-
   waitingHandler() {
     this.setBlock("Video loading");
   }
-
   canplayHandler() {
     setTimeout(() => this.unblock());
   }
-
   stop() {
     if (this.playPromise) {
       this.playPromise.then(() => {
@@ -95,13 +84,11 @@ class VideoPlay extends motorcortex.MediaPlayback {
       });
     }
   }
-
   onProgress(millisecond) {
     this.unblock();
     const startFrom = millisecond + this.element.entity.startFrom;
     this.element.entity.video.currentTime = (startFrom + millisecond) / 1000;
   }
-
 }
 
 var name = "@kissmybutton/motorcortex-video";
@@ -137,7 +124,7 @@ var keywords = [
 ];
 var devDependencies = {
 	"@babel/cli": "7.19.3",
-	"@babel/core": "7.19.3",
+	"@babel/core": "7.19.6",
 	"@babel/preset-env": "7.19.4",
 	"@donkeyclip/motorcortex": "9.4.1",
 	"@donkeyclip/motorcortex-player": "2.10.6",
