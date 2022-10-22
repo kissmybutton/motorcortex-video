@@ -131,7 +131,7 @@ var devDependencies = {
 	"babel-loader": "8.2.5",
 	browserslist: "4.21.4",
 	"caniuse-lite": "1.0.30001423",
-	concurrently: "7.4.0",
+	concurrently: "7.5.0",
 	coveralls: "3.1.1",
 	"css-loader": "6.7.1",
 	"es6-promise": "4.2.8",
