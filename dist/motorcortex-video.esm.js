@@ -128,7 +128,7 @@ var devDependencies = {
 	"@donkeyclip/motorcortex-player": "2.10.7",
 	"@rollup/plugin-json": "4.1.0",
 	"babel-eslint": "10.1.0",
-	"babel-loader": "8.2.5",
+	"babel-loader": "8.3.0",
 	browserslist: "4.21.4",
 	"caniuse-lite": "1.0.30001429",
 	concurrently: "7.5.0",
