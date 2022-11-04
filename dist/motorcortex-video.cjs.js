@@ -50,7 +50,8 @@ class VideoClip extends motorcortex.BrowserClip {
 }
 
 class VideoPlay extends motorcortex.MediaPlayback {
-  play() {
+  play( /*millisecond*/
+  ) {
     const video = this.element.entity.video;
 
     // If the video is ready to play we don't need to block again
@@ -124,8 +125,8 @@ var keywords = [
 ];
 var devDependencies = {
 	"@babel/cli": "7.19.3",
-	"@babel/core": "7.19.6",
-	"@babel/preset-env": "7.19.4",
+	"@babel/core": "7.20.2",
+	"@babel/preset-env": "7.20.2",
 	"@donkeyclip/motorcortex": "9.4.1",
 	"@donkeyclip/motorcortex-player": "2.10.7",
 	"@rollup/plugin-json": "4.1.0",
