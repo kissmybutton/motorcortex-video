@@ -144,7 +144,7 @@ var devDependencies = {
 	"eslint-plugin-prettier": "4.2.1",
 	"eslint-plugin-standard": "5.0.0",
 	"exports-loader": "4.0.0",
-	husky: "8.0.1",
+	husky: "8.0.2",
 	"imports-loader": "4.0.1",
 	"json-stringify-safe": "5.0.1",
 	"lint-staged": "13.0.3",
