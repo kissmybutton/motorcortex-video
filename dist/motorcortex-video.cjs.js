@@ -151,7 +151,7 @@ var devDependencies = {
 	"json-stringify-safe": "5.0.1",
 	"lint-staged": "13.2.0",
 	npx: "10.2.2",
-	prettier: "2.8.6",
+	prettier: "2.8.7",
 	rimraf: "3.0.2",
 	rollup: "2.79.1",
 	"rollup-plugin-babel": "4.4.0",
