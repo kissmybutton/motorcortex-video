@@ -123,8 +123,8 @@ var keywords = [
 ];
 var devDependencies = {
 	"@babel/cli": "7.21.0",
-	"@babel/core": "7.21.3",
-	"@babel/preset-env": "7.20.2",
+	"@babel/core": "7.21.4",
+	"@babel/preset-env": "7.21.4",
 	"@donkeyclip/motorcortex": "9.5.6",
 	"@donkeyclip/motorcortex-player": "2.10.8",
 	"@rollup/plugin-json": "4.1.0",
