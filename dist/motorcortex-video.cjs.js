@@ -159,7 +159,7 @@ var devDependencies = {
 	"rollup-plugin-node-resolve": "5.2.0",
 	"rollup-plugin-terser": "7.0.2",
 	shelljs: "0.8.5",
-	webpack: "5.80.0",
+	webpack: "5.81.0",
 	"webpack-cli": "4.10.0",
 	"webpack-dev-server": "4.13.3",
 	"whatwg-fetch": "3.6.2"
