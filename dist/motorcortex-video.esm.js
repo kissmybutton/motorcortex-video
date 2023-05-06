@@ -136,7 +136,7 @@ var devDependencies = {
 	coveralls: "3.1.1",
 	"css-loader": "6.7.3",
 	"es6-promise": "4.2.8",
-	eslint: "8.39.0",
+	eslint: "8.40.0",
 	"eslint-config-prettier": "8.8.0",
 	"eslint-plugin-babel": "5.3.1",
 	"eslint-plugin-import": "2.27.5",
