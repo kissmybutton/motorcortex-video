@@ -132,7 +132,7 @@ var devDependencies = {
 	"@rollup/plugin-json": "4.1.0",
 	"babel-eslint": "10.1.0",
 	"babel-loader": "8.3.0",
-	browserslist: "4.21.7",
+	browserslist: "4.21.9",
 	"caniuse-lite": "1.0.30001502",
 	concurrently: "7.6.0",
 	coveralls: "3.1.1",
