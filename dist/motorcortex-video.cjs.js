@@ -124,9 +124,9 @@ var keywords = [
 	"motorcortex-plugin"
 ];
 var devDependencies = {
-	"@babel/cli": "7.22.6",
-	"@babel/core": "7.22.6",
-	"@babel/preset-env": "7.22.6",
+	"@babel/cli": "7.23.9",
+	"@babel/core": "7.23.9",
+	"@babel/preset-env": "7.23.9",
 	"@donkeyclip/motorcortex": "9.9.0",
 	"@donkeyclip/motorcortex-player": "2.10.11",
 	"@rollup/plugin-json": "4.1.0",
