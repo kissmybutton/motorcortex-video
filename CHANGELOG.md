@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.1.16 (2024-02-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to mc version 8
+
+### Features
+
+* **attributes:** audio (boolean) attribute ([b207edb](https://github.com/kissmybutton/motorcortex-video/commit/b207edb33d56150a5e704cd115a8e2082d231c69))
+* drop explorer 11 support ([ae41479](https://github.com/kissmybutton/motorcortex-video/commit/ae41479eee0fd99678fc88c5e63009740b583f21))
+* sound ([426068a](https://github.com/kissmybutton/motorcortex-video/commit/426068a967960d5214f32c83bbb0c22f13e12966))
+* **sound support:** sound support ([3752bed](https://github.com/kissmybutton/motorcortex-video/commit/3752bed5e5fa001e47c6165edcf7659a2528d794))
+* update compatibility with motorcortex ([d881873](https://github.com/kissmybutton/motorcortex-video/commit/d881873b63c22cae934171f5bfa848728f41ab9e))
+* update mc to v9 ([f5abe4a](https://github.com/kissmybutton/motorcortex-video/commit/f5abe4a8664b23ed4e87b9ba16ab7baf08a56d4e))
+
+
+### Bug Fixes
+
+* delete commitlint.config.js ([058a1ed](https://github.com/kissmybutton/motorcortex-video/commit/058a1edaf0219efc4d11d7eb01f22ab003c4f1b4))
+* fix sound ([586a3f6](https://github.com/kissmybutton/motorcortex-video/commit/586a3f6be7d2dbc886fcb05254cce4f909f201e9))
+* improve safari behaviour ([0d54255](https://github.com/kissmybutton/motorcortex-video/commit/0d54255480ddf27d64c70db5daafe2f213f14ca0))
+* remove math random ([8dded90](https://github.com/kissmybutton/motorcortex-video/commit/8dded90a2e267f95e3c6ec2912e76d917b845d2b))
+* **safari:** allow videos to play in safari mobile ([1ce3bba](https://github.com/kissmybutton/motorcortex-video/commit/1ce3bba12e3945bd04ad8c0545531d16ea632748))
+* update dependencies ([2e5f7be](https://github.com/kissmybutton/motorcortex-video/commit/2e5f7be73110698d261974ca741fdc4a8361b668))
+* update npm name ([ea322bf](https://github.com/kissmybutton/motorcortex-video/commit/ea322bfa644470c47ce87080cfa2f324e0e48ee9))
+* update rollup.config ([c964b0b](https://github.com/kissmybutton/motorcortex-video/commit/c964b0bd4d1b77a3f23c6af9f24cf0ffc3714cd4))
+* upgrade to mc version 8 ([b4fc0ef](https://github.com/kissmybutton/motorcortex-video/commit/b4fc0efa22fcaa09ad91ec2ab27b5489e4838bd8))
+
+
+### Miscellaneous Chores
+
+* release 1.1.16 ([04373e5](https://github.com/kissmybutton/motorcortex-video/commit/04373e5fef5a2112282274102e0850a39f9f9ce1))
+
 ### [2.2.2](https://github.com/kissmybutton/motorcortex-video/compare/v2.2.1...v2.2.2) (2022-05-09)
 
 

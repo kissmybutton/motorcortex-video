@@ -1,6 +1,6 @@
 {
   "name": "@kissmybutton/motorcortex-video",
-  "version": "2.2.2",
+  "version": "1.1.16",
   "main": "dist/motorcortex-video.cjs.js",
   "module": "dist/motorcortex-video.esm.js",
   "browser": "dist/motorcortex-video.umd.js",
